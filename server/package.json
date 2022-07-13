@@ -1,0 +1,27 @@
+{
+  "name": "yo-shop-server",
+  "version": "0.0.1",
+  "description": "Server of my shop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoSoloPersona/yo-shop.git"
+  },
+  "keywords": [
+    "online",
+    "shop",
+    "typescript",
+    "react",
+    "node",
+    "express"
+  ],
+  "author": "yolik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YoSoloPersona/yo-shop/issues"
+  },
+  "homepage": "https://github.com/YoSoloPersona/yo-shop#readme"
+}
