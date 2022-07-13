@@ -4,6 +4,8 @@
   "description": "Server of my shop",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +25,22 @@
   "bugs": {
     "url": "https://github.com/YoSoloPersona/yo-shop/issues"
   },
-  "homepage": "https://github.com/YoSoloPersona/yo-shop#readme"
+  "homepage": "https://github.com/YoSoloPersona/yo-shop#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jasmine": "^4.0.3",
+    "@types/node": "^18.0.3",
+    "debug": "^4.3.4",
+    "jasmine": "^4.2.1",
+    "typedoc": "^0.23.7",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.3"
+  }
 }
