@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 // Протоколы
 const log = debug('app:log');
 
+// Запускаем сервер
 app.listen(PORT, () => {
     log(`Сервер запущен на порту: ${PORT}`);
 });

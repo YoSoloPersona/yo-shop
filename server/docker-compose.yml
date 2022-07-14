@@ -1,0 +1,35 @@
+# версия схемы
+version: "3.9"
+
+# список служб
+services:
+  # сервер базы данных
+  postgres:
+    container_name: postgres_container
+    image: postgres:14.4
+    environment:
+
+      POSTGRES_DB: "shop_db"    # имя бд
+      POSTGRES_USER: "admin"    # логин
+      POSTGRES_PASSWORD: "1234" # пароль
+    ports:
+      - "5432:5432"             # пробрасываем порты
+  
+  # администрирование бд
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "yolik@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "1234"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
