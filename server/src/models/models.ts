@@ -1,92 +1,135 @@
-//
-import { basename } from 'path';
-import { DataTypes } from 'sequelize';
+import { CreationOptional, DataTypes, Model } from 'sequelize';
 
 // local
 import sequelize from '../db/db';
 
 // описание таблиц
 // пользователь
-export const user = sequelize.define('user', {
+export interface User extends Model {
+    id: number;
+    email: string;
+    role: string;
+}
+
+export const ModelUser = sequelize.define<User>('user', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     email: { type: DataTypes.STRING },
-    role: { type: DataTypes.STRING, defaultValue: "USER" },
+    role: { type: DataTypes.STRING, defaultValue: 'USER' }
 });
 
 // корзина
-export const basket = sequelize.define('basket', {
+export interface Basket extends Model {
+    id: number;
+}
+
+export const ModelBasket = sequelize.define<Basket>('basket', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
 });
 
+export interface BasketDevice extends Model {
+    id: number;
+}
 
-export const basketDevice = sequelize.define('basketDevice', {
+export const ModelBasketDevice = sequelize.define<BasketDevice>('basketDevice', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
 });
 
 // устройство
-export const device = sequelize.define('device', {
+export interface Device extends Model {
+    id: number;
+    name: string;
+    price: string;
+    rating: number;
+    img: string;
+}
+
+export const ModelDevice = sequelize.define<Device>('device', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false},
-    price: { type: DataTypes.STRING, unique: true, allowNull: false},
-    rating: { type: DataTypes.STRING, defaultValue: 0},
-    img: { type: DataTypes.STRING, unique: true, allowNull: false},
+    name: { type: DataTypes.STRING, unique: true, allowNull: false },
+    price: { type: DataTypes.STRING, unique: true, allowNull: false },
+    rating: { type: DataTypes.INTEGER, defaultValue: 0 },
+    img: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
 
 // тип устройства
-export const type = sequelize.define('type', {
+export interface Type extends Model {
+    id: number;
+    name: string;
+}
+
+export const ModelType = sequelize.define<Type>('type', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false}
+    name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
 
 // брэнд
-export const brand = sequelize.define('brand', {
+export interface Brand extends Model {
+    id: number;
+    name: string;
+}
+
+export const ModelBrand = sequelize.define<Brand>('brand', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: DataTypes.STRING, unique: true, allowNull: false}
+    name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
 
 // рейтинг
-export const rating = sequelize.define('rating', {
+interface Rating extends Model {
+    id: number;
+    rate: number;
+}
+
+export const ModelRating = sequelize.define<Rating>('rating', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    rate: { type: DataTypes.INTEGER, allowNull: false}
+    rate: { type: DataTypes.INTEGER, allowNull: false }
 });
 
 // описание устройства
-export const deviceInfo = sequelize.define('deviceInfo', {
+interface DeviceInfo extends Model {
+    id: number;
+    title: string;
+    description: string;
+}
+
+export const ModelDeviceInfo = sequelize.define<DeviceInfo>('deviceInfo', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    title: { type: DataTypes.STRING, allowNull: false},
-    description: { type: DataTypes.STRING, allowNull: false}
+    title: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.STRING, allowNull: false }
 });
 
-// 
-const typeBrand = sequelize.define('typeBrand', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+//
+interface TypeBrand extends Model {
+    id: number;
+}
+
+const ModelTypeBrand = sequelize.define<TypeBrand>('typeBrand', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
 });
 
 // Связи
-user.hasOne(basket);
-basket.belongsTo(user);
+ModelUser.hasOne(ModelBasket);
+ModelBasket.belongsTo(ModelUser);
 
-user.hasMany(rating);
-rating.belongsTo(user);
+ModelUser.hasMany(ModelRating);
+ModelRating.belongsTo(ModelUser);
 
-basket.hasMany(basketDevice);
-basketDevice.belongsTo(basket);
+ModelBasket.hasMany(ModelBasketDevice);
+ModelBasketDevice.belongsTo(ModelBasket);
 
-type.hasMany(device);
-device.belongsTo(type);
+ModelType.hasMany(ModelDevice);
+ModelDevice.belongsTo(ModelType);
 
-brand.hasMany(device);
-device.belongsTo(brand);
+ModelBrand.hasMany(ModelDevice);
+ModelDevice.belongsTo(ModelBrand);
 
-device.hasMany(rating);
-rating.belongsTo(device);
+ModelDevice.hasMany(ModelRating);
+ModelRating.belongsTo(ModelDevice);
 
-device.hasMany(basketDevice);
-basketDevice.belongsTo(device);
+ModelDevice.hasMany(ModelBasketDevice);
+ModelBasketDevice.belongsTo(ModelDevice);
 
-device.hasMany(deviceInfo);
-deviceInfo.belongsTo(device);
+ModelDevice.hasMany(ModelDeviceInfo);
+ModelDeviceInfo.belongsTo(ModelDevice);
 
-type.belongsToMany(brand, { through: typeBrand }); 
-brand.belongsToMany(type, { through: typeBrand });
-
+ModelType.belongsToMany(ModelBrand, { through: ModelTypeBrand });
+ModelBrand.belongsToMany(ModelType, { through: ModelTypeBrand });

@@ -1,13 +1,18 @@
 import express from 'express';
 import debug from 'debug';
-import cors from "cors";
+import cors from 'cors';
 
 // local
+import router from './routers';
 import sequelize from './db/db';
 import * as models from './models/models';
+import errorHandler from './middleware/errorHandle';
+
+const version = '1';
 
 // Протоколы
 const log = debug('app:log');
+const logError = debug('app:err');
 
 // Сервер
 const app = express();
@@ -15,11 +20,10 @@ const app = express();
 // Middleware
 // app.use(cors);
 app.use(express.json());
+app.use(`/api:${version}`, router);
 
-// Routers
-app.get('/', (req, res) => {
-    res.json({message: 'working!!!'})
-})
+// обработчик ошибок
+app.use(errorHandler);
 
 sequelize
     // авторизируемся в бд
@@ -35,6 +39,7 @@ sequelize
             log(`Сервер запущен на порту: ${PORT}`);
         });
     })
-    .catch(err => {
-        log(err);
-    })
+    // обработка ошибок
+    .catch((err) => {
+        logError(err);
+    });
