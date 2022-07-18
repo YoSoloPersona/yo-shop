@@ -5,11 +5,11 @@ import ErrorApi from '../errors/errorApi';
 
 /**
  * Обрабатывает ошибки API.
- * @param err возникшая ошибка
- * @param req запрос
- * @param res ответ
- * @param next следующий обработчик
- * @returns 
+ * @param err возникшая ошибка.
+ * @param req запрос.
+ * @param res ответ.
+ * @param next следующий обработчик.
+ * @returns void.
  */
 export default function (
     err: Error,

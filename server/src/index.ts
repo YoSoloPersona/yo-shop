@@ -5,14 +5,14 @@ import cors from 'cors';
 // local
 import router from './routers';
 import sequelize from './db/db';
-import * as models from './models/models';
 import errorHandler from './middleware/errorHandle';
 
-const version = '1';
+// версия API
+const version = 1;
 
 // Протоколы
 const log = debug('app:log');
-const logError = debug('app:err');
+const logError = debug('app:error');
 
 // Сервер
 const app = express();
@@ -20,7 +20,7 @@ const app = express();
 // Middleware
 // app.use(cors);
 app.use(express.json());
-app.use(`/api:${version}`, router);
+app.use(`/api/v${version}`, router);
 
 // обработчик ошибок
 app.use(errorHandler);

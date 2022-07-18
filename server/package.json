@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "start dev": "cross-env DEBUG=* nodemon ./dist/index.js",
+    "start dev": "cross-env DEBUG=app:* nodemon ./dist/index.js",
     "docker start": "docker-compose up -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
