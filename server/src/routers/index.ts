@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import debug from 'debug';
 
 // local
 import ErrorApi from '../errors/errorApi';
@@ -7,6 +8,11 @@ import ControllerBrand from '../controllers/controllerBrand';
 import ControllerDevice from '../controllers/controllerDevice';
 import ControllerType from '../controllers/controllerType';
 
+// протоколы
+const log = debug('app:log');
+const logError = debug('app:error');
+
+// Роутер /api/v1/...
 const router = Router();
 
 // список для создания роутеров на основе путей контроллеров
@@ -20,6 +26,7 @@ const list = [
         controller: ControllerDevice
     },
     {
+        // api/v1/type/...
         path: '/type',
         controller: ControllerType
     }
@@ -27,15 +34,15 @@ const list = [
     .map((element) => {
         const childRouter = Router();
 
-        // GET запрос всех элементов
+        // GET запрос элементов
         childRouter.get(
             '/',
             (req: Request, res: Response, next: NextFunction) => {
                 element.controller
-                    .findAll()
+                    .findAll({where: {... req.query}})
                     // Получили список элементов из БД
                     .then((listElements) => res.json(listElements))
-                    // Возникла ошибка при получении элментов из БД
+                    // Возникла ошибка при получении элементов из БД
                     .catch((err) => {
                         next(ErrorApi.internal(err.message));
                     });
@@ -52,7 +59,11 @@ const list = [
                     .then((el) => res.json(el))
                     // Возникла ошибка при добавлении в БД
                     .catch((err) => {
-                        ErrorApi.badRequest(err.message);
+                        next(
+                            ErrorApi.badRequest(
+                                `Возникла ошибка при добавлении элемента: "${err.message}"`
+                            )
+                        );
                     });
             }
         );
@@ -62,11 +73,15 @@ const list = [
             '/',
             (req: Request, res: Response, next: NextFunction) => {
                 element.controller
-                    .remove()
+                    .remove({where: {...req.query}})
                     // Данные успешно удалены
-                    .then((countDeleted) => {})
+                    .then((countDeleted) => {
+                        res.status(200).send(countDeleted);
+                    })
                     // Возникла ошибка при удалении данных
-                    .catch((err) => {next(ErrorApi.internal(err.message))});
+                    .catch((err) => {
+                        next(ErrorApi.internal(err.message));
+                    });
             }
         );
 

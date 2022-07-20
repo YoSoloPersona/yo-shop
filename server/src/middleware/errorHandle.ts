@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
+import debug from 'debug';
 
 // local
 import ErrorApi from '../errors/errorApi';
+
+const logError = debug('app:error');
 
 /**
  * Обрабатывает ошибки API.
@@ -17,6 +20,8 @@ export default function (
     res: Response,
     next: NextFunction
 ): void {
+    logError(err);
+    logError(err.message);
     // Если возникла предвиденная нами ошибка.
     if (err instanceof ErrorApi) {
         res.status(err.status).json({ message: err.message });
