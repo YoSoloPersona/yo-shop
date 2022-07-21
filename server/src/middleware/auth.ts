@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from "jsonwebtoken";
+import * as jwt from 'jsonwebtoken';
 
 export default function auth(req: Request, res: Response, next: NextFunction) {
     if (req.method === 'OPTIONS') {
@@ -15,7 +15,7 @@ export default function auth(req: Request, res: Response, next: NextFunction) {
 
     // Проверяем присланный токен, получаем и сохраняем данные пользователя
     const user = jwt.verify(token, process.env.SECRET_KEY as string);
-    Object.defineProperty(req, 'user', { value: user, writable: false });   
+    Object.defineProperty(req, 'user', { value: user, writable: false });
 
     // следующий обработчик
     next();

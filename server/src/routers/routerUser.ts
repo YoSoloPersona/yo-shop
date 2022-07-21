@@ -2,12 +2,12 @@ import { NextFunction, Router, Request, Response } from 'express';
 
 // local
 import ControllerUser from '../controllers/controllerUser';
-import auth from "../middleware/auth";
+import auth from '../middleware/auth';
 
 const router = Router();
 
-router.post('/auth', auth, (req: Request, res: Response, nex: NextFunction) => {
-    res.json({message: 'good'});
+router.post('/auth', auth, (req: Request, res: Response, next: NextFunction) => {
+    res.json({ message: 'good' });
 });
 
 router.post(

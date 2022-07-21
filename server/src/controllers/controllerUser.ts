@@ -12,7 +12,11 @@ class ControllerUser {
      * @param role тип пользователя.
      * @returns jsonwebtoken зарегистрированного пользователя.
      */
-    async registration(email: string, password: string, role: string): Promise<string> {
+    async registration(
+        email: string,
+        password: string,
+        role: string
+    ): Promise<string> {
         if (!email || !password) {
             throw new Error('Не указан email или пароль.');
         }
@@ -31,34 +35,51 @@ class ControllerUser {
         const user = await ModelUser.create({
             email,
             role,
-            password: hashPassword
+            password: hashPassword,
         });
 
         // Возвращаем jwt токен
-        return jwt.sign({ id: user.id, email, role }, process.env.SECRET_KEY as string, { expiresIn: '24h' });
+        return jwt.sign(
+            { id: user.id, email, role },
+            process.env.SECRET_KEY as string,
+            { expiresIn: '24h' }
+        );
     }
-
 
     async login(email: string, password: string): Promise<string> {
         // Получаем hash пароля
-        const user = await ModelUser.findOne({where: {
-            email
-        }});
+        const user = await ModelUser.findOne({
+            where: {
+                email,
+            },
+        });
 
-        if (!user)  {
-            throw new Error('Не удалось авторизоваться, указан неверный email.');
+        if (!user) {
+            throw new Error(
+                'Не удалось авторизоваться, указан неверный email.'
+            );
         }
 
-        if (!bcrypt.compareSync(password, user.password))  {
-            throw new Error('Не удалось авторизоваться, указан неверный пароль.');
+        if (!bcrypt.compareSync(password, user.password)) {
+            throw new Error(
+                'Не удалось авторизоваться, указан неверный пароль.'
+            );
         }
-        
-        return jwt.sign({ id: user.id, email, role: user.role }, process.env.SECRET_KEY as string, { expiresIn: '24h' });
+
+        return jwt.sign(
+            { id: user.id, email, role: user.role },
+            process.env.SECRET_KEY as string,
+            { expiresIn: '24h' }
+        );
     }
 
-    async auth() {}
+    auth(): void {
+        throw new Error('Метод ещё не реализован.');
+    }
 
-    async delete() {}
+    delete(): void {
+        throw new Error('Метод ещё не реализован.');
+    }
 }
 
 export default new ControllerUser();
