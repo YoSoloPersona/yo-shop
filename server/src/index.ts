@@ -24,7 +24,7 @@ app.use(`/api/v${version}`, router);
 
 // обработчик ошибок
 app.use(errorHandler);
-
+ 
 sequelize
     // авторизируемся в бд
     .authenticate()
