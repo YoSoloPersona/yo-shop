@@ -3,7 +3,7 @@ import debug from 'debug';
 
 // local
 import ErrorApi from '../errors/errorApi';
-import routerUser from './routerUser';
+import { router as routerUser } from './routerUser';
 import ControllerBrand from '../controllers/controllerBrand';
 import ControllerDevice from '../controllers/controllerDevice';
 import ControllerType from '../controllers/controllerType';
@@ -12,8 +12,33 @@ import ControllerType from '../controllers/controllerType';
 const log = debug('app:log');
 const logError = debug('app:error');
 
+// версия API
+const version = 1;
+
+export class Paths {
+    static get root() {
+        return  `/api/v${version}`;
+    }
+
+    static get brand () {
+        return '/brand';
+    }
+
+    static get device () {
+        return '/device';
+    }
+
+    static get type () {
+        return '/device';
+    }
+
+    static get user () {
+        return '/user';
+    }
+};
+
 // Роутер /api/v1/...
-const router = Router();
+export const router = Router();
 
 // список для создания роутеров на основе путей контроллеров
 const list = [
@@ -101,5 +126,3 @@ list.splice(-1, 0, {
 list.forEach((kvp) => {
     router.use(kvp.path, kvp.router);
 });
-
-export default router;
