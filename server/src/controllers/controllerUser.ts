@@ -3,7 +3,11 @@ import * as jwt from 'jsonwebtoken';
 
 // locals
 import { ModelUser, User } from '../models/models';
+import ErrorApi from '../errors/errorApi';
 
+/**
+ * Класс для работы с пользователями.
+ */
 class ControllerUser {
     /**
      * Регистрирует пользователя в БД.
@@ -18,14 +22,16 @@ class ControllerUser {
         role: string
     ): Promise<string> {
         if (!email || !password) {
-            throw new Error('Не указан email или пароль.');
+            throw ErrorApi.badRequest('Не указан email или пароль.');
         }
 
         // Ищем пользователя с указанными email
         const candidate = await ModelUser.findOne({ where: { email } });
 
         if (candidate) {
-            throw new Error('Пользователь с таким email уже зарегистрирован.');
+            throw ErrorApi.accountAlreadyExists(
+                'Пользователь с таким email уже зарегистрирован.'
+            );
         }
 
         // Получаем hash пароля
@@ -35,7 +41,7 @@ class ControllerUser {
         const user = await ModelUser.create({
             email,
             role,
-            password: hashPassword,
+            password: hashPassword
         });
 
         // Возвращаем jwt токен
@@ -46,23 +52,29 @@ class ControllerUser {
         );
     }
 
+    /**
+     * Авторизует пользователя.
+     * @param email электронная почта.
+     * @param password пароль.
+     * @returns jsonwebtoken авторизованного пользователя.
+     */
     async login(email: string, password: string): Promise<string> {
         // Получаем hash пароля
         const user = await ModelUser.findOne({
             where: {
-                email,
-            },
+                email
+            }
         });
 
         if (!user) {
-            throw new Error(
-                'Не удалось авторизоваться, указан неверный email.'
+            throw ErrorApi.badRequest(
+                'Не удалось авторизоваться, указан неверный email или пароль.'
             );
         }
 
         if (!bcrypt.compareSync(password, user.password)) {
-            throw new Error(
-                'Не удалось авторизоваться, указан неверный пароль.'
+            throw ErrorApi.badRequest(
+                'Не удалось авторизоваться, указан неверный email или пароль.'
             );
         }
 
@@ -74,11 +86,11 @@ class ControllerUser {
     }
 
     auth(): void {
-        throw new Error('Метод ещё не реализован.');
+        throw ErrorApi.notImplemented('Метод ещё не реализован.');
     }
 
     delete(): void {
-        throw new Error('Метод ещё не реализован.');
+        throw ErrorApi.notImplemented('Метод ещё не реализован.');
     }
 }
 

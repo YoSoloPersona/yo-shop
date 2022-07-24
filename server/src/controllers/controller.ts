@@ -2,14 +2,14 @@ import { DestroyOptions, FindOptions } from 'sequelize/types';
 
 export default interface Controller<T> {
     /** Ищет необходимые элементы. */
-    findAll(option?: FindOptions<any>): Promise<T[]>;
+    findAll(option?: FindOptions<T>): Promise<T[]>;
 
     /** Ищет необходимый элемент. */
-    findOne(option?: FindOptions): Promise<T | null>;
+    findOne(option?: FindOptions<T>): Promise<T | null>;
 
     /** Добавляет элемент. */
     add(el: T): Promise<T>;
 
     /** Удаляет элемент. */
-    remove(option?: DestroyOptions<any>): Promise<number>;
+    remove(option?: DestroyOptions<T>): Promise<number>;
 }

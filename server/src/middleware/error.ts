@@ -20,13 +20,13 @@ export default function (
     res: Response,
     next: NextFunction
 ): void {
-    logError(err);
-    logError(err.message);
     // Если возникла предвиденная нами ошибка.
     if (err instanceof ErrorApi) {
         res.status(err.status).json({ message: err.message });
         return;
     }
 
-    res.status(500).json({ message: `Непредвиденная ошибка: ${err.message}` });
+    // Если не сгенерированная нами ошибка.
+    logError(err);
+    res.status(500).json({ message: `Непредвиденная ошибка.` });
 }

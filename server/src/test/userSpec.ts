@@ -3,7 +3,7 @@ import * as http from 'http';
 import debug from 'debug';
 
 // local
-import { Paths } from '../routers/routerUser';
+import { Url } from '../routers/routerUser';
 
 // Определяем протоколы
 const log = debug('test:log'); // Для отображения простой информации
@@ -28,7 +28,7 @@ describe('#Проверка системы авторизации.', () => {
             const options = {
                 hostname: process.env.HOST || 'localhost',
                 port: Number(process.env.PORT) || 80,
-                path: `/api/v1/user${Paths.registration}`,
+                path: `/api/v1/user${Url.registration}`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ describe('#Проверка системы авторизации.', () => {
             const options = {
                 hostname: process.env.HOST || 'localhost',
                 port: Number(process.env.PORT) || 80,
-                path: `/api/v1/user${Paths.login}`,
+                path: `/api/v1/user${Url.login}`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

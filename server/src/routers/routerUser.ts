@@ -7,13 +7,17 @@ import auth from '../middleware/auth';
 
 const log = debug('app:log');
 
-export class Paths {
+export class Url {
     static get registration() {
         return '/registration';
     }
 
     static get login() {
         return '/login';
+    }
+
+    static get auth() {
+        return '/auth';
     }
 }
 
@@ -22,16 +26,16 @@ export const router = Router();
 
 //
 router.post(
-    '/auth',
+    Url.auth,
     auth,
     (req: Request, res: Response, next: NextFunction) => {
         res.json({ message: 'good' });
     }
 );
 
-// Регистрация
+// Регистрация пользователя
 router.post(
-    Paths.registration,
+    Url.registration,
     (req: Request, res: Response, next: NextFunction) => {
         log(router);
         const { email, password, role } = req.body;
@@ -44,11 +48,15 @@ router.post(
     }
 );
 
-router.post(Paths.login, (req: Request, res: Response, next: NextFunction) => {
+// Авторизация пользователя
+router.post(Url.login, (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     ControllerUser.login(email, password)
+        // Авторизуем пользователя
         .then(token => res.json({ token }))
+        // Произошла ошибка при регистрации пользователя
         .catch(err => next(err));
 });
 
+// Удаление пользователя
 router.delete('/', ControllerUser.delete);

@@ -3,6 +3,7 @@ import debug from 'debug';
 
 // local
 import ErrorApi from '../errors/errorApi';
+import role from "../middleware/role";
 import { router as routerUser } from './routerUser';
 import ControllerBrand from '../controllers/controllerBrand';
 import ControllerDevice from '../controllers/controllerDevice';
@@ -60,6 +61,7 @@ const list = [
         // POST запрос нового элемента
         childRouter.post(
             '/',
+            role('ADMIN'),
             (req: Request, res: Response, next: NextFunction) => {
                 element.controller
                     .add(req.body)

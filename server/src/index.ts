@@ -5,7 +5,7 @@ import cors from 'cors';
 // local
 import { router as routerApi, Paths as PathApi } from './routers/routerApi';
 import sequelize from './db/db';
-import errorHandler from './middleware/errorHandle';
+import errorHandler from './middleware/error';
 
 // Протоколы
 const log = debug('app:log');

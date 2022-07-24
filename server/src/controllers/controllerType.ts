@@ -9,7 +9,7 @@ class ControllerType implements Controller<Type> {
      * Поолучение всех типов товаров.
      * @returns промис массива найденных типов товаров.
      */
-    findAll(option?: FindOptions<any>): Promise<Type[]> {
+    findAll(option?: FindOptions<Type>): Promise<Type[]> {
         return Model.findAll(option);
     }
 
@@ -18,7 +18,7 @@ class ControllerType implements Controller<Type> {
      * @param option параметры поиска.
      * @returns промис найденного типа товаров либо null в противном случае. 
      */
-    findOne(option?: FindOptions<any>): Promise<Type | null> {
+    findOne(option?: FindOptions<Type>): Promise<Type | null> {
         return Model.findOne(option);
     }
 
@@ -36,7 +36,7 @@ class ControllerType implements Controller<Type> {
      * @param option параметры для поиска удаляемых типов товаров.
      * @returns количество удалённых типов товаров.
      */
-    async remove(option?: DestroyOptions<any>): Promise<number> {
+    async remove(option?: DestroyOptions<Type>): Promise<number> {
         return Model.destroy(option);
     }
 }
