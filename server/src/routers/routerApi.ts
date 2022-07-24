@@ -17,46 +17,29 @@ const version = 1;
 
 export class Paths {
     static get root() {
-        return  `/api/v${version}`;
+        return `/api/v${version}`;
     }
+}
 
-    static get brand () {
-        return '/brand';
-    }
-
-    static get device () {
-        return '/device';
-    }
-
-    static get type () {
-        return '/device';
-    }
-
-    static get user () {
-        return '/user';
-    }
-};
-
-// Роутер /api/v1/...
+/** Корневой роутер API. */
 export const router = Router();
 
 // список для создания роутеров на основе путей контроллеров
 const list = [
     {
         path: '/brand',
-        controller: ControllerBrand
+        controller: ControllerBrand,
     },
     {
         path: '/device',
-        controller: ControllerDevice
+        controller: ControllerDevice,
     },
     {
-        // api/v1/type/...
         path: '/type',
-        controller: ControllerType
-    }
+        controller: ControllerType,
+    },
 ] // Создаём роутеры
-    .map((element) => {
+    .map(element => {
         const childRouter = Router();
 
         // GET запрос элементов
@@ -64,11 +47,11 @@ const list = [
             '/',
             (req: Request, res: Response, next: NextFunction) => {
                 element.controller
-                    .findAll({where: {... req.query}})
+                    .findAll({ where: { ...req.query } })
                     // Получили список элементов из БД
-                    .then((listElements) => res.json(listElements))
+                    .then(listElements => res.json(listElements))
                     // Возникла ошибка при получении элементов из БД
-                    .catch((err) => {
+                    .catch(err => {
                         next(ErrorApi.internal(err.message));
                     });
             }
@@ -81,9 +64,9 @@ const list = [
                 element.controller
                     .add(req.body)
                     // Элемент был добавлен в БД
-                    .then((el) => res.json(el))
+                    .then(el => res.json(el))
                     // Возникла ошибка при добавлении в БД
-                    .catch((err) => {
+                    .catch(err => {
                         next(
                             ErrorApi.badRequest(
                                 `Возникла ошибка при добавлении элемента: "${err.message}"`
@@ -98,13 +81,13 @@ const list = [
             '/',
             (req: Request, res: Response, next: NextFunction) => {
                 element.controller
-                    .remove({where: {...req.query}})
+                    .remove({ where: { ...req.query } })
                     // Данные успешно удалены
-                    .then((countDeleted) => {
+                    .then(countDeleted => {
                         res.status(200).send(countDeleted);
                     })
                     // Возникла ошибка при удалении данных
-                    .catch((err) => {
+                    .catch(err => {
                         next(ErrorApi.internal(err.message));
                     });
             }
@@ -112,17 +95,17 @@ const list = [
 
         return {
             path: element.path,
-            router: childRouter
+            router: childRouter,
         };
     });
 
 // Добавляем в ручную созданные роутеры
 list.splice(-1, 0, {
     path: '/user',
-    router: routerUser
+    router: routerUser,
 });
 
 // "Добавляем" дочерние роутеры к родительскому
-list.forEach((kvp) => {
+list.forEach(kvp => {
     router.use(kvp.path, kvp.router);
 });
