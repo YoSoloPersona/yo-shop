@@ -1,19 +1,62 @@
-import React from 'react';
-import { Route, NavLink, Link, Routes } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Route, NavLink, Link, Routes, useRoutes } from 'react-router-dom';
 
 
 // local
-import { authRoutes, publicRoutes } from './routes';
+import { Context } from "./index";
+import { Api } from './info';
+import Admin from './components/admin';
+import Basket from './components/basket';
+import Shop from './components/shop';
+import Auth from './components/auth';
+import Device from './components/device';
+
+/** Список роутеров требующих авторизации. */
+export const authRoutes = [
+    {
+        path: Api.user.admin.url,
+        element: <Admin />
+    },
+
+    {
+        path: Api.basket.url,
+        element: <Basket />
+    }
+];
+
+/** Список роутеров НЕ требующих авторизации. */
+export const publicRoutes = [
+    {
+        path: Api.shop.url,
+        element: <Shop />
+    },
+    {
+        path: Api.user.login.url,
+        element: <Auth />
+    },
+    {
+        path: Api.user.registration.url,
+        element: <Auth />
+    },
+    {
+        path: Api.device.url + '/:id',
+        element: <Device />
+    },
+];
 
 type Props = {};
 
+/**
+ * Компонент. Создаёт роутеры.
+ * @param props 
+ * @returns 
+ */
 const AppRouter = (props: Props) => {
-    const isAuth = false;
+    const { user } = useContext(Context);
+    const { isAuth } = user;
 
-    return <Routes>
-        {isAuth && authRoutes.map((info) => <Route key={info.path} path={info.path} element={info.element({})}></Route>)}
-        {publicRoutes.map((info) => <Route key={info.path} path={info.path} element={info.element({})}></Route>)}
-    </Routes>;
+    // Создаём роутеры
+    return useRoutes([...((isAuth) ? authRoutes : []), ...publicRoutes])
 };
 
 export default AppRouter;
