@@ -4,29 +4,22 @@ version: "3.9"
 # список служб
 services:
   # сервер базы данных
-  postgres:
+  yo-shop-postgres:
     container_name: postgres_container
     image: postgres:14.4
-    environment:
-
-      POSTGRES_DB: "shop_db"    # имя бд
-      POSTGRES_USER: "admin"    # логин
-      POSTGRES_PASSWORD: "1234" # пароль
+    env_file: ../../env/postgres.env
     ports:
-      - "5432:5432"             # пробрасываем порты
-  
+      - "5432:5432"             # пробрасываем порт что бы локальный сервер имел доступ в БД
+
   # администрирование бд
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "yolik@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "1234"
-      PGADMIN_CONFIG_SERVER_MODE: "False"
+    env_file: ../../env/pgadmin.env
     volumes:
-      - ./pgadmin:/var/lib/pgadmin
+      - ../../pgadmin:/var/lib/pgadmin
     ports:
-      - "5050:80"
+      - "5050:80"               # пробрасываем порт дял доступа через браузер
     restart: unless-stopped
     deploy:
       resources:

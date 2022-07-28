@@ -1,0 +1,34 @@
+# версия схемы
+version: "3.9"
+
+# список служб
+services:
+  # сервер базы данных
+  yo-shop-postgres:
+    container_name: test_postgres_container
+    image: postgres:14.4
+    env_file: ../../env/postgres.env
+
+  # сервер магазина
+  yo-shop-server:
+    container_name: test_yo_shop_server_container
+    image: yo-shop-server
+    env_file: ../../env/server-test.env
+    restart: 'no'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+
+  # клиент тестирующий сервер
+  yo-shop-test:
+    container_name: test_yo_shop_client_container
+    image: test-yo-shop-client
+    env_file: ../../env/server-test.env
+    restart: 'no'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G

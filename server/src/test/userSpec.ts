@@ -1,5 +1,5 @@
 import 'jasmine';
-import * as http from 'http';
+import axios, { AxiosResponse } from 'axios';
 import debug from 'debug';
 
 // local
@@ -10,68 +10,51 @@ const log = debug('test:log'); // Для отображения простой �
 const logError = debug('test:error'); // Для отображения ошибок
 
 // Время ожидания ответов от сервера
-const timeout = 10000;
+const timeout = 3000;
 
 // Данные для авторизации
 const userData = JSON.stringify({
     email: 'user1@mail.ru',
     password: '1234',
-    role: 'user',
+    role: 'user'
 });
+
+// Общие для все запросов параметры
+const protocol = process.env.SHOP_PROTOCOL || 'http';
+const host = process.env.SHOP_HOST || 'localhost';
+const port = Number(process.env.SHOP_PORT) || 3000;
+const url = `${protocol}://${host}:${port}`;
+const config = {
+    baseURL: url,
+    timeout: timeout
+};
 
 describe('#Проверка системы авторизации.', () => {
     it(
         'Регистрация пользователя.',
         done => {
-            
             // Информация для отправки запроса
-            const options = {
-                hostname: process.env.HOST || 'localhost',
-                port: Number(process.env.PORT) || 80,
-                path: `/api/v1/user${Url.registration}`,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Length': Buffer.byteLength(userData),
-                },
-            };
+            const path = `/api/v1/user${Url.registration}`;
 
-            // Формируем запрос
-            const req = http.request(options, res => {
-                const offset = 0;
-                //const buffer =  Buffer.alloc(Number(res.headers['content-length']));
-                const buffer: number[] = [];
-
-                // Получили ответ
-                res.setEncoding('utf8');
-                // Считываем тело ответа
-                res.on('readable', () => {
-                    let data;
-                    while (null != (data = res.read())) {
-                        buffer.push(data);
+            axios
+                .post(url + path, userData, {
+                    ...config,
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
                 })
-                    // Закончили считывание
-                    .on('end', () => {
-                        expect(res.statusCode).toBe(200); // Статус код в ответе должен быть "успешным"
-                        const answer = JSON.parse(buffer.join(''));
-                        expect(answer).toBeDefined(); // Ответ дожлен содержать объект
-                        expect(answer.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
-                        done();
-                    })
-                    // Ошибка при отпраке запроса
-                    .on('error', err => {
-                        fail(err);
-                    });
-            });
-
-            req.on('error', e => {
-                logError(`problem with request: ${e.message}`);
-            });
-
-            // Дописываем тело и отправлем запрос
-            req.write(userData);
-            req.end();
+                //
+                .then(({ status, data }) => {
+                    expect(status).toBe(200); // Статус код в ответе должен быть "успешным"
+                    expect(data).toBeDefined(); // Ответ дожлен содержать объект
+                    expect(data.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
+                    done();
+                })
+                //
+                .catch(err => {
+                    fail(err);
+                    logError(`problem with request: ${err.message}`);
+                });
         },
         timeout
     );
@@ -80,53 +63,27 @@ describe('#Проверка системы авторизации.', () => {
         'Авторизация пользователя.',
         done => {
             // Информация для отправки запроса
-            const options = {
-                hostname: process.env.HOST || 'localhost',
-                port: Number(process.env.PORT) || 80,
-                path: `/api/v1/user${Url.login}`,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Content-Length': Buffer.byteLength(userData),
-                },
-            };
+            const path = `/api/v1/user${Url.login}`;
 
-            // Формируем запрос
-            const req = http.request(options, res => {
-                const offset = 0;
-                //const buffer =  Buffer.alloc(Number(res.headers['content-length']));
-                const buffer: number[] = [];
-
-                // Получили ответ
-                res.setEncoding('utf8');
-                // Считываем тело ответа
-                res.on('readable', () => {
-                    let data;
-                    while (null != (data = res.read())) {
-                        buffer.push(data);
+            axios
+                .post(url + path, userData, {
+                    ...config,
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
                 })
-                    // Закончили считывание
-                    .on('end', () => {
-                        expect(res.statusCode).toBe(200); // Статус код в ответе должен быть "успешным"
-                        const answer = JSON.parse(buffer.join(''));
-                        expect(answer).toBeDefined(); // Ответ дожлен содержать объект
-                        expect(answer.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
-                        done();
-                    })
-                    // Ошибка при отпраке запроса
-                    .on('error', err => {
-                        fail(err);
-                    });
-            });
-
-            req.on('error', e => {
-                logError(`problem with request: ${e.message}`);
-            });
-
-            // Дописываем тело и отправлем запрос
-            req.write(userData);
-            req.end();
+                //
+                .then(({ status, data }) => {
+                    expect(status).toBe(200); // Статус код в ответе должен быть "успешным"
+                    expect(data).toBeDefined(); // Ответ дожлен содержать объект
+                    expect(data.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
+                    done();
+                })
+                //
+                .catch(err => {
+                    fail(err);
+                    logError(`problem with request: ${err.message}`);
+                });
         },
         timeout
     );

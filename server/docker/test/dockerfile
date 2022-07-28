@@ -1,0 +1,12 @@
+# Образ клиента для тестирования сервера
+FROM node:12-alpine
+# Создаём директорию для тестов
+WORKDIR /client
+# Необходимые пакеты
+COPY package.json .
+COPY ./dist ./dist/
+COPY ./test ./test/
+# Устанавливаем пакеты
+RUN npm i
+# Запускаем REST
+CMD ["npm", "run", "test"]

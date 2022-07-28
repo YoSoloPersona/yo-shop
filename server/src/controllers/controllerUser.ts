@@ -59,7 +59,6 @@ class ControllerUser {
      * @returns jsonwebtoken авторизованного пользователя.
      */
     async login(email: string, password: string): Promise<string> {
-        // Получаем hash пароля
         const user = await ModelUser.findOne({
             where: {
                 email

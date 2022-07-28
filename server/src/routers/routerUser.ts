@@ -37,7 +37,6 @@ router.post(
 router.post(
     Url.registration,
     (req: Request, res: Response, next: NextFunction) => {
-        log(router);
         const { email, password, role } = req.body;
         // Регистрируем пользователя
         ControllerUser.registration(email, password, role)
