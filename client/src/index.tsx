@@ -1,5 +1,8 @@
 import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
+
+// local
+import './i18n';
 import './assets/css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
