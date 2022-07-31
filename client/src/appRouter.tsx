@@ -3,7 +3,7 @@ import { Route, NavLink, Link, Routes, useRoutes } from 'react-router-dom';
 
 
 // local
-import { Context } from "./index";
+import { useUser } from "./hooks/userHook";
 import { Api } from './info';
 import Admin from './components/admin';
 import Basket from './components/basket';
@@ -52,7 +52,7 @@ type Props = {};
  * @returns 
  */
 const AppRouter = (props: Props) => {
-    const { user } = useContext(Context);
+    const { user } = useUser();
     const { isAuth } = user;
 
     // Создаём роутеры

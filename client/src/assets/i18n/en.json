@@ -1,7 +1,9 @@
 {
     "translation": {
         "menu": {
-            "title": "My shop"
+            "title": "My shop",
+            "admin": "Administrate",
+            "registration": "Registration"
         }
     }
 }

@@ -1,23 +1,24 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // local
+import { UserProvider } from './hooks/userHook'
 import './i18n';
 import './assets/css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ServiceUser from './services/serviceUser';
 
-export const Context = createContext({ user: new ServiceUser()});
+
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     <React.StrictMode>
-        <Context.Provider value={{ user: new ServiceUser()}}>
+        <UserProvider>
             <App />
-        </Context.Provider>
+            <App />
+        </UserProvider>
     </React.StrictMode>
 );
 
