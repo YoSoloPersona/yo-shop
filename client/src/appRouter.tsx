@@ -8,7 +8,7 @@ import { Api } from './info';
 import Admin from './components/admin';
 import Basket from './components/basket';
 import Shop from './components/shop';
-import Auth from './components/auth';
+import { Auth } from './components/auth';
 import Device from './components/device';
 
 /** Список роутеров требующих авторизации. */

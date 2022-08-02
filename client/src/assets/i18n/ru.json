@@ -4,6 +4,32 @@
             "title": "Мой магазин",
             "admin": "Администрирование",
             "registration": "Регистрация"
+        },
+        "auth": {
+            "registration": {
+                "title": "Регистрация",
+                "answer": "Нет аккаунта?",
+                "invitation": "Зарегистрируйся!",
+                "email": {
+                    "placeholder": "Введите ваш email..."
+                },
+                "password": {
+                    "placeholder": "Введите ваш пароль..."
+                },
+                "action": "Зарегистрироваться"
+            },
+            "authorization": {
+                "tite": "Авторизация",
+                "answer": "Есть аккаунт?",
+                "invitation": "Войдите!",
+                "email": {
+                    "placeholder": "Введите ваш email..."
+                },
+                "password": {
+                    "placeholder": "Введите ваш пароль..."
+                },
+                "action": "Войти"
+            }
         }
     }
 }

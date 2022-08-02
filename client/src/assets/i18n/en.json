@@ -4,6 +4,21 @@
             "title": "My shop",
             "admin": "Administrate",
             "registration": "Registration"
+        },
+        "auth": {
+            "registration": {
+                "title": "Registration",
+                "answer": "Don't have an account?",
+                "invitation": "Register",
+                "email": {
+                    "placeholder": ""
+                }
+            },
+            "authorization":{
+                "tite": "Authorization",
+                "answer": "Have an account?",
+                "invitation": "Login!"
+            }
         }
     }
 }
