@@ -4,7 +4,7 @@ import { Route, NavLink, Link, Routes, useRoutes } from 'react-router-dom';
 
 // local
 import { useUser } from "./hooks/userHook";
-import { Api } from './info';
+import { domain } from './domain';
 import Admin from './components/admin';
 import Basket from './components/basket';
 import Shop from './components/shop';
@@ -14,12 +14,12 @@ import Device from './components/device';
 /** Список роутеров требующих авторизации. */
 export const authRoutes = [
     {
-        path: Api.user.admin.url,
+        path: domain.user.admin.url,
         element: <Admin />
     },
 
     {
-        path: Api.basket.url,
+        path: domain.basket.url,
         element: <Basket />
     }
 ];
@@ -27,19 +27,19 @@ export const authRoutes = [
 /** Список роутеров НЕ требующих авторизации. */
 export const publicRoutes = [
     {
-        path: Api.shop.url,
+        path: domain.shop.url,
         element: <Shop />
     },
     {
-        path: Api.user.login.url,
+        path: domain.user.login.url,
         element: <Auth />
     },
     {
-        path: Api.user.registration.url,
+        path: domain.user.registration.url,
         element: <Auth />
     },
     {
-        path: Api.device.url + '/:id',
+        path: domain.device.url + '/:id',
         element: <Device />
     },
 ];

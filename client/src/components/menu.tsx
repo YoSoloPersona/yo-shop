@@ -10,7 +10,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 // local
-import { Api } from '../info';
+import { domain } from '../domain';
 
 type Props = {};
 
@@ -20,10 +20,10 @@ const Menu = (props: Props) => {
     return (
         <Navbar bg="light" variant="light">
             <Container>
-                <NavLink to={Api.shop.url}>{t('menu.title')}</NavLink>
+                <NavLink to={domain.shop.url}>{t('menu.title')}</NavLink>
                 <Nav className="ml-auto">
-                    <Nav.Link href={Api.user.admin.url}>{t('menu.admin')}</Nav.Link>
-                    <Nav.Link href={Api.user.registration.url}>{t('menu.registration')}</Nav.Link>
+                    <Nav.Link href={domain.user.admin.url}>{t('menu.admin')}</Nav.Link>
+                    <Nav.Link href={domain.user.registration.url}>{t('menu.registration')}</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

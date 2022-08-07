@@ -8,8 +8,8 @@
         "auth": {
             "registration": {
                 "title": "Регистрация",
-                "answer": "Нет аккаунта?",
-                "invitation": "Зарегистрируйся!",
+                "answer": "Есть аккаунт?",
+                "invitation": "Войдите!",
                 "email": {
                     "placeholder": "Введите ваш email..."
                 },
@@ -19,9 +19,9 @@
                 "action": "Зарегистрироваться"
             },
             "authorization": {
-                "tite": "Авторизация",
-                "answer": "Есть аккаунт?",
-                "invitation": "Войдите!",
+                "title": "Авторизация",
+                "answer": "Нет аккаунта?",
+                "invitation": "Зарегистрируйся!",
                 "email": {
                     "placeholder": "Введите ваш email..."
                 },

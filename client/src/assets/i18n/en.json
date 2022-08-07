@@ -9,14 +9,14 @@
             "registration": {
                 "title": "Registration",
                 "answer": "Don't have an account?",
-                "invitation": "Register",
+                "invitation": "Have an account?",
                 "email": {
                     "placeholder": ""
                 }
             },
             "authorization":{
                 "tite": "Authorization",
-                "answer": "Have an account?",
+                "answer": "Register!",
                 "invitation": "Login!"
             }
         }

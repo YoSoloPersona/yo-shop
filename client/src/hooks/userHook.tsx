@@ -2,7 +2,6 @@ import { createContext, useContext } from 'react';
 
 // local
 import { User } from '../models/user';
-// import ServiceUser from '../services/serviceUser';
 
 export class ServiceUser {
     private _isAuth = false;
@@ -23,6 +22,14 @@ export class ServiceUser {
 
     set user(value: User | undefined) {
         this._user = value;
+    }
+
+    set token(value: string) {
+        localStorage.setItem('token', value);
+    }
+
+    get token() {
+        return localStorage.getItem('token') || '';
     }
 
     registration() {}

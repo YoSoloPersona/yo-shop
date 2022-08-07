@@ -38,10 +38,22 @@ class UrlNode {
 
     /**
      * Возвращает полный путь до узла.
-     * @returns
+     * @returns string.
      */
     toString(): string {
         return this._parent ? this._parent.toString() + this._url : this._url;
+    }
+
+    /**
+     * Возвращает полный путь до узла.
+     * @returns string.
+     */
+    get path(): string {
+        return this._parent ? this._parent.toString() + this._url : this._url;
+    }
+
+    get url() {
+        return this._url;
     }
 
     /**
@@ -58,13 +70,17 @@ const host = 'localhost';
 const port = 3000;
 
 /**
- * Объект с информацией о URL API.
+ * Объект с информацией о сайте.
  */
-export const api = init(`${protocol}://${host}:${port}/api/v1`, {
+
+export const domain = init(`${protocol}://${host}:${port}`, {
+    /** Протокол. */
     protocol,
 
+    /** Хост. */
     host,
 
+    /** Порт. */
     port,
 
     /** Пользователи. */
@@ -75,7 +91,11 @@ export const api = init(`${protocol}://${host}:${port}/api/v1`, {
         /** Авторизация. */
         login: init('/login', {}),
 
-        auth: init('/auth', {})
+        /**  */
+        auth: init('/auth', {}),
+
+        /** Администрирование. */
+        admin: init('/admin', {})
     }),
     /** Типы товаров. */
     type: init('/type', {}),
