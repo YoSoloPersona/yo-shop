@@ -1,23 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 
 // local
-import { UserProvider } from './hooks/userHook'
-import './i18n';
 import './assets/css/index.css';
+import './i18n';
 import App from './App';
+import store from './store';
 import reportWebVitals from './reportWebVitals';
-
-
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     <React.StrictMode>
-        <UserProvider>
+        <Provider store={store}>
             <App />
-        </UserProvider>
+        </Provider>
     </React.StrictMode>
 );
 

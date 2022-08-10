@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
+
 import { Container, Form, Card, Button, Row, Alert } from 'react-bootstrap';
+
 import { useTranslation } from 'react-i18next';
 
 // local
-import { useUser } from '../hooks/userHook';
+import { RootState, setAuthAction } from '../reducer';
 import { domain } from '../domain';
 import { repositoryUser } from '../repositories/repositoryUser';
 
+// Вытаскивае необходимые данные из хранилища (авторизация)
+const mapState = (state: RootState) => state.auth;
+
+// Необходимые команды
+const mapDispatch = {
+    setAuth: setAuthAction
+};
+
+// Обобрачиваем наш компонент
+const connector = connect(mapState, mapDispatch);
+
+type Props = {} & ConnectedProps<typeof connector>;
+
 /**
  * Форма для регистрации и авторизации.
- * @returns Auth.
+ * @param props
+ * @returns JSX.Element.
  */
-export function Auth() {
+function Auth(props: Props) {
     const location = useLocation();
     // Данные для регистрации пользователя
     const [data, setData] = useState({
@@ -22,8 +39,8 @@ export function Auth() {
     });
 
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [error, setError] = useState<string | undefined>(); // Ошибки
-    const { user } = useUser(); // Данные о пользователе
     const isLogin = location.pathname !== domain.user.registration.url; // Определяем где мы находимся, на регистрации или авторизации
     const action = isLogin ? 'authorization' : 'registration';
 
@@ -42,8 +59,8 @@ export function Auth() {
             .registrate(data)
             // Обрабатываем полученный ответ
             .then((answer) => {
-                // Сохраням токен
-                user.token = answer.token;
+                props.setAuth({ user: data, token: answer.token}); // Сохраням данные
+                navigate('/'); // Возвращаемся на главную страницу
             })
             // Обрабатываем ошибку при отправке запроса
             .catch((err: Error) => {
@@ -56,8 +73,8 @@ export function Auth() {
         repositoryUser
             .login(data)
             .then((answer) => {
-                console.log(answer);
-                user.token = answer.token;
+                props.setAuth({ user: data, token: answer.token}); // Сохраням данные
+                navigate('/'); // Возвращаемся на главную страницу
             })
             .catch((err: Error) => {
                 setError(`Возникла ошибка при авторизации.`);
@@ -113,3 +130,5 @@ export function Auth() {
         </Container>
     );
 }
+
+export default connector(Auth);

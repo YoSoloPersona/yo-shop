@@ -3,7 +3,9 @@
         "menu": {
             "title": "Мой магазин",
             "admin": "Администрирование",
-            "registration": "Регистрация"
+            "registration": "Регистрация",
+            "login": "Авторизация",
+            "exit": "Выйти"
         },
         "auth": {
             "registration": {

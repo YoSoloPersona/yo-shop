@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { Route, NavLink, Link, Routes, useRoutes } from 'react-router-dom';
 
-
 // local
-import { useUser } from "./hooks/userHook";
+import { RootState } from './reducer';
 import { domain } from './domain';
 import Admin from './components/admin';
 import Basket from './components/basket';
 import Shop from './components/shop';
-import { Auth } from './components/auth';
+import Auth from './components/auth';
 import Device from './components/device';
 
 /** Список роутеров требующих авторизации. */
@@ -44,7 +44,13 @@ export const publicRoutes = [
     },
 ];
 
-type Props = {};
+const mapState = (state: RootState) => state.auth;
+
+const mapDispatch = {};
+
+const connecter = connect(mapState, mapDispatch);
+
+type Props = {} & ConnectedProps<typeof connecter>;
 
 /**
  * Компонент. Создаёт роутеры.
@@ -52,11 +58,9 @@ type Props = {};
  * @returns 
  */
 const AppRouter = (props: Props) => {
-    const { user } = useUser();
-    const { isAuth } = user;
 
     // Создаём роутеры
-    return useRoutes([...((isAuth) ? authRoutes : []), ...publicRoutes])
+    return useRoutes([...((props.user) ? authRoutes : []), ...publicRoutes])
 };
 
-export default AppRouter;
+export default connecter(AppRouter);
