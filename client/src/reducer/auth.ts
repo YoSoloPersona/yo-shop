@@ -1,7 +1,7 @@
 import { Reducer, Action } from 'redux';
 
 // local
-import { User } from '../models/user';
+import { User } from '../../../server/src/models';
 
 /** Данные о пользователе. */
 type Auth = {
@@ -81,7 +81,6 @@ export const reducer: Reducer<Auth, AuthAction> = (
 
         // Сохраняет данные авторизованного пользователя
         case 'SET_AUTH':
-            console.log({ ...state, user, token: token ?? '' });
             return { ...state, user, token: token ?? '' }
 
         default:

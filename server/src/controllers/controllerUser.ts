@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 // locals
-import { ModelUser, User } from '../models/models';
+import { ModelUser, User } from '../models';
 import ErrorApi from '../errors/errorApi';
 
 /**

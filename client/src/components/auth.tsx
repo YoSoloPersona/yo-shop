@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
-
 import { Container, Form, Card, Button, Row, Alert } from 'react-bootstrap';
 
+// i18
 import { useTranslation } from 'react-i18next';
 
 // local
+import { User } from '../../../server/src/models';
 import { RootState, setAuthAction } from '../reducer';
 import { domain } from '../domain';
 import { repositoryUser } from '../repositories/repositoryUser';
@@ -19,7 +20,7 @@ const mapDispatch = {
     setAuth: setAuthAction
 };
 
-// Обобрачиваем наш компонент
+// Оборачиваем наш компонент
 const connector = connect(mapState, mapDispatch);
 
 type Props = {} & ConnectedProps<typeof connector>;
@@ -32,7 +33,8 @@ type Props = {} & ConnectedProps<typeof connector>;
 function Auth(props: Props) {
     const location = useLocation();
     // Данные для регистрации пользователя
-    const [data, setData] = useState({
+    const [data, setData] = useState<User & {password: string}>({
+        id: 0,
         email: '',
         password: '',
         role: 'USER'
@@ -59,7 +61,8 @@ function Auth(props: Props) {
             .registrate(data)
             // Обрабатываем полученный ответ
             .then((answer) => {
-                props.setAuth({ user: data, token: answer.token}); // Сохраням данные
+                data.password = '';
+                props.setAuth({ user: {...data}, token: answer.token}); // Сохраням данные
                 navigate('/'); // Возвращаемся на главную страницу
             })
             // Обрабатываем ошибку при отправке запроса
@@ -73,6 +76,7 @@ function Auth(props: Props) {
         repositoryUser
             .login(data)
             .then((answer) => {
+                data.password = '';
                 props.setAuth({ user: data, token: answer.token}); // Сохраням данные
                 navigate('/'); // Возвращаемся на главную страницу
             })
@@ -106,7 +110,7 @@ function Auth(props: Props) {
                         <Row className="d-flex flex-column justify-content-between mt-3">
                             <div className="d-flex justify-content-around">
                                 {t(`auth.${action}.answer`)}
-                                <NavLink to={domain.user.registration.path}>
+                                <NavLink to={domain.user.registration.url}>
                                     {t(`auth.${action}.invitation`)}
                                 </NavLink>
                             </div>

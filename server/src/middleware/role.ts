@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 // local
-import { User } from '../models/models';
+import { User } from '../models';
 import ErrorApi from '../errors/errorApi';
 
 /**

@@ -1,15 +1,15 @@
 // local
 import Controller from './controller';
-import { ModelType as Model, Type } from '../models/models';
+import { ModelCategory as Model, Category } from '../models';
 import { DestroyOptions, FindOptions } from 'sequelize/types';
 
 /** Класс контроллер для получения типов товаров. */
-class ControllerType implements Controller<Type> {
+class ControllerType implements Controller<Category> {
     /**
      * Поолучение всех типов товаров.
      * @returns промис массива найденных типов товаров.
      */
-    findAll(option?: FindOptions<Type>): Promise<Type[]> {
+    findAll(option?: FindOptions<Category>): Promise<Category[]> {
         return Model.findAll(option);
     }
 
@@ -18,7 +18,7 @@ class ControllerType implements Controller<Type> {
      * @param option параметры поиска.
      * @returns промис найденного типа товаров либо null в противном случае. 
      */
-    findOne(option?: FindOptions<Type>): Promise<Type | null> {
+    findOne(option?: FindOptions<Category>): Promise<Category | null> {
         return Model.findOne(option);
     }
 
@@ -27,7 +27,7 @@ class ControllerType implements Controller<Type> {
      * @param type добавлемое описание типа товаров.
      * @returns промис добавленного типа товаров с дополнительной информацией о добавлении.
      */
-    add(type: Type): Promise<Type> {
+    add(type: Category): Promise<Category> {
         return Model.create({ ...type });
     }
 
@@ -36,7 +36,7 @@ class ControllerType implements Controller<Type> {
      * @param option параметры для поиска удаляемых типов товаров.
      * @returns количество удалённых типов товаров.
      */
-    async remove(option?: DestroyOptions<Type>): Promise<number> {
+    async remove(option?: DestroyOptions<Category>): Promise<number> {
         return Model.destroy(option);
     }
 }

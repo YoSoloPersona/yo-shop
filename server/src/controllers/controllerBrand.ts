@@ -1,5 +1,5 @@
 // local
-import { ModelBrand as Model, Brand } from "../models/models";
+import { ModelBrand as Model, Brand } from "../models";
 import Controller from './controller';
 import ErrorApi from "../errors/errorApi";
 import e from 'express';

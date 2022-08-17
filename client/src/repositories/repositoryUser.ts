@@ -1,8 +1,8 @@
-import { despatch, despatchAuth } from './despatch'
+import { despatch } from './despatch'
 import { domain } from './domain';
-import { User } from '../models/user';
+import { User } from '../../../server/src/models';
 
-type AnswerRegistrate = {
+type Answer = {
     'token': string
 }
 
@@ -18,7 +18,7 @@ class RepositoryUser {
      */
     registrate(user: User) {
         return despatch
-            .post<AnswerRegistrate>(domain.api.user.registration.path, JSON.stringify(user), {
+            .post<Answer>(domain.api.user.registration.path, JSON.stringify(user), {
                 headers: {
                     'Content-Type': 'application/json'
                 }

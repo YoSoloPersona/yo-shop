@@ -1,18 +1,18 @@
 // local
-import { ModelDevice as Model, Device } from '../models/models';
+import { ModelProduct as Model, Product } from '../models';
 import Controller from './controller';
 import ErrorApi from '../errors/errorApi';
 
-class ControllerDevice implements Controller<Device> {
-    findAll(): Promise<Device[]> {
+class ControllerDevice implements Controller<Product> {
+    findAll(): Promise<Product[]> {
         return Model.findAll();
     }
 
-    findOne(): Promise<Device | null> {
+    findOne(): Promise<Product | null> {
         return Model.findOne();
     }
 
-    add(el: Device): Promise<Device> {
+    add(el: Product): Promise<Product> {
         return Model.create({ ...el });
     }
 

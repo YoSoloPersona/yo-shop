@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { Route, NavLink, Link, Routes, useRoutes } from 'react-router-dom';
+import {  useRoutes } from 'react-router-dom';
 
 // local
 import { RootState } from './reducer';
