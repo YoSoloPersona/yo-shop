@@ -30,61 +30,61 @@ const config = {
 };
 
 describe('#Проверка системы авторизации.', () => {
-    it(
-        'Регистрация пользователя.',
-        done => {
-            // Информация для отправки запроса
-            const path = `/api/v1/user${Url.registration}`;
+    Promise.resolve(
+        it(
+            'Регистрация пользователя.',
+            done => {
+                // Информация для отправки запроса
+                const path = `/api/v1/user${Url.registration}`;
 
-            axios
-                .post(url + path, userData, {
-                    ...config,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                //
-                .then(({ status, data }) => {
-                    expect(status).toBe(200); // Статус код в ответе должен быть "успешным"
-                    expect(data).toBeDefined(); // Ответ дожлен содержать объект
-                    expect(data.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
-                    done();
-                })
-                //
-                .catch(err => {
-                    fail(err);
-                    logError(`problem with request: ${err.message}`);
-                });
-        },
-        timeout
-    );
+                axios
+                    .post(url + path, userData, {
+                        ...config,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    //
+                    .then(({ status, data }) => {
+                        expect(status).toBe(200); // Статус код в ответе должен быть "успешным"
+                        expect(data).toBeDefined(); // Ответ дожлен содержать объект
+                        expect(data.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
+                        done();
+                    })
+                    //
+                    .catch(err => {
+                        fail(err);
+                    });
+            },
+            timeout
+        )
+    ).then(() => {
+        it(
+            'Авторизация пользователя.',
+            done => {
+                // Информация для отправки запроса
+                const path = `/api/v1/user${Url.login}`;
 
-    it(
-        'Авторизация пользователя.',
-        done => {
-            // Информация для отправки запроса
-            const path = `/api/v1/user${Url.login}`;
-
-            axios
-                .post(url + path, userData, {
-                    ...config,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                //
-                .then(({ status, data }) => {
-                    expect(status).toBe(200); // Статус код в ответе должен быть "успешным"
-                    expect(data).toBeDefined(); // Ответ дожлен содержать объект
-                    expect(data.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
-                    done();
-                })
-                //
-                .catch(err => {
-                    fail(err);
-                    logError(`problem with request: ${err.message}`);
-                });
-        },
-        timeout
-    );
+                axios
+                    .post(url + path, userData, {
+                        ...config,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    //
+                    .then(({ status, data }) => {
+                        expect(status).toBe(200); // Статус код в ответе должен быть "успешным"
+                        expect(data).toBeDefined(); // Ответ дожлен содержать объект
+                        expect(data.token).toBeDefined(); // В объекте должен быть определено поле с jsonwebtoken токеном
+                        done();
+                    })
+                    //
+                    .catch(err => {
+                        fail(err);
+                    });
+            },
+            timeout
+        );
+    });
 });

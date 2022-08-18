@@ -8,11 +8,9 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "lint": "eslint --fix",
-    "build image test": "docker build -t test-yo-shop-client -f ./docker/test/dockerfile .",
-    "build image server": "docker build -t yo-shop-server -f ./docker/production/dockerfile .",
     "start development server": "env-cmd -f ./env/server-development.env nodemon ./dist/index.js",
     "start development postgres + pgadmin on docker": "docker-compose -f ./docker/development/docker-compose.yml up -d",
-    "start test on docker ": "docker-compose -f ./docker/test/docker-compose.yml up -d",
+    "start test on docker ": "docker-compose -f ./docker/client/docker-compose.yml up -d",
     "test": "jasmine --config=./test/jasmine.json"
   },
   "repository": {
@@ -49,6 +47,7 @@
     "env-cmd": "^10.1.0",
     "eslint": "^8.20.0",
     "jasmine": "^4.2.1",
+    "jasmine-reporters": "^2.5.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "typedoc": "^0.23.7",

@@ -3,42 +3,37 @@ import debug from 'debug';
 
 // local
 import ErrorApi from '../errors/errorApi';
-import role from "../middleware/role";
+import { role } from '../middleware/role';
 import { router as routerUser } from './routerUser';
 import ControllerBrand from '../controllers/controllerBrand';
 import ControllerDevice from '../controllers/controllerDevice';
 import ControllerType from '../controllers/controllerType';
+import { domain } from './domain';
 
 // протоколы
 const log = debug('app:log');
 const logError = debug('app:error');
-
-// версия API
-const version = 1;
-
-export class Paths {
-    static get root() {
-        return `/api/v${version}`;
-    }
-}
 
 /** Корневой роутер API. */
 export const router = Router();
 
 // список для создания роутеров на основе путей контроллеров
 const list = [
+    // Бренды
     {
-        path: '/brand',
-        controller: ControllerBrand,
+        path: domain.api.brand.url,
+        controller: ControllerBrand
     },
+    // Товары
     {
-        path: '/device',
-        controller: ControllerDevice,
+        path: domain.api.device.url,
+        controller: ControllerDevice
     },
+    // 
     {
-        path: '/type',
-        controller: ControllerType,
-    },
+        path: domain.api.type.url,
+        controller: ControllerType
+    }
 ] // Создаём роутеры
     .map(element => {
         const childRouter = Router();
@@ -58,7 +53,7 @@ const list = [
             }
         );
 
-        // POST запрос нового элемента
+        // POST запрос на добавление нового элемента
         childRouter.post(
             '/',
             role('ADMIN'),
@@ -97,14 +92,14 @@ const list = [
 
         return {
             path: element.path,
-            router: childRouter,
+            router: childRouter
         };
     });
 
 // Добавляем в ручную созданные роутеры
 list.splice(-1, 0, {
     path: '/user',
-    router: routerUser,
+    router: routerUser
 });
 
 // "Добавляем" дочерние роутеры к родительскому

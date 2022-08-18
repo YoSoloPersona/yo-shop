@@ -13,15 +13,14 @@ import ErrorApi from "../errors/errorApi";
  */
 export default function auth(req: Request, res: Response, next: NextFunction) {
     if (req.method === 'OPTIONS') {
-        next();
+        return next();
     }
 
     const token = req.headers.authorization?.split(' ')[1];
 
     // Если в запросе нет токена
     if (!token) {
-        next(ErrorApi.unauthorized('Не авторизован.'));
-        return;
+        return next(ErrorApi.unauthorized('Не авторизован.'));
     }
 
     // Проверяем присланный токен, получаем и сохраняем данные пользователя

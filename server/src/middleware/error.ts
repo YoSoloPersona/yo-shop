@@ -14,12 +14,14 @@ const logError = debug('app:error');
  * @param next следующий обработчик.
  * @returns void.
  */
-export default function (
+export function error (
     err: Error,
     req: Request,
     res: Response,
     next: NextFunction
 ): void {
+    logError(err);
+
     // Если возникла предвиденная нами ошибка.
     if (err instanceof ErrorApi) {
         res.status(err.status).json({ message: err.message });
@@ -27,6 +29,5 @@ export default function (
     }
 
     // Если не сгенерированная нами ошибка.
-    logError(err);
     res.status(500).json({ message: `Непредвиденная ошибка.` });
 }

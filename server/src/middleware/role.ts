@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 // local
-import { User } from '../models';
+import { User, Role } from '../models';
 import ErrorApi from '../errors/errorApi';
 
 /**
@@ -10,7 +10,7 @@ import ErrorApi from '../errors/errorApi';
  * @param role тип пользователя.
  * @returns (req: Request, res: Response, next: NextFunction) => void.
  */
-export default function (role: string) {
+export function role (role: Role) {
     /**
      * Проверяет необходимые для авторизации данные.
      * @param req запрос.

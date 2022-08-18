@@ -3,9 +3,10 @@ import debug from 'debug';
 import cors from 'cors';
 
 // local
-import { router as routerApi, Paths as PathApi } from './routers/routerApi';
+import { router as routerApi } from './routers/routerApi';
+import { domain } from './routers/domain';
 import sequelize from './db/db';
-import errorHandler from './middleware/error';
+import {error} from './middleware/error';
 
 // Протоколы
 const log = debug('app:log');
@@ -17,10 +18,10 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(PathApi.root, routerApi);
+app.use(domain.api.url, routerApi);
 
 // обработчик ошибок
-app.use(errorHandler);
+app.use(error);
  
 sequelize
     // авторизируемся в бд

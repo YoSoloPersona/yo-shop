@@ -5,6 +5,8 @@ import sequelize from '../db/db';
 
 // описание таблиц
 
+export type Role = 'USER' | 'ADMIN';
+
 /** Описание пользователя. */
 export interface User {
     /** Идентификатор в БД. */
@@ -14,7 +16,7 @@ export interface User {
     email: string;
 
     /** Тип. */
-    role: 'USER' | 'ADMIN';
+    role: Role;
 
     /** Хэш пароля. */
     password: string;

@@ -1,6 +1,7 @@
 # версия схемы
 version: "3.9"
 
+# Тестирование сервера
 # список служб
 services:
   # сервер базы данных
@@ -8,12 +9,16 @@ services:
     container_name: test_postgres_container
     image: postgres:14.4
     env_file: ../../env/postgres.env
+    restart: 'no'
+
 
   # сервер магазина
   yo-shop-server:
     container_name: test_yo_shop_server_container
-    image: yo-shop-server
-    env_file: ../../env/server-test.env
+    build: # продакшн образ сервера
+      context: ../../ # указываем корневую директорию
+      dockerfile: ./docker/server/production/dockerfile # образ 
+    env_file: ../../env/server-test.env # переменные среды тестового сервера
     restart: 'no'
     deploy:
       resources:
@@ -24,8 +29,12 @@ services:
   # клиент тестирующий сервер
   yo-shop-test:
     container_name: test_yo_shop_client_container
-    image: test-yo-shop-client
+    build: # образ тестового клиента
+      context: ../../ # указываем корневую директорию
+      dockerfile: ./docker/client/dockerfile # образ 
     env_file: ../../env/server-test.env
+    # depends_on:   
+    #   - yo-shop-server # запускаем после сервера API
     restart: 'no'
     deploy:
       resources:
