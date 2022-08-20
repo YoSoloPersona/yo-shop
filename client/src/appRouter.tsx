@@ -11,7 +11,7 @@ import Auth from './components/auth';
 import Device from './components/device';
 
 /** Список роутеров требующих авторизации. */
-export const authRoutes = [
+const authRoutes = [
     {
         path: domain.user.admin.url,
         element: <Admin />
@@ -24,7 +24,7 @@ export const authRoutes = [
 ];
 
 /** Список роутеров НЕ требующих авторизации. */
-export const publicRoutes = [
+const publicRoutes = [
     {
         path: domain.shop.url,
         element: <Shop />

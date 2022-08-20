@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 // local
 import { User } from '../../../server/src/models';
-import { RootState, setAuthAction } from '../reducer';
+import { RootState, setUserAction } from '../reducer';
 import { domain } from '../domain';
 import { repositoryUser } from '../repositories/repositoryUser';
 
@@ -16,8 +16,8 @@ import { repositoryUser } from '../repositories/repositoryUser';
 const mapState = (state: RootState) => state.auth;
 
 // Необходимые команды
-const mapDispatch = {
-    setAuth: setAuthAction
+const mapDispatch =  {
+    setUser: setUserAction
 };
 
 // Оборачиваем наш компонент
@@ -33,7 +33,7 @@ type Props = {} & ConnectedProps<typeof connector>;
 function Auth(props: Props) {
     const location = useLocation();
     // Данные для регистрации пользователя
-    const [data, setData] = useState<User & {password: string}>({
+    const [data, setData] = useState<User>({
         id: 0,
         email: '',
         password: '',
@@ -62,8 +62,8 @@ function Auth(props: Props) {
             // Обрабатываем полученный ответ
             .then((answer) => {
                 data.password = '';
-                props.setAuth({ user: {...data}, token: answer.token}); // Сохраням данные
-                navigate('/'); // Возвращаемся на главную страницу
+                props.setUser({ email: data.email, token: answer.token }); // Сохраням данные
+                navigate(domain.shop.url); // Возвращаемся на главную страницу
             })
             // Обрабатываем ошибку при отправке запроса
             .catch((err: Error) => {
@@ -77,8 +77,8 @@ function Auth(props: Props) {
             .login(data)
             .then((answer) => {
                 data.password = '';
-                props.setAuth({ user: data, token: answer.token}); // Сохраням данные
-                navigate('/'); // Возвращаемся на главную страницу
+                props.setUser({ email: data.email, token: answer.token }); // Сохраням данные
+                navigate(domain.shop.url); // Возвращаемся на главную страницу
             })
             .catch((err: Error) => {
                 setError(`Возникла ошибка при авторизации.`);

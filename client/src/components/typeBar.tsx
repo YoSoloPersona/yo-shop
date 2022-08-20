@@ -19,7 +19,6 @@ const TypeBar = (props: Props) => {
         repositoryDevice
             .getTypes()
             .then((newTypesDevice) => {
-              console.log(newTypesDevice);
               props.initTypesDevice(newTypesDevice)
             });
     }, []);

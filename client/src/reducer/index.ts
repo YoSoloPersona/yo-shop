@@ -13,5 +13,5 @@ export const rootReducer = combineReducers({
 /**  */
 export type RootState = ReturnType<typeof rootReducer>;
 
-export { setUserAction, setTokenAction, setAuthAction } from './auth';
+export { setUserAction } from './auth';
 export { initTypesDevice, pushTypeDevice } from './product';

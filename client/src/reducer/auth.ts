@@ -1,26 +1,27 @@
 import { Reducer, Action } from 'redux';
 
-// local
-import { User } from '../../../server/src/models';
+type User = {
+    email: string | null;
+    token: string | null;
+};
 
 /** Данные о пользователе. */
 type Auth = {
-    user?: User;
-
-    token: string;
+    user: User;
 };
 
 /** Описание команд для изменения данных о пользователе. */
 type AuthAction = {
-    user?: User;
-    token?: string;
-} & Action<'SET_USER' | 'SET_TOKEN' | 'SET_AUTH'>;
+    user: User;
+} & Action<'SET_USER'>;
 
 // Начальное состояние
-const initialState = {
-    user: undefined,
-
-    token: ''
+// Проверяем был ли уже авторизован пользователь и пробуем вытащить данные
+const initialState: Auth = {
+    user: {
+        email: localStorage.getItem('user.email'),
+        token: localStorage.getItem('user.token')
+    }
 };
 
 /**
@@ -36,31 +37,6 @@ export function setUserAction(user: User): AuthAction {
 }
 
 /**
- * Сохраняет токен авторизованного пользователя.
- * @param token JWT токен авторизованного пользователя
- * @returns AuthAction.
- */
-export const setTokenAction = (token = '') => {
-    return {
-        type: 'SET_TOKEN',
-        token
-    };
-};
-
-/**
- * Сохраняет данные авторизованного пользователя.
- * @param param0 данные авторизованного пользователя.
- * @returns AuthAction.
- */
-export const setAuthAction = ({user, token}: Auth) => {
-    return {
-        type: 'SET_AUTH',
-        user,
-        token
-    }
-}
-
-/**
  * Редуктор.
  * @param state текущее состояние хранилища.
  * @param action действие (клманда).
@@ -68,20 +44,15 @@ export const setAuthAction = ({user, token}: Auth) => {
  */
 export const reducer: Reducer<Auth, AuthAction> = (
     state = initialState,
-    { type, user, token }
+    { type, user }
 ) => {
     switch (type) {
         // Сохраняет данные авторизованного пользователя
         case 'SET_USER':
+            user.email && localStorage.setItem('user.email', user.email);
+            user.token && localStorage.setItem('user.token', user.token);
+
             return { ...state, user };
-
-        // Сохраняет JWT токен авторизованного пользователя
-        case 'SET_TOKEN':
-            return { ...state, token: token ?? '' };
-
-        // Сохраняет данные авторизованного пользователя
-        case 'SET_AUTH':
-            return { ...state, user, token: token ?? '' }
 
         default:
             return state;
