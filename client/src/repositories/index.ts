@@ -1,1 +1,1 @@
-export const i = {}; 
+export { repositoryCategory } from './repositoryCategory'

@@ -33,7 +33,7 @@ const Menu = (props: Props) => {
     const { t } = useTranslation();
 
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="light" variant="light">
             <Container>
                 <NavLink to={domain.shop.url}>{t('menu.title')}</NavLink>
                 {props.user.email ? (

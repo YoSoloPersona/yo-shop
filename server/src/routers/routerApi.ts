@@ -58,12 +58,15 @@ const list = [
             '/',
             role('ADMIN'),
             (req: Request, res: Response, next: NextFunction) => {
+                log(`Добавление ${req.body}`);
+
                 element.controller
                     .add(req.body)
                     // Элемент был добавлен в БД
                     .then(el => res.json(el))
                     // Возникла ошибка при добавлении в БД
                     .catch(err => {
+                        logError(`Ошибка при добавлении: ${err.message}`);
                         next(
                             ErrorApi.badRequest(
                                 `Возникла ошибка при добавлении элемента: "${err.message}"`
@@ -77,6 +80,7 @@ const list = [
         childRouter.delete(
             '/',
             (req: Request, res: Response, next: NextFunction) => {
+                log({ where: { ...req.query } });
                 element.controller
                     .remove({ where: { ...req.query } })
                     // Данные успешно удалены
@@ -85,7 +89,7 @@ const list = [
                     })
                     // Возникла ошибка при удалении данных
                     .catch(err => {
-                        next(ErrorApi.internal(err.message));
+                        next(ErrorApi.badRequest(`Возникла ошибка при удалении элементов: "${err.message}"`));
                     });
             }
         );

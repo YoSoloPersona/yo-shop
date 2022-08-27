@@ -32,6 +32,15 @@
                 },
                 "action": "Войти"
             }
+        },
+        "admin": {
+            "category": {
+                "add": {
+                    "placeholder": "Товар",
+                    "button": "Добавить"
+                }
+            }
         }
+        
     }
 }

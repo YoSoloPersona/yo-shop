@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // local
-import { domain } from './domain';
+
 
 // Создаём объекты для запросов с базовыми настройками, для того чтобы не конфигурировать каждый раз заного.
 
@@ -17,7 +17,9 @@ export const despatchAuth = axios.create({
 
 // Перед каждой отправкой добавляем токен
 despatchAuth.interceptors.request.use(config => {
-    config.headers && (config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`);
+    if (config.headers) {
+        config.headers.authorization = `Bearer ${localStorage.getItem('user.token')}`;
+    }
 
     return config;
 });

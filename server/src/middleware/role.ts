@@ -30,16 +30,20 @@ export function role (role: Role) {
             next(ErrorApi.unauthorized('Не авторизован.'));
             return;
         }
-
+        console.log(token)
         // Проверяем присланный токен, получаем и сохраняем данные пользователя
-        const user = jwt.verify(
-            token,
-            process.env.SECRET_KEY as string
-        ) as User;
-        Object.defineProperty(req, 'user', { value: user, writable: false });
+        try {
+            const user = jwt.verify(
+                token,
+                process.env.SECRET_KEY as string
+            ) as User;
+            Object.defineProperty(req, 'user', { value: user, writable: false });
 
-        if (role !== user?.role) {
-            next(ErrorApi.forbidden('Не достаточно прав.'));
+            if (role !== user?.role) {
+                next(ErrorApi.forbidden('Не достаточно прав.'));
+            }
+        } catch (error) {
+            next(ErrorApi.forbidden('Ошибка при верификации токена.'));
         }
 
         // следующий обработчик

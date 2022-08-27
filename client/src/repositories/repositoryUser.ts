@@ -16,7 +16,7 @@ class RepositoryUser {
      * @param user данные регистрируемого пользователя.
      * @returns Promise.
      */
-    registrate(user: User) {
+    registrate(user: User): Promise<Answer> {
         return despatch
             .post<Answer>(domain.api.user.registration.path, JSON.stringify(user), {
                 headers: {
@@ -32,8 +32,8 @@ class RepositoryUser {
      * @param user данные авторизируемого пользователя.
      * @returns Promise.
      */
-    login(user: User) {
-        return despatch.post(domain.api.user.login.path, JSON.stringify(user), {
+    login(user: User): Promise<Answer> {
+        return despatch.post<Answer>(domain.api.user.login.path, JSON.stringify(user), {
             headers: {
                 'Content-Type': 'application/json'
             }

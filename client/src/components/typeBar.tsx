@@ -3,12 +3,12 @@ import { ListGroup } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
 
 // local
-import { RootState, initTypesDevice } from '../reducer';
-import { repositoryDevice } from '../repositories/repositoryDevice';
+import { RootState, initCategories } from '../reducer';
+import { repositoryCategory } from '../repositories/repositoryCategory';
 
-const mapState = (state: RootState) => state.device;
+const mapState = (state: RootState) => state.category;
 
-const mapDispatch = { initTypesDevice };
+const mapDispatch = { initCategories };
 
 const connector = connect(mapState, mapDispatch);
 
@@ -16,10 +16,10 @@ type Props = {} & ConnectedProps<typeof connector>;
 
 const TypeBar = (props: Props) => {
     useEffect(() => {
-        repositoryDevice
+        repositoryCategory
             .getTypes()
             .then((newTypesDevice) => {
-              props.initTypesDevice(newTypesDevice)
+              props.initCategories(newTypesDevice)
             });
     }, []);
 
