@@ -7,12 +7,12 @@ import axios from 'axios';
 
 /** Объект для запросов данных с сервера не требующих авторизации. */
 export const despatch = axios.create({
-    timeout: 2000
+    timeout: 4000
 });
 
 /** Объект для запросов данных с сервера требующих авторизации. */
 export const despatchAuth = axios.create({
-    timeout: 2000
+    timeout: 4000
 });
 
 // Перед каждой отправкой добавляем токен

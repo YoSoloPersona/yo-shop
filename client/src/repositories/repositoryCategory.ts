@@ -3,9 +3,7 @@ import querystring from 'querystring';
 // local
 import { despatch, despatchAuth } from './despatch';
 import { domain } from './domain';
-import { Category as Model } from '../../../server/src/models';
-
-type Category = Omit<Model, 'id'>;
+import { Category } from '../../../server/src/models';
 
 /**
  *
@@ -15,7 +13,7 @@ class RepositoryCategory {
      * Возвращает список категорий товаров.
      * @returns Promise<Category[]>.
      */
-    getTypes() {
+    all() {
         return despatch
             .get<Category[]>(domain.api.type.path)
             .then((res) => res.data);
@@ -26,7 +24,7 @@ class RepositoryCategory {
      * @param category добавляемая категория товаров.
      * @returns Promise<Category>.
      */
-    async pushCategory(category: Category): Promise<Category> {
+    async push(category: Category): Promise<Category> {
         if (!category) {
             throw Error(`Попытка добавить пустую категорию товаров.`);
         }
@@ -39,10 +37,9 @@ class RepositoryCategory {
         return res.data;
     }
 
-    removeCategory(category: Category): Promise<number> {
+    remove(category: Category): Promise<number> {
         const params = new URLSearchParams();
         params.append('name',  category.name);
-        console.log(`${domain.api.type.path}?${params}`);
         return despatch
             .delete<number>(
                 `${domain.api.type.path}?${params}`

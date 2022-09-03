@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Container, Tab, Row, Col, Navbar, Nav } from 'react-bootstrap';
 
 // local
-import Category from './admin/category';
+import { Repository } from './repository';
+import EditCategory from './admin/editCategory';
 import { Brand } from './admin/brand';
 import { Product } from './admin/product';
 
@@ -28,7 +29,7 @@ export default function Admin({}: Props) {
                 <Col sm={9}>
                     <Tab.Content>
                         <Tab.Pane eventKey="first">
-                            <Category />
+                            <EditCategory />
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
                             <Brand />

@@ -17,7 +17,7 @@ type Props = {} & ConnectedProps<typeof connector>;
 const TypeBar = (props: Props) => {
     useEffect(() => {
         repositoryCategory
-            .getTypes()
+            .all()
             .then((newTypesDevice) => {
               props.initCategories(newTypesDevice)
             });

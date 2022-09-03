@@ -36,8 +36,14 @@
         "admin": {
             "category": {
                 "add": {
-                    "placeholder": "Товар",
+                    "placeholder": "Категория",
                     "button": "Добавить"
+                },
+                "list": {
+                    "columns": {
+                        "name": "Категория",
+                        "action": "Действие"
+                    }
                 }
             }
         }

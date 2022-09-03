@@ -14,6 +14,14 @@ i18n
         },
         interpolation: {
             escapeValue: false
-        }
+        },
+        react: {
+            bindI18n: 'languageChanged',
+            bindI18nStore: '',
+            transEmptyNodeValue: '',
+            transSupportBasicHtmlNodes: true,
+            transKeepBasicHtmlNodesFor: ['br', 'strong', 'i'],
+            useSuspense: false,
+          }
     });
 export default i18n;

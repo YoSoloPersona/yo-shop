@@ -85,7 +85,7 @@ const list = [
                     .remove({ where: { ...req.query } })
                     // Данные успешно удалены
                     .then(countDeleted => {
-                        res.status(200).send(countDeleted);
+                        res.status(200).send(countDeleted.toString());
                     })
                     // Возникла ошибка при удалении данных
                     .catch(err => {
