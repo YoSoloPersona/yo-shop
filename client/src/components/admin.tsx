@@ -1,15 +1,14 @@
-import React from 'react';
-import { Button, Container, Tab, Row, Col, Navbar, Nav } from 'react-bootstrap';
+import {  Tab, Row, Col, Nav } from 'react-bootstrap';
 
 // local
-import { Repository } from './repository';
-import EditCategory from './admin/editCategory';
+import EditorCategory from './admin/editorCategory';
 import { Brand } from './admin/brand';
 import { Product } from './admin/product';
+import { repositoryCategory } from '../repositories/repositoryCategory';
 
 type Props = {};
 
-export default function Admin({}: Props) {
+export default function Admin(props: Props) {
     return (
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Row>
@@ -29,7 +28,7 @@ export default function Admin({}: Props) {
                 <Col sm={9}>
                     <Tab.Content>
                         <Tab.Pane eventKey="first">
-                            <EditCategory />
+                            <EditorCategory task={repositoryCategory.all} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
                             <Brand />

@@ -82,7 +82,7 @@ export const ModelProduct = sequelize.define<Product & Model>('product', {
 /** Категория продуктов. */
 export interface Category {
     /** Идентификатор в БД. */
-    id: number;
+    id?: number;
 
     /** Наименование. */
     name: string;

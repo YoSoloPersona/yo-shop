@@ -9,7 +9,7 @@
     "watch": "tsc --watch",
     "lint": "eslint --fix",
     "start development server": "env-cmd -f ./env/server-development.env nodemon ./dist/index.js",
-    "start development postgres + pgadmin on docker": "docker-compose -f ./docker/development/docker-compose.yml up -d",
+    "start development postgres + pgadmin on docker": "docker-compose -f ./docker/server/development/docker-compose.yml up -d",
     "start test on docker ": "docker-compose -f ./docker/client/docker-compose.yml up -d",
     "test": "jasmine --config=./test/jasmine.json"
   },

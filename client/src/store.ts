@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // local
-// Експортируем редусеры
+// Экспортируем редусеры
 import { rootReducer as reducer } from './reducer';
 
 /** Redux хранилище. */
