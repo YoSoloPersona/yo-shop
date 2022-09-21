@@ -4,7 +4,7 @@ import cors from 'cors';
 
 // local
 import { router as routerApi } from './routers/routerApi';
-import { domain } from './routers/domain';
+import { domain } from './helpers/domain';
 import sequelize from './db/db';
 import {error} from './middleware/error';
 

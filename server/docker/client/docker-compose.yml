@@ -19,6 +19,8 @@ services:
       context: ../../ # указываем корневую директорию
       dockerfile: ./docker/server/production/dockerfile # образ 
     env_file: ../../env/server-test.env # переменные среды тестового сервера
+    depends_on:   
+      - yo-shop-postgres # запускаем после БД
     restart: 'no'
     deploy:
       resources:
@@ -33,8 +35,10 @@ services:
       context: ../../ # указываем корневую директорию
       dockerfile: ./docker/client/dockerfile # образ 
     env_file: ../../env/server-test.env
-    # depends_on:   
-    #   - yo-shop-server # запускаем после сервера API
+    depends_on:   
+      - yo-shop-server # запускаем после сервера API
+    # command: tail -F anything
+    # command: ["./wait-for-it.sh", "yo-shop-server:3000"]
     restart: 'no'
     deploy:
       resources:

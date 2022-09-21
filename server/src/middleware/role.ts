@@ -30,7 +30,6 @@ export function role (role: Role) {
             next(ErrorApi.unauthorized('Не авторизован.'));
             return;
         }
-        console.log(token)
         // Проверяем присланный токен, получаем и сохраняем данные пользователя
         try {
             const user = jwt.verify(

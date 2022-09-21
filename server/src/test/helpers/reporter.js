@@ -1,7 +1,8 @@
 import reporters from 'jasmine-reporters';
 
 const junitReporter = new reporters.JUnitXmlReporter({
-    savePath: __dirname,
-    consolidateAll: false
+    savePath: './test-results', // путь для сохранения результатов
+    consolidateAll: false,
+    filePrefix: 'xmloutput'
 });
 jasmine.getEnv().addReporter(junitReporter)

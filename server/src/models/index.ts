@@ -1,16 +1,16 @@
-import { CreationOptional, DataTypes, Model } from 'sequelize';
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 
 // local
 import sequelize from '../db/db';
 
 // описание таблиц
 
-export type Role = 'USER' | 'ADMIN';
+export type Role = 'user' | 'admin';
 
 /** Описание пользователя. */
-export interface User {
+export interface User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     /** Идентификатор в БД. */
-    id: number;
+    id: CreationOptional<number>;
 
     /** Электронаня почта. */
     email: string;
@@ -23,7 +23,7 @@ export interface User {
 }
 
 /** Модель пользователя. */
-export const ModelUser = sequelize.define<User & Model>('user', {
+export const ModelUser = sequelize.define<User>('user', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     email: { type: DataTypes.STRING, allowNull: false },
     password: { type: DataTypes.STRING, allowNull: false},

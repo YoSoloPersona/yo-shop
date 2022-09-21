@@ -2,8 +2,9 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 // locals
-import { ModelUser, User } from '../models';
+import { ModelUser, Role, User } from '../models';
 import ErrorApi from '../errors/errorApi';
+import { DestroyOptions, InferAttributes } from 'sequelize/types';
 
 /**
  * Класс для работы с пользователями.
@@ -19,7 +20,7 @@ class ControllerUser {
     async registration(
         email: string,
         password: string,
-        role: string
+        role: Role
     ): Promise<string> {
         if (!email || !password) {
             throw ErrorApi.badRequest('Не указан email или пароль.');
@@ -88,8 +89,13 @@ class ControllerUser {
         throw ErrorApi.notImplemented('Метод ещё не реализован.');
     }
 
-    delete(): void {
-        throw ErrorApi.notImplemented('Метод ещё не реализован.');
+    /**
+     * Удаляет пользователей с указанными параметрами.
+     * @param options параметры поиска удаляемых пользователей.
+     * @returns количество удалённых пользователей.
+     */
+    delete(options?: DestroyOptions<InferAttributes<User, { omit: never; }>>) {
+        return ModelUser.destroy(options);
     }
 }
 

@@ -7,8 +7,8 @@ import { role } from '../middleware/role';
 import { router as routerUser } from './routerUser';
 import ControllerBrand from '../controllers/controllerBrand';
 import ControllerDevice from '../controllers/controllerDevice';
-import ControllerType from '../controllers/controllerType';
-import { domain } from './domain';
+import ControllerCategory from '../controllers/controllerCategory';
+import { domain } from '../helpers/domain';
 
 // протоколы
 const log = debug('app:log');
@@ -32,7 +32,7 @@ const list = [
     // 
     {
         path: domain.api.type.url,
-        controller: ControllerType
+        controller: ControllerCategory
     }
 ] // Создаём роутеры
     .map(element => {
@@ -56,7 +56,7 @@ const list = [
         // POST запрос на добавление нового элемента
         childRouter.post(
             '/',
-            role('ADMIN'),
+            role('admin'),
             (req: Request, res: Response, next: NextFunction) => {
                 log(`Добавление ${req.body}`);
 
@@ -82,6 +82,7 @@ const list = [
             (req: Request, res: Response, next: NextFunction) => {
                 log({ where: { ...req.query } });
                 element.controller
+                    // Удаляем из БД
                     .remove({ where: { ...req.query } })
                     // Данные успешно удалены
                     .then(countDeleted => {

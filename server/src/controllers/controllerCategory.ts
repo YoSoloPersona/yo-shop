@@ -4,7 +4,7 @@ import { ModelCategory as Model, Category } from '../models';
 import { DestroyOptions, FindOptions } from 'sequelize/types';
 
 /** Класс контроллер для получения типов товаров. */
-class ControllerType implements Controller<Category> {
+class ControllerCategory implements Controller<Category> {
     /**
      * Поолучение всех типов товаров.
      * @returns промис массива найденных типов товаров.
@@ -41,4 +41,4 @@ class ControllerType implements Controller<Category> {
     }
 }
 
-export default new ControllerType();
+export default new ControllerCategory();

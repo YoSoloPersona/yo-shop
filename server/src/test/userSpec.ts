@@ -3,7 +3,9 @@ import axios, { AxiosResponse } from 'axios';
 import debug from 'debug';
 
 // local
-import { Url } from '../routers/routerUser';
+import { domain } from '../helpers/domain';
+import { user } from './data/users'
+import { repositoryUser } from '../repositories';
 
 // Определяем протоколы
 const log = debug('test:log'); // Для отображения простой информации
@@ -12,12 +14,6 @@ const logError = debug('test:error'); // Для отображения ошиб�
 // Время ожидания ответов от сервера
 const timeout = 3000;
 
-// Данные для авторизации
-const userData = JSON.stringify({
-    email: 'user1@mail.ru',
-    password: '1234',
-    role: 'user'
-});
 
 // Общие для все запросов параметры
 const protocol = process.env.SHOP_PROTOCOL || 'http';
@@ -31,14 +27,20 @@ const config = {
 
 describe('#Проверка системы авторизации.', () => {
     Promise.resolve(
-        it(
+        it('Очистка базы данных.', (done) => {
+            repositoryUser.clear();
+        })
+    )
+    .then(() => {
+        xit(
             'Регистрация пользователя.',
             done => {
                 // Информация для отправки запроса
-                const path = `/api/v1/user${Url.registration}`;
+                
+                const path = domain.api.user.registration.path;
 
                 axios
-                    .post(url + path, userData, {
+                    .post(url + path, user, {
                         ...config,
                         headers: {
                             'Content-Type': 'application/json'
@@ -58,15 +60,16 @@ describe('#Проверка системы авторизации.', () => {
             },
             timeout
         )
-    ).then(() => {
-        it(
+    })
+    .then(() => {
+        xit(
             'Авторизация пользователя.',
             done => {
                 // Информация для отправки запроса
-                const path = `/api/v1/user${Url.login}`;
+                const path = domain.api.user.login.path;
 
                 axios
-                    .post(url + path, userData, {
+                    .post(url + path, user, {
                         ...config,
                         headers: {
                             'Content-Type': 'application/json'
