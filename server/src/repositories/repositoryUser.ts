@@ -1,27 +1,29 @@
-import { getDespatch } from './despatch';
-import { domain } from '../helpers/domain';
-import { User } from '../../../server/src/models';
 import { URLSearchParams } from 'url';
-import { InferAttributes, WhereOptions } from 'sequelize/types';
+import debug from 'debug';
+
+// local
+import { domain } from '../helpers/domain';
+import { FilterUser, OptionalUser } from '../models';
+import { Repository } from './repository';
+
+const log = debug('test:repositoryUser');
 
 type Answer = {
     token: string;
 };
 
-const despatch = getDespatch();
-
 /**
  *
  */
-class RepositoryUser {
+class RepositoryUser extends Repository {
     /**
      * Отправляет данные для регистрации пользователя.
      * @param user данные регистрируемого пользователя.
      * @returns Promise.
      */
-    registrate(user: User): Promise<Answer> {
+    registrate(user: OptionalUser): Promise<Answer> {
         return (
-            despatch
+            this.despatch
                 .post<Answer>(
                     domain.api.user.registration.path,
                     JSON.stringify(user),
@@ -41,9 +43,9 @@ class RepositoryUser {
      * @param user данные авторизируемого пользователя.
      * @returns Promise.
      */
-    login(user: User): Promise<Answer> {
+    login(user: OptionalUser): Promise<Answer> {
         return (
-            despatch
+            this.despatch
                 .post<Answer>(
                     domain.api.user.login.path,
                     JSON.stringify(user),
@@ -58,23 +60,33 @@ class RepositoryUser {
         );
     }
 
-    delete(
-        options?: WhereOptions<
-            InferAttributes<
-                User,
-                {
-                    omit: never;
-                }
-            >
-        >
-    ): Promise<number> {
+    /**
+     * Удаляет пользователей по указанному фильтру.
+     * @param filter 
+     * @returns 
+     */
+    delete(filter?: FilterUser): Promise<number> {
         const params = new URLSearchParams();
 
-        return despatch.delete(`${domain.api.user.path}?${params}`);
+        for (const key in filter) {
+            if (getOwnPropertyDescriptors.prototype.hasOwnProperty.call(filter, key)) { 
+                params.append(key, filter[key]);  
+            }
+        }
+
+        return this.despatch
+            .delete(`${domain.api.user.path}?${params}`)
+            .then(res => res.data.count);
     }
 
+    /**
+     *
+     * @returns
+     */
     clear(): Promise<number> {
-        return despatch.delete(domain.api.user.path);
+        return this.despatch
+            .delete(domain.api.user.path)
+            .then(res => res.data.count);
     }
 }
 

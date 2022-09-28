@@ -1,34 +1,71 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
+import {
+    CreationOptional,
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    Model,
+    Optional,
+    WhereOptions
+} from 'sequelize';
 
 // local
-import sequelize from '../db/db';
+import { sequelize } from '../db/sequelize';
 
 // описание таблиц
 
-export type Role = 'user' | 'admin';
+/** Типы пользователей. */
+export type Role = 'root' | 'user' | 'admin';
 
-/** Описание пользователя. */
-export interface User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-    /** Идентификатор в БД. */
-    id: CreationOptional<number>;
+/** Пользователь. */
+export type OptionalUser = Optional<
+InferCreationAttributes<
+    ModelUser,
+    {
+        omit: never;
+    }
+>,
+'id'
+>;
 
-    /** Электронаня почта. */
-    email: string;
-
-    /** Тип. */
-    role: Role;
-
-    /** Хэш пароля. */
-    password: string;
-}
+/** Фильтр для получения пользователей. */
+export type FilterUser = WhereOptions<
+InferAttributes<
+    ModelUser,
+    {
+        omit: never;
+    }
+>
+>
 
 /** Модель пользователя. */
-export const ModelUser = sequelize.define<User>('user', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    email: { type: DataTypes.STRING, allowNull: false },
-    password: { type: DataTypes.STRING, allowNull: false},
-    role: { type: DataTypes.STRING, defaultValue: 'USER' }
-});
+export class ModelUser extends Model<
+    InferAttributes<ModelUser>,
+    InferCreationAttributes<ModelUser>
+> {
+    declare id: CreationOptional<number>;
+
+    /** Электронаня почта. */
+    declare email: string;
+
+    /** Тип. */
+    declare role: Role;
+
+    /** Хэш пароля. */
+    declare password: string;
+}
+
+ModelUser.init(
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        email: { type: DataTypes.STRING, allowNull: false },
+        password: { type: DataTypes.STRING, allowNull: false },
+        role: { type: DataTypes.STRING, defaultValue: 'user' }
+    },
+    {
+        sequelize: sequelize,
+        tableName: 'users'
+    }
+);
 
 /** Корзина. */
 export interface Basket {
@@ -48,9 +85,12 @@ export interface BasketProduct {
 }
 
 /**  */
-export const ModelBasketDevice = sequelize.define<BasketProduct & Model>('basketProduct', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
-});
+export const ModelBasketDevice = sequelize.define<BasketProduct & Model>(
+    'basketProduct',
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+    }
+);
 
 /** Продукт. */
 export interface Product {
@@ -93,7 +133,6 @@ export const ModelCategory = sequelize.define<Category & Model>('category', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, unique: true, allowNull: false }
 });
-
 
 /** Бренд. */
 export interface Brand {

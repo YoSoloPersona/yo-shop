@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 // local
-import { User, Role } from '../models';
+import { Role, OptionalUser } from '../models';
 import ErrorApi from '../errors/errorApi';
 
 /**
@@ -10,7 +10,7 @@ import ErrorApi from '../errors/errorApi';
  * @param role тип пользователя.
  * @returns (req: Request, res: Response, next: NextFunction) => void.
  */
-export function role (role: Role) {
+export function role (...role: Role[]) {
     /**
      * Проверяет необходимые для авторизации данные.
      * @param req запрос.
@@ -35,10 +35,10 @@ export function role (role: Role) {
             const user = jwt.verify(
                 token,
                 process.env.SECRET_KEY as string
-            ) as User;
+            ) as OptionalUser;
             Object.defineProperty(req, 'user', { value: user, writable: false });
 
-            if (role !== user?.role) {
+            if (!role.includes(user.role)) {
                 next(ErrorApi.forbidden('Не достаточно прав.'));
             }
         } catch (error) {

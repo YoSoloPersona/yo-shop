@@ -7,11 +7,16 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
+
     "lint": "eslint --fix",
-    "start server": "env-cmd -f ./env/server-development.env nodemon ./dist/index.js",
-    "docker start postgres + pgadmin": "docker-compose -f ./docker/server/development/docker-compose.yml up -d",
-    "docker test": "docker-compose -f ./docker/client/docker-compose.yml up --abort-on-container-exit --force-recreate",
-    "test": "concurrently \"jasmine --config=./helpers/jasmine.json\""
+    "install-development": "env-cmd -f ./env/development/server.env nodemon ./dist/install.js",
+
+    "start-development-server": "env-cmd -f ./env/development/server.env nodemon ./dist/index.js",
+    "start-development-postgres-pgadmin": "docker-compose -f ./docker/development/docker-compose.yml up -d",
+    "start-development": "concurrently \"npm:watch\" \"npm:start-development-*\"",
+
+    "test:docker": "docker-compose -f ./docker/test/docker-compose.yml up --abort-on-container-exit --force-recreate",
+    "test:local": "concurrently \"env-cmd -f ./env/development/server.env jasmine --config=./helpers/jasmine.json\""
   },
   "repository": {
     "type": "git",

@@ -2,9 +2,9 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
 // locals
-import { ModelUser, Role, User } from '../models';
+import { ModelUser, Role } from '../models';
 import ErrorApi from '../errors/errorApi';
-import { DestroyOptions, InferAttributes } from 'sequelize/types';
+import { InferAttributes, Op, WhereOptions } from 'sequelize';
 
 /**
  * Класс для работы с пользователями.
@@ -66,13 +66,7 @@ class ControllerUser {
             }
         });
 
-        if (!user) {
-            throw ErrorApi.badRequest(
-                'Не удалось авторизоваться, указан неверный email или пароль.'
-            );
-        }
-
-        if (!bcrypt.compareSync(password, user.password)) {
+        if (!user || !bcrypt.compareSync(password, user.password)) {
             throw ErrorApi.badRequest(
                 'Не удалось авторизоваться, указан неверный email или пароль.'
             );
@@ -85,17 +79,46 @@ class ControllerUser {
         );
     }
 
-    auth(): void {
-        throw ErrorApi.notImplemented('Метод ещё не реализован.');
+    /**
+     * Удаляет всех пользователей за исключением root.
+     * @returns Promise<number> количество удалённых пользователей.
+     */
+    clear(): Promise<number> {
+        return ModelUser.destroy({
+            where: {
+                role: {
+                    [Op.ne]: 'root'
+                }
+            }
+        });
     }
 
     /**
      * Удаляет пользователей с указанными параметрами.
-     * @param options параметры поиска удаляемых пользователей.
+     * @param filter параметры поиска удаляемых пользователей.
      * @returns количество удалённых пользователей.
      */
-    delete(options?: DestroyOptions<InferAttributes<User, { omit: never; }>>) {
-        return ModelUser.destroy(options);
+    delete(
+        filter?: WhereOptions<
+            InferAttributes<
+                ModelUser,
+                {
+                    omit: never;
+                }
+            >
+        >
+    ) {
+        return ModelUser.destroy({
+            where: {
+                [Op.and]: [
+                    {
+                        role: {
+                            [Op.ne]: 'root'
+                        }
+                    }
+                ]
+            }
+        });
     }
 }
 

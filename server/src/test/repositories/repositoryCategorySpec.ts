@@ -2,9 +2,8 @@ import 'jasmine';
 import debug from 'debug';
 
 // local
-import { repositoryUser, repositoryCategory } from '../repositories';
-import { domain } from '../helpers/domain';
-import { admin, user } from './data/users';
+import { repositoryUser, repositoryCategory } from '../../repositories';
+import { admin, user1 } from '../data/users';
 
 // Таймаут на выполнение утверждения
 const timeoutIt = 3000;
@@ -14,7 +13,7 @@ xdescribe('#Проверка работы с категориями ', () => {
 
     // Для работы с категориями товаров, необходимо авторизоваться под админом
     Promise.resolve(
-        it(
+        xit(
             'Авторизация пользователя',
             done => {
                 repositoryUser
@@ -32,7 +31,7 @@ xdescribe('#Проверка работы с категориями ', () => {
             timeoutIt
         )
     ).then(() => {
-        it('Добавление категории', done => {
+        xit('Добавление категории', done => {
             repositoryCategory
                 .push({ name: 'Категория1' })
                 .then(category => {

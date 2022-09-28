@@ -5,14 +5,14 @@ import cors from 'cors';
 // local
 import { router as routerApi } from './routers/routerApi';
 import { domain } from './helpers/domain';
-import sequelize from './db/db';
+import { sequelize } from './db/sequelize';
 import {error} from './middleware/error';
 
 // Протоколы
 const log = debug('app:log');
 const logError = debug('app:error');
 
-// Сервер
+// Сервер 
 const app = express();
 
 // Middleware

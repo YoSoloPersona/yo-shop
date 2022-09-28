@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "process",
+            "label": "install",
+            "options": {
+                "cwd": "./server",
+                "env": {
+                    "DB_NAME": "shop_db",
+                    "DB_USER": "admin",
+                    "DB_PASSWORD": "1234",
+					"SECRET_KEY":"qwerty"
+                }
+            },
+            "command": "node",
+            "args": ["./dist/install.js"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "server/tsconfig.json",
+            "option": "watch",
+            "problemMatcher": ["$tsc-watch"],
+            "group": "build",
+            "label": "tsc: отслеживание — server/tsconfig.json"
+        }
+    ]
+}
