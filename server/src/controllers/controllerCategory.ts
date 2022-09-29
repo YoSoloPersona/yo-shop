@@ -1,16 +1,16 @@
 // local
 import Controller from './controller';
-import { ModelCategory as Model, Category } from '../models';
+import { ModelCategory, FindCategory } from '../models';
 import { DestroyOptions, FindOptions } from 'sequelize/types';
 
 /** Класс контроллер для получения типов товаров. */
-class ControllerCategory implements Controller<Category> {
+class ControllerCategory implements Controller<ModelCategory> {
     /**
      * Поолучение всех типов товаров.
      * @returns промис массива найденных типов товаров.
      */
-    findAll(option?: FindOptions<Category>): Promise<Category[]> {
-        return Model.findAll(option);
+    findAll(option?: FindCategory): Promise<ModelCategory[]> {
+        return ModelCategory.findAll(option);
     }
 
     /**
@@ -18,8 +18,8 @@ class ControllerCategory implements Controller<Category> {
      * @param option параметры поиска.
      * @returns промис найденного типа товаров либо null в противном случае. 
      */
-    findOne(option?: FindOptions<Category>): Promise<Category | null> {
-        return Model.findOne(option);
+    findOne(option?: FindCategory): Promise<ModelCategory | null> {
+        return ModelCategory.findOne(option);
     }
 
     /**
@@ -27,8 +27,8 @@ class ControllerCategory implements Controller<Category> {
      * @param type добавлемое описание типа товаров.
      * @returns промис добавленного типа товаров с дополнительной информацией о добавлении.
      */
-    add(type: Category): Promise<Category> {
-        return Model.create({ ...type });
+    add(type: ModelCategory): Promise<ModelCategory> {
+        return ModelCategory.create({ ...type });
     }
 
     /**
@@ -36,8 +36,8 @@ class ControllerCategory implements Controller<Category> {
      * @param option параметры для поиска удаляемых типов товаров.
      * @returns количество удалённых типов товаров.
      */
-    async remove(option?: DestroyOptions<Category>): Promise<number> {
-        return Model.destroy(option);
+    async remove(option?: DestroyOptions<ModelCategory>): Promise<number> {
+        return ModelCategory.destroy(option);
     }
 }
 

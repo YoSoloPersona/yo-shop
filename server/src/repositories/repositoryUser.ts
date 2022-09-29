@@ -69,7 +69,7 @@ class RepositoryUser extends Repository {
         const params = new URLSearchParams();
 
         for (const key in filter) {
-            if (getOwnPropertyDescriptors.prototype.hasOwnProperty.call(filter, key)) { 
+            if (Object.prototype.hasOwnProperty.call(filter, key)) { 
                 params.append(key, filter[key]);  
             }
         }

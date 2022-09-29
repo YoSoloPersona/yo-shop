@@ -6,7 +6,7 @@ import ErrorApi from '../errors/errorApi';
 import { role } from '../middleware/role';
 import { router as routerUser } from './routerUser';
 import ControllerBrand from '../controllers/controllerBrand';
-import ControllerDevice from '../controllers/controllerDevice';
+import ControllerDevice from '../controllers/controllerProduct';
 import ControllerCategory from '../controllers/controllerCategory';
 import { domain } from '../helpers/domain';
 
