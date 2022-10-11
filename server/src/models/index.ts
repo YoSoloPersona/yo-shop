@@ -10,15 +10,15 @@ import { ModelProductInfo } from './productInfo';
 import { ModelTypeBrand } from './typeBrand';
 
 // описание таблиц
-export { Role, OptionalUser, FilterUser, ModelUser } from './user';
-export { ModelBasket } from './basket';
-export { ModelProduct, FindProduct, OptionalProduct } from './product';
-export { ModelCategory, FindCategory, OptionalCategory } from './category';
-export { ModelBrand, FindBrand, OptionalBrand } from './brand';
-export { ModelBasketProducts } from './basketProduct';
-export { ModelRating } from './rating';
-export { ModelProductInfo } from './productInfo';
-export { ModelTypeBrand } from './typeBrand';
+export { Role, FilterUser, ModelUser } from './user';
+export { ModelBasket, Basket } from './basket';
+export { ModelProduct, Product, FindProduct } from './product';
+export { ModelCategory, Category, FindCategory } from './category';
+export { ModelBrand, Brand, FindBrand } from './brand';
+export { ModelBasketProducts, BasketProducts } from './basketProduct';
+export { ModelRating, Rating } from './rating';
+export { ModelProductInfo, ProductInfo } from './productInfo';
+export { ModelTypeBrand, TypeBrand } from './typeBrand';
 
 
 // Связи

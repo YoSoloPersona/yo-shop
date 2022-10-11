@@ -3,17 +3,18 @@ import {
     DataTypes,
     InferAttributes,
     InferCreationAttributes,
-    Model,
-    Optional,
-    WhereOptions
+    Model
 } from 'sequelize';
 
 // local
 import { sequelize } from '../db/sequelize';
 
 /** Корзина. */
+export type Basket = InferAttributes<ModelBasket>;
+
+/** Модель корзины. */
 export class ModelBasket extends Model<
-    InferAttributes<ModelBasket>,
+    Basket,
     InferCreationAttributes<ModelBasket>
 > {
     /** Идентификатор в БД. */

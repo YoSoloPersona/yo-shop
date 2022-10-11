@@ -9,9 +9,12 @@ import {
 // local
 import { sequelize } from '../db/sequelize';
 
-/**  */
+/** Карзина продуктов. */
+export type BasketProducts = InferAttributes<ModelBasketProducts>;
+
+/** Модель карзины продуктов. */
 export class ModelBasketProducts extends Model<
-    InferAttributes<ModelBasketProducts>,
+    BasketProducts,
     InferCreationAttributes<ModelBasketProducts>
 > {
     /** Идентификатор в БД. */

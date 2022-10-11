@@ -9,8 +9,13 @@ import {
 // local
 import { sequelize } from '../db/sequelize';
 
+export type Rating = InferAttributes<ModelRating>;
+
 /** Модель рейтинга. */
-export class ModelRating extends Model<InferAttributes<ModelRating>, InferCreationAttributes<ModelRating>> {
+export class ModelRating extends Model<
+    Rating,
+    InferCreationAttributes<ModelRating>
+> {
     /** Идентификатор в БД. */
     declare id: CreateOptions<number>;
 
@@ -18,9 +23,13 @@ export class ModelRating extends Model<InferAttributes<ModelRating>, InferCreati
     declare rate: number;
 }
 
-ModelRating.init({
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    rate: { type: DataTypes.INTEGER, allowNull: false }
-}, {
-    sequelize, tableName: 'rating'
-});
+ModelRating.init(
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        rate: { type: DataTypes.INTEGER, allowNull: false }
+    },
+    {
+        sequelize,
+        tableName: 'rating'
+    }
+);

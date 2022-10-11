@@ -15,29 +15,14 @@ import { sequelize } from '../db/sequelize';
 export type Role = 'root' | 'user' | 'admin';
 
 /** Пользователь. */
-export type OptionalUser = Optional<
-    InferCreationAttributes<
-        ModelUser,
-        {
-            omit: never;
-        }
-    >,
-    'id'
->;
+export type User = InferAttributes<ModelUser>;
 
 /** Фильтр для получения пользователей. */
-export type FilterUser = WhereOptions<
-    InferAttributes<
-        ModelUser,
-        {
-            omit: never;
-        }
-    >
->;
+export type FilterUser = WhereOptions<User>;
 
 /** Модель пользователя. */
 export class ModelUser extends Model<
-    InferAttributes<ModelUser>,
+    User,
     InferCreationAttributes<ModelUser>
 > {
     declare id: CreationOptional<number>;
@@ -52,6 +37,7 @@ export class ModelUser extends Model<
     declare password: string;
 }
 
+// Инициализируем в БД
 ModelUser.init(
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -60,7 +46,7 @@ ModelUser.init(
         role: { type: DataTypes.STRING, defaultValue: 'user' }
     },
     {
-        sequelize,
-        tableName: 'users'
+        sequelize, // Ссылка на БД для инициализации
+        tableName: 'users' // Имя таблицы
     }
 );

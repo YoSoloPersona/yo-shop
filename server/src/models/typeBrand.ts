@@ -9,9 +9,12 @@ import {
 // local
 import { sequelize } from '../db/sequelize';
 
-/**  */
+/** Тип бренда. */
+export type TypeBrand = InferAttributes<ModelTypeBrand>;
+
+/** Модель типа бренда. */
 export class ModelTypeBrand extends Model<
-    InferAttributes<ModelTypeBrand>,
+    TypeBrand,
     InferCreationAttributes<ModelTypeBrand>
 > {
     declare id: CreateOptions<number>;

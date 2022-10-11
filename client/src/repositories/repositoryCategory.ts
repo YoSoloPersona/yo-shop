@@ -14,7 +14,6 @@ class RepositoryCategory {
      * @returns Promise<Category[]>.
      */
     all() {
-        console.log(`Получение списка категорий `);
         return despatch
             .get<Category[]>(domain.api.type.path)
             .then((res) => res.data);

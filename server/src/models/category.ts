@@ -4,8 +4,7 @@ import {
     Model,
     CreateOptions,
     DataTypes,
-    FindOptions,
-    Optional
+    FindOptions
 } from 'sequelize';
 
 // local
@@ -15,20 +14,12 @@ export type FindCategory = FindOptions<
     InferAttributes<ModelCategory, { omit: never }>
 >;
 
-/** Пользователь. */
-export type OptionalCategory = Optional<
-    InferCreationAttributes<
-        ModelCategory,
-        {
-            omit: never;
-        }
-    >,
-    'id'
->;
+/** Категория продуктов. */
+export type Category = InferAttributes<ModelCategory>;
 
 /** Категория продуктов. */
 export class ModelCategory extends Model<
-    InferAttributes<ModelCategory>,
+    Category,
     InferCreationAttributes<ModelCategory>
 > {
     /** Идентификатор в БД. */

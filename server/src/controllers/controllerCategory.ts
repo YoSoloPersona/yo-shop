@@ -1,15 +1,15 @@
 // local
 import Controller from './controller';
-import { ModelCategory, FindCategory } from '../models';
+import { ModelCategory, Category, FindCategory } from '../models';
 import { DestroyOptions, FindOptions } from 'sequelize/types';
 
 /** Класс контроллер для получения типов товаров. */
-class ControllerCategory implements Controller<ModelCategory> {
+class ControllerCategory implements Controller<Category> {
     /**
-     * Поолучение всех типов товаров.
+     * Получение всех типов товаров.
      * @returns промис массива найденных типов товаров.
      */
-    findAll(option?: FindCategory): Promise<ModelCategory[]> {
+    findAll(option?: FindCategory): Promise<Category[]> {
         return ModelCategory.findAll(option);
     }
 
@@ -18,8 +18,8 @@ class ControllerCategory implements Controller<ModelCategory> {
      * @param option параметры поиска.
      * @returns промис найденного типа товаров либо null в противном случае. 
      */
-    findOne(option?: FindCategory): Promise<ModelCategory | null> {
-        return ModelCategory.findOne(option);
+    findOne(option?: FindCategory): Promise<Category | undefined> {
+        return ModelCategory.findOne(option).then(category => category?.toJSON());
     }
 
     /**
@@ -27,8 +27,8 @@ class ControllerCategory implements Controller<ModelCategory> {
      * @param type добавлемое описание типа товаров.
      * @returns промис добавленного типа товаров с дополнительной информацией о добавлении.
      */
-    add(type: ModelCategory): Promise<ModelCategory> {
-        return ModelCategory.create({ ...type });
+    add(type: ModelCategory): Promise<Category> {
+        return ModelCategory.create({ ...type }).then(category => category.toJSON());
     }
 
     /**

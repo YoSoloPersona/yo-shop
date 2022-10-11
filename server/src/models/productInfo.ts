@@ -10,8 +10,11 @@ import {
 import { sequelize } from '../db/sequelize';
 
 /** Описание продукта. */
+export type ProductInfo = InferAttributes<ModelProductInfo>;
+
+/** Модель описания продукта. */
 export class ModelProductInfo extends Model<
-    InferAttributes<ModelProductInfo>,
+    ProductInfo,
     InferCreationAttributes<ModelProductInfo>
 > {
     /** Идентификатор в БД. */

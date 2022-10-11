@@ -15,20 +15,12 @@ export type FindBrand = FindOptions<
     InferAttributes<ModelBrand, { omit: never }>
 >;
 
-/** Пользователь. */
-export type OptionalBrand = Optional<
-    InferCreationAttributes<
-        ModelBrand,
-        {
-            omit: never;
-        }
-    >,
-    never
->;
+/** Бренд. */
+export type Brand = InferAttributes<ModelBrand>;
 
 /** Модель бренда. */
 export class ModelBrand extends Model<
-    InferAttributes<ModelBrand>,
+    Brand,
     InferCreationAttributes<ModelBrand>
 > {
     /** Идентификатор в БД. */

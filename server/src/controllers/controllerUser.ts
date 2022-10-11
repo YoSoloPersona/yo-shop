@@ -1,10 +1,13 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import debug from 'debug';
 
 // locals
 import { ModelUser, Role } from '../models';
 import ErrorApi from '../errors/errorApi';
 import { InferAttributes, Op, WhereOptions } from 'sequelize';
+
+const log = debug('controllers:user');
 
 /**
  * Класс для работы с пользователями.
@@ -39,11 +42,11 @@ class ControllerUser {
         const hashPassword = await bcrypt.hash(password, 5);
 
         // Регистрируем пользователя
-        const user = await ModelUser.create({
+        const user = (await ModelUser.create({
             email,
             role,
             password: hashPassword
-        });
+        })).toJSON();
 
         // Возвращаем jwt токен
         return jwt.sign(
@@ -60,11 +63,13 @@ class ControllerUser {
      * @returns jsonwebtoken авторизованного пользователя.
      */
     async login(email: string, password: string): Promise<string> {
-        const user = await ModelUser.findOne({
-            where: {
-                email
-            }
-        });
+        const user = (
+            await ModelUser.findOne({
+                where: {
+                    email
+                }
+            })
+        )?.toJSON();
 
         if (!user || !bcrypt.compareSync(password, user.password)) {
             throw ErrorApi.badRequest(
@@ -98,16 +103,7 @@ class ControllerUser {
      * @param filter параметры поиска удаляемых пользователей.
      * @returns количество удалённых пользователей.
      */
-    delete(
-        filter?: WhereOptions<
-            InferAttributes<
-                ModelUser,
-                {
-                    omit: never;
-                }
-            >
-        >
-    ) {
+    delete(filter?: WhereOptions<InferAttributes<ModelUser>>) {
         return ModelUser.destroy({
             where: {
                 [Op.and]: [

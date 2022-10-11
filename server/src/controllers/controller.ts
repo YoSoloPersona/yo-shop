@@ -5,7 +5,7 @@ export default interface Controller<T> {
     findAll(option?: FindOptions<T>): Promise<T[]>;
 
     /** Ищет необходимый элемент. */
-    findOne(option?: FindOptions<T>): Promise<T | null>;
+    findOne(option?: FindOptions<T>): Promise<T | undefined>;
 
     /** Добавляет элемент. */
     add(el: T): Promise<T>;

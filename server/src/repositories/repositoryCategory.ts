@@ -3,7 +3,7 @@ import querystring from 'querystring';
 // local
 import { getDespatch } from './despatch';
 import { domain } from '../helpers/domain';
-import { ModelCategory, OptionalCategory } from '../../../server/src/models';
+import { ModelCategory, Category } from '../../../server/src/models';
 
 /**
  *
@@ -22,10 +22,9 @@ class RepositoryCategory {
      * Возвращает список категорий товаров.
      * @returns Promise<Category[]>.
      */
-    all() {
-        console.log(`Получение списка категорий `);
+    all(): Promise<Category[]> {
         return this._despatch
-            .get<ModelCategory[]>(domain.api.type.path)
+            .get<Category[]>(domain.api.type.path)
             .then((res) => res.data);
     }
 
@@ -34,20 +33,17 @@ class RepositoryCategory {
      * @param category добавляемая категория товаров.
      * @returns Promise<Category>.
      */
-    async push(category: OptionalCategory): Promise<ModelCategory> {
+    push(category: Category): Promise<Category> {
         // Написал с использованием async, для разнообразия
         if (!category) {
             throw Error(`Попытка добавить пустую категорию товаров.`);
         }
 
         // Ожидаем ответ от сервера
-        const res = await this._despatch.post<ModelCategory>(
+        return this._despatch.post<Category>(
             domain.api.type.path,
             category
-        );
-
-        // Возвращаем информацию о добавленной категории
-        return res.data;
+        ).then(res => res.data);
     }
 
     /**
