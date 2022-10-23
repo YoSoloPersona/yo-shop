@@ -1,0 +1,26 @@
+{
+  "name": "yo-shop-model",
+  "version": "0.0.1",
+  "description": "Description of the shop model.",
+  "main": "./dist/index.js",
+  "types": "./dist/types",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "test"
+  },
+  "keywords": [
+    "typescript",
+    "api",
+    "yo-shop",
+    "model"
+  ],
+  "author": "yolik",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "sequelize": "^6.25.0"
+  }
+}
