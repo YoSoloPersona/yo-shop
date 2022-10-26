@@ -1,15 +1,14 @@
 // local
-import {
-    ModelUser,
-    ModelBasket,
-    ModelCategory,
-    ModelProduct,
-    ModelBasketProducts,
-    ModelBrand,
-    ModelRating,
-    ModelProductInfo,
-    ModelTypeBrand
-} from 'yo-shop-model';
+export { ModelUser } from './user';
+export { ModelBasket } from './basket';
+export { ModelCategory } from './category';
+export { ModelProduct } from './product';
+export { ModelBasketProducts } from './basketProduct';
+export { ModelBrand } from './brand';
+export { ModelRating } from './rating';
+export { ModelProductInfo } from './productInfo';
+export { ModelTypeBrand } from './typeBrand';
+    
 
 // Связи
 ModelUser.hasOne(ModelBasket);
