@@ -1,24 +1,25 @@
 // local
-import { ModelBrand, OptionalBrand } from "../models";
+import { ModelBrand, Brand, FindBrand } from 'yo-shop-model';
 import Controller from './controller';
-import ErrorApi from "../errors/errorApi";
-import e from 'express';
 
-
-class ControllerBrand implements Controller<ModelBrand> {
-    findAll(): Promise<ModelBrand[]> {
-        return ModelBrand.findAll();
+class ControllerBrand implements Controller<Brand> {
+    findAll(option?: FindBrand): Promise<Brand[]> {
+        return ModelBrand.findAll(option).then(listModelBrand =>
+            listModelBrand.map(modelBrand => modelBrand.toJSON())
+        );
     }
 
-    findOne(): Promise<ModelBrand | null> {
-        return ModelBrand.findOne()
+    findOne(option?: FindBrand): Promise<Brand | null> {
+        return ModelBrand.findOne(option).then(modelBrand =>
+            modelBrand ? modelBrand?.toJSON() : null
+        );
     }
 
-    add(el: OptionalBrand): Promise<ModelBrand> {
+    add(el: Brand): Promise<Brand> {
         return ModelBrand.create(el);
     }
 
-    async remove(): Promise<number> {
+    remove(): Promise<number> {
         return ModelBrand.destroy();
     }
 }

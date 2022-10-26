@@ -5,7 +5,7 @@ import jwb, { JwtPayload } from 'jsonwebtoken';
 import { sequelize } from '../../db/sequelize';
 import ControllerUser from '../../controllers/controllerUser';
 import { user1 } from '../data/users';
-import { OptionalUser } from '../../models';
+import { User } from 'yo-shop-model';
 
 /** Таймаут на одидание проверки одного уьверждения. */
 const timeoutIt = 10000;
@@ -15,7 +15,7 @@ const timeoutIt = 10000;
  * @param token токен.
  * @param user пользователь.
  */
-function compareTokenAndUser(token: string, user: OptionalUser) {
+function compareTokenAndUser(token: string, user: User) {
     expect(token).toBeDefined();
     const { email, role } = jwb.decode(token) as JwtPayload;
     expect(email).toEqual(user.email);

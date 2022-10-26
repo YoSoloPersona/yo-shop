@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { GrUpdate } from 'react-icons/gr';
-import { Category } from '../../../../../server/src/models';
+import { Category } from 'yo-shop-model';
 
 // local
 import { useInput } from '../../../hooks/useInput';

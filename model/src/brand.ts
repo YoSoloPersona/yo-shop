@@ -6,12 +6,10 @@ import {
     FindOptions
 } from 'sequelize';
 
-export type FindBrand = FindOptions<
-    InferAttributes<ModelBrand, { omit: never }>
->;
+export type FindBrand = FindOptions<Brand>;
 
 /** Бренд. */
-export type Brand = InferAttributes<ModelBrand>;
+export type Brand = InferAttributes<ModelBrand, { omit: never}>;
 
 /** Модель бренда. */
 export class ModelBrand extends Model<

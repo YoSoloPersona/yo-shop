@@ -1,6 +1,6 @@
 import { despatch } from './despatch'
 import { domain } from './domain';
-import { User } from '../../../server/src/models';
+import { User } from 'yo-shop-model';
 
 type Answer = {
     'token': string

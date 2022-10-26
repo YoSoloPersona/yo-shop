@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 // local
 import { useInput } from '../../../hooks/useInput';
 import { Task } from '../../task';
-import { Category } from '../../../../../server/src/models';
+import { Category } from 'yo-shop-model';
 
 /** Свойства. */
 type Props = {

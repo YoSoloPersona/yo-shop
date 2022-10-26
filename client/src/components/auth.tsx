@@ -7,7 +7,7 @@ import { Container, Form, Card, Button, Row, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 // local
-import { User } from '../../../server/src/models';
+import { User } from 'yo-shop-model';
 import { RootState, setUserAction } from '../reducer';
 import { domain } from '../domain';
 import { repositoryUser } from '../repositories/repositoryUser';
@@ -37,7 +37,7 @@ function Auth(props: Props) {
         id: 0,
         email: '',
         password: '',
-        role: 'USER'
+        role: 'user'
     });
 
     const { t } = useTranslation();

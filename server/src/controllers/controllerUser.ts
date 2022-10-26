@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import debug from 'debug';
 
 // locals
-import { ModelUser, Role } from '../models';
+import { ModelUser, Role } from 'yo-shop-model';
 import ErrorApi from '../errors/errorApi';
 import { InferAttributes, Op, WhereOptions } from 'sequelize';
 

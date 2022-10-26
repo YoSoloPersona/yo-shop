@@ -1,6 +1,6 @@
 export { domain } from './domain';
 
-export { Role, FilterUser, ModelUser } from './user';
+export { ModelUser, Role, User, FilterUser,  } from './user';
 export { ModelBasket, Basket } from './basket';
 export { ModelProduct, Product, FindProduct } from './product';
 export { ModelCategory, Category, FindCategory } from './category';

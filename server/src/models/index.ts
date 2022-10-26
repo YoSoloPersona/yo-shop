@@ -1,25 +1,15 @@
 // local
-import { ModelUser } from './user';
-import { ModelBasket } from './basket';
-import { ModelCategory } from './category';
-import { ModelProduct } from './product';
-import { ModelBasketProducts } from './basketProduct';
-import { ModelBrand } from './brand';
-import { ModelRating } from './rating';
-import { ModelProductInfo } from './productInfo';
-import { ModelTypeBrand } from './typeBrand';
-
-// описание таблиц
-export { Role, FilterUser, ModelUser } from './user';
-export { ModelBasket, Basket } from './basket';
-export { ModelProduct, Product, FindProduct } from './product';
-export { ModelCategory, Category, FindCategory } from './category';
-export { ModelBrand, Brand, FindBrand } from './brand';
-export { ModelBasketProducts, BasketProducts } from './basketProduct';
-export { ModelRating, Rating } from './rating';
-export { ModelProductInfo, ProductInfo } from './productInfo';
-export { ModelTypeBrand, TypeBrand } from './typeBrand';
-
+import {
+    ModelUser,
+    ModelBasket,
+    ModelCategory,
+    ModelProduct,
+    ModelBasketProducts,
+    ModelBrand,
+    ModelRating,
+    ModelProductInfo,
+    ModelTypeBrand
+} from 'yo-shop-model';
 
 // Связи
 ModelUser.hasOne(ModelBasket);

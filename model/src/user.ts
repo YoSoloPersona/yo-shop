@@ -20,7 +20,7 @@ export class ModelUser extends Model<
     User,
     InferCreationAttributes<ModelUser>
 > {
-    declare id: CreationOptional<number>;
+    declare id?: CreationOptional<number>;
 
     /** Электронаня почта. */
     declare email: string;

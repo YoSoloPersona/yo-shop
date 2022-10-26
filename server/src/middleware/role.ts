@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 // local
-import { Role, OptionalUser } from '../models';
+import { Role, User } from 'yo-shop-model';
 import ErrorApi from '../errors/errorApi';
 
 /**
@@ -35,7 +35,7 @@ export function role (...role: Role[]) {
             const user = jwt.verify(
                 token,
                 process.env.SECRET_KEY as string
-            ) as OptionalUser;
+            ) as User;
             Object.defineProperty(req, 'user', { value: user, writable: false });
 
             if (!role.includes(user.role)) {

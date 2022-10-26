@@ -1,7 +1,7 @@
 // local
 import Controller from './controller';
-import { ModelCategory, Category, FindCategory } from '../models';
-import { DestroyOptions, FindOptions } from 'sequelize/types';
+import { ModelCategory, Category, FindCategory } from 'yo-shop-model';
+import { DestroyOptions } from 'sequelize/types';
 
 /** Класс контроллер для получения типов товаров. */
 class ControllerCategory implements Controller<Category> {
@@ -9,26 +9,32 @@ class ControllerCategory implements Controller<Category> {
      * Получение всех типов товаров.
      * @returns промис массива найденных типов товаров.
      */
-    findAll(option?: FindCategory): Promise<Category[]> {
-        return ModelCategory.findAll(option);
+    findAll(options?: FindCategory): Promise<Category[]> {
+        return ModelCategory.findAll(options).then(listCategory =>
+            listCategory.map(modelCategory => modelCategory.toJSON())
+        );
     }
 
     /**
      * Получение конктретного типа товаров.
      * @param option параметры поиска.
-     * @returns промис найденного типа товаров либо null в противном случае. 
+     * @returns промис найденного типа товаров либо null в противном случае.
      */
-    findOne(option?: FindCategory): Promise<Category | undefined> {
-        return ModelCategory.findOne(option).then(category => category?.toJSON());
+    findOne(option?: FindCategory): Promise<Category | null> {
+        return ModelCategory.findOne(option).then(category =>
+            category ? category?.toJSON() : null
+        );
     }
 
     /**
      * Добавление нового типа товаров.
-     * @param type добавлемое описание типа товаров.
+     * @param categoty добавлемое описание типа товаров.
      * @returns промис добавленного типа товаров с дополнительной информацией о добавлении.
      */
-    add(type: ModelCategory): Promise<Category> {
-        return ModelCategory.create({ ...type }).then(category => category.toJSON());
+    add(categoty: Category): Promise<Category> {
+        return ModelCategory.create({ ...categoty }).then(category =>
+            category.toJSON()
+        );
     }
 
     /**

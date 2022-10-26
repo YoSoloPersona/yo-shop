@@ -5,7 +5,7 @@ import { Button, Table } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 // local
-import { Category } from '../../../../../server/src/models';
+import { Category } from 'yo-shop-model';
 import { Task } from '../../task';
 import { Edit } from './edit';
 import { EditableCategory } from './main';

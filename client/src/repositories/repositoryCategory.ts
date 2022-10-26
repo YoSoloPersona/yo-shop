@@ -3,7 +3,7 @@ import querystring from 'querystring';
 // local
 import { despatch, despatchAuth } from './despatch';
 import { domain } from './domain';
-import { Category } from '../../../server/src/models';
+import { Category } from 'yo-shop-model';
 
 /**
  *

@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 import { repositoryCategory } from '../../../repositories';
 import { List } from './list';
 import { Add } from './add';
-import { Category } from '../../../../../server/src/models';
+import { Category } from 'yo-shop-model';
 
 /** Свойства. */
 type Props = {

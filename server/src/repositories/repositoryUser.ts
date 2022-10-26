@@ -3,7 +3,7 @@ import debug from 'debug';
 
 // local
 import { domain } from '../helpers/domain';
-import { FilterUser, OptionalUser } from '../models';
+import { FilterUser, User } from 'yo-shop-model';
 import { Repository } from './repository';
 
 const log = debug('test:repositoryUser');
@@ -21,7 +21,7 @@ class RepositoryUser extends Repository {
      * @param user данные регистрируемого пользователя.
      * @returns Promise.
      */
-    registrate(user: OptionalUser): Promise<Answer> {
+    registrate(user: User): Promise<Answer> {
         return (
             this.despatch
                 .post<Answer>(
@@ -43,7 +43,7 @@ class RepositoryUser extends Repository {
      * @param user данные авторизируемого пользователя.
      * @returns Promise.
      */
-    login(user: OptionalUser): Promise<Answer> {
+    login(user: User): Promise<Answer> {
         return (
             this.despatch
                 .post<Answer>(

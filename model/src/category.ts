@@ -19,7 +19,7 @@ export class ModelCategory extends Model<
     InferCreationAttributes<ModelCategory>
 > {
     /** Идентификатор в БД. */
-    declare id: CreateOptions<number>;
+    declare id?: CreateOptions<number>;
 
     /** Наименование. */
     declare name: string;
