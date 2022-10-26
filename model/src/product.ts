@@ -1,35 +1,17 @@
-import {
-    InferAttributes,
-    InferCreationAttributes,
-    Model,
-    CreateOptions,
-    FindOptions
-} from 'sequelize';
-
-export type FindProduct = FindOptions<
-    InferAttributes<ModelProduct, { omit: never }>
->;
-
 /** Продукт. */
-export type Product = InferAttributes<ModelProduct>;
-
-/** Модель продукта. */
-export class ModelProduct extends Model<
-Product,
-    InferCreationAttributes<ModelProduct>
-> {
+export interface Product {
     /** Идентификатор в БД. */
-    declare id: CreateOptions<number>;
+    id?: number;
 
     /** Наименование. */
-    declare name: string;
+    name: string;
 
     /** Цена. */
-    declare price: string;
+    price: string;
 
     /** Рейтинг. */
-    declare rating: number;
+    rating: number;
 
     /** Картинка. */
-    declare img: string;
+    img: string;
 }

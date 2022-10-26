@@ -1,18 +1,5 @@
-import {
-    CreationOptional,
-    InferAttributes,
-    InferCreationAttributes,
-    Model
-} from 'sequelize';
-
 /** Корзина. */
-export type Basket = InferAttributes<ModelBasket>;
-
-/** Модель корзины. */
-export class ModelBasket extends Model<
-    Basket,
-    InferCreationAttributes<ModelBasket>
-> {
+export class Basket {
     /** Идентификатор в БД. */
-    declare id: CreationOptional<number>;
+    declare id?: number;
 }

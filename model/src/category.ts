@@ -1,26 +1,8 @@
-import {
-    InferAttributes,
-    InferCreationAttributes,
-    Model,
-    CreateOptions,
-    FindOptions
-} from 'sequelize';
-
-export type FindCategory = FindOptions<
-    InferAttributes<ModelCategory, { omit: never }>
->;
-
 /** Категория продуктов. */
-export type Category = InferAttributes<ModelCategory>;
-
-/** Категория продуктов. */
-export class ModelCategory extends Model<
-    Category,
-    InferCreationAttributes<ModelCategory>
-> {
+export interface Category {
     /** Идентификатор в БД. */
-    declare id?: CreateOptions<number>;
+    id?: number;
 
     /** Наименование. */
-    declare name: string;
+    name: string;
 }
