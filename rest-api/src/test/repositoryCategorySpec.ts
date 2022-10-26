@@ -2,8 +2,8 @@ import 'jasmine';
 import debug from 'debug';
 
 // local
-import { repositoryUser, repositoryCategory } from '../../repositories';
-import { admin, user1 } from '../data/users';
+import { repositoryUser, repositoryCategory } from '../';
+import { admin, user1 } from './data/users';
 
 // Таймаут на выполнение утверждения
 const timeoutIt = 3000;

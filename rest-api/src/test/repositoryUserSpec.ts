@@ -2,9 +2,8 @@ import 'jasmine';
 import debug from 'debug';
 
 // local
-import { user1, admin, root } from '../data/users';
-import { repositoryUser } from '../../repositories';
-import e from 'express';
+import { user1, admin, root } from './data/users';
+import { repositoryUser } from '../';
 
 // Определяем протоколы
 const log = debug('test:log'); // Для отображения простой информации

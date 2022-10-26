@@ -2,7 +2,7 @@ import { URLSearchParams } from 'url';
 import debug from 'debug';
 
 // local
-import { domain } from '../helpers/domain';
+import { domain } from 'yo-shop-model';
 import { FilterUser, User } from 'yo-shop-model';
 import { Repository } from './repository';
 
@@ -34,7 +34,7 @@ class RepositoryUser extends Repository {
                     }
                 )
                 // Вытаскиваем данные из ответа
-                .then(res => res.data)
+                .then((res) => res.data)
         );
     }
 
@@ -56,27 +56,27 @@ class RepositoryUser extends Repository {
                     }
                 )
                 // Вытаскиваем данные из ответа
-                .then(res => res.data)
+                .then((res) => res.data)
         );
     }
 
     /**
      * Удаляет пользователей по указанному фильтру.
-     * @param filter 
-     * @returns 
+     * @param filter
+     * @returns
      */
     delete(filter?: FilterUser): Promise<number> {
         const params = new URLSearchParams();
 
         for (const key in filter) {
-            if (Object.prototype.hasOwnProperty.call(filter, key)) { 
-                params.append(key, filter[key]);  
+            if (Object.prototype.hasOwnProperty.call(filter, key)) {
+                params.append(key, filter[key]);
             }
         }
 
         return this.despatch
             .delete(`${domain.api.user.path}?${params}`)
-            .then(res => res.data.count);
+            .then((res) => res.data.count);
     }
 
     /**
@@ -86,7 +86,7 @@ class RepositoryUser extends Repository {
     clear(): Promise<number> {
         return this.despatch
             .delete(domain.api.user.path)
-            .then(res => res.data.count);
+            .then((res) => res.data.count);
     }
 }
 

@@ -1,8 +1,6 @@
-import querystring from 'querystring';
-
 // local
 import { getDespatch } from './despatch';
-import { domain } from '../helpers/domain';
+import { domain } from 'yo-shop-model';
 import { ModelCategory, Category } from 'yo-shop-model';
 
 /**
