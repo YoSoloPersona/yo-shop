@@ -17,7 +17,7 @@ const baseConfig: AxiosRequestConfig = {
  */
 function addLog(despatch: AxiosInstance): AxiosInstance {
     despatch.interceptors.response.use(res => {
-        log(`ответ ${res.status};${res.data.toString()}`);
+        // log(`ответ ${res.status};${res.data.toString()}`);
 
         return res;
     });

@@ -1,10 +1,13 @@
 import {
+    DataTypes,
     InferAttributes,
     InferCreationAttributes,
-    Model,
-    CreateOptions
+    Model
 } from 'sequelize';
 import { ProductInfo } from 'yo-shop-model';
+
+// local
+import { sequelize } from '../db/sequelize';
 
 /** Модель описания продукта. */
 export class ModelProductInfo
@@ -15,7 +18,7 @@ export class ModelProductInfo
     implements ProductInfo
 {
     /** Идентификатор в БД. */
-    declare id: CreateOptions<number>;
+    declare id: number;
 
     /** Заголовок. */
     declare title: string;
@@ -23,3 +26,16 @@ export class ModelProductInfo
     /** Описание. */
     declare description: string;
 }
+
+/** Инициализация в БД. */
+ModelProductInfo.init(
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        title: { type: DataTypes.STRING, allowNull: false },
+        description: { type: DataTypes.STRING, allowNull: false }
+    },
+    {
+        sequelize,
+        tableName: 'productInfo'
+    }
+);

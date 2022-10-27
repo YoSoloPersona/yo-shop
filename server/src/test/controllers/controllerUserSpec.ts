@@ -3,7 +3,7 @@ import jwb, { JwtPayload } from 'jsonwebtoken';
 
 // local
 import { sequelize } from '../../db/sequelize';
-import ControllerUser from '../../controllers/controllerUser';
+import ControllerUser from '../../controllers/user';
 import { user1 } from '../data/users';
 import { User } from 'yo-shop-model';
 

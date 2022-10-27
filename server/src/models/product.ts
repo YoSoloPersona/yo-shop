@@ -2,14 +2,21 @@ import {
     InferAttributes,
     InferCreationAttributes,
     Model,
-    CreateOptions,
-    FindOptions
+    FindOptions,
+    WhereOptions,
+    DataTypes
 } from 'sequelize';
 import { Product } from 'yo-shop-model';
 
-export type FindProduct = FindOptions<
-    InferAttributes<ModelProduct, { omit: never }>
->;
+// local
+import { sequelize } from '../db/sequelize';
+
+/** Параметры поиска продукта. */
+export type FindProduct = FindOptions<ModelProduct>;
+
+/** Параметры поиска продукта. */
+export type WhereProduct = WhereOptions<ModelProduct>;
+
 /** Модель продукта. */
 export class ModelProduct
     extends Model<
@@ -19,7 +26,7 @@ export class ModelProduct
     implements Product
 {
     /** Идентификатор в БД. */
-    declare id: CreateOptions<number>;
+    declare id?: number;
 
     /** Наименование. */
     declare name: string;
@@ -33,3 +40,15 @@ export class ModelProduct
     /** Картинка. */
     declare img: string;
 }
+
+/** Инициализация в БД. */
+ModelProduct.init(
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        name: { type: DataTypes.STRING, unique: true, allowNull: false },
+        price: { type: DataTypes.STRING, unique: true, allowNull: false },
+        rating: { type: DataTypes.INTEGER, defaultValue: 0 },
+        img: { type: DataTypes.STRING, unique: true, allowNull: false }
+    },
+    { sequelize, tableName: 'product' }
+);

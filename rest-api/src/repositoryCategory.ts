@@ -1,7 +1,7 @@
 // local
 import { getDespatch } from './despatch';
 import { domain } from 'yo-shop-model';
-import { ModelCategory, Category } from 'yo-shop-model';
+import { Category } from 'yo-shop-model';
 
 /**
  *
@@ -49,7 +49,7 @@ class RepositoryCategory {
      * @param category удаляемая категория товаров.
      * @returns Promise<number>.
      */
-    remove(category: ModelCategory): Promise<number> {
+    remove(category: Category): Promise<number> {
         const params = new URLSearchParams();
         params.append('name', category.name);
 
@@ -59,9 +59,9 @@ class RepositoryCategory {
     }
 
     update(
-        oldCategory: ModelCategory,
-        newCategory: Partial<ModelCategory>
-    ): Promise<ModelCategory> {
+        oldCategory: Category,
+        newCategory: Partial<Category>
+    ): Promise<Category> {
         const params = new URLSearchParams();
 
         // Не используем !category.id на случай если id === 0

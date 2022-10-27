@@ -1,14 +1,24 @@
 // local
-export { ModelUser } from './user';
+import { ModelUser } from './user';
+import { ModelBasket } from './basket';
+import { ModelCategory } from './category';
+import { ModelProduct } from './product';
+import { ModelBasketProducts } from './basketProduct';
+import { ModelBrand } from './brand';
+import { ModelRating } from './rating';
+import { ModelProductInfo } from './productInfo';
+import { ModelTypeBrand } from './typeBrand';
+
+// local
+export { ModelUser, FindUser, WhereUser } from './user';
 export { ModelBasket } from './basket';
-export { ModelCategory } from './category';
-export { ModelProduct } from './product';
+export { ModelCategory, FindCategory, WhereCategory } from './category';
+export { ModelProduct, FindProduct, WhereProduct } from './product';
 export { ModelBasketProducts } from './basketProduct';
-export { ModelBrand } from './brand';
+export { ModelBrand, FindBrand, WhereBrand } from './brand';
 export { ModelRating } from './rating';
 export { ModelProductInfo } from './productInfo';
-export { ModelTypeBrand } from './typeBrand';
-    
+export { ModelTypeBrand, FindTypeBrand, WhereTypeBrand } from './typeBrand';
 
 // Связи
 ModelUser.hasOne(ModelBasket);

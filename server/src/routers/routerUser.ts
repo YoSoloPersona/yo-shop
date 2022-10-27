@@ -2,7 +2,7 @@ import { NextFunction, Router, Request, Response } from 'express';
 import debug from 'debug';
 
 // local
-import ControllerUser from '../controllers/controllerUser';
+import ControllerUser from '../controllers/user';
 import auth from '../middleware/auth';
 import { domain } from '../helpers/domain';
 import { role } from '../middleware/role';

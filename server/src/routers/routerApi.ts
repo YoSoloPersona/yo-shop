@@ -5,9 +5,9 @@ import debug from 'debug';
 import ErrorApi from '../errors/errorApi';
 import { role } from '../middleware/role';
 import { router as routerUser } from './routerUser';
-import ControllerBrand from '../controllers/controllerBrand';
-import ControllerDevice from '../controllers/controllerProduct';
-import ControllerCategory from '../controllers/controllerCategory';
+import ControllerBrand from '../controllers/brand';
+import ControllerDevice from '../controllers/product';
+import ControllerCategory from '../controllers/category';
 import { domain } from '../helpers/domain';
 
 // протоколы

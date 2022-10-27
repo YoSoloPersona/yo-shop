@@ -1,4 +1,4 @@
-import ControllerUser from './controllers/controllerUser';
+import ControllerUser from './controllers/user';
 import { sequelize } from './db/sequelize';
 
 sequelize

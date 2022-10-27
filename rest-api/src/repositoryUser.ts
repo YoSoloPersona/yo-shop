@@ -3,7 +3,7 @@ import debug from 'debug';
 
 // local
 import { domain } from 'yo-shop-model';
-import { FilterUser, User } from 'yo-shop-model';
+import { User } from 'yo-shop-model';
 import { Repository } from './repository';
 
 const log = debug('test:repositoryUser');
@@ -65,7 +65,7 @@ class RepositoryUser extends Repository {
      * @param filter
      * @returns
      */
-    delete(filter?: FilterUser): Promise<number> {
+    delete(filter?: any): Promise<number> {
         const params = new URLSearchParams();
 
         for (const key in filter) {

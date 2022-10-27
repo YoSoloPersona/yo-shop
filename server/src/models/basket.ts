@@ -1,10 +1,13 @@
 import {
-    CreationOptional,
+    DataTypes,
     InferAttributes,
     InferCreationAttributes,
     Model
 } from 'sequelize';
 import { Basket } from 'yo-shop-model';
+
+// local
+import { sequelize } from '../db/sequelize';
 
 /** Модель корзины. */
 export class ModelBasket
@@ -15,5 +18,13 @@ export class ModelBasket
     implements Basket
 {
     /** Идентификатор в БД. */
-    declare id: CreationOptional<number>;
+    declare id: number;
 }
+
+/** Инициализация в БД. */
+ModelBasket.init(
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+    },
+    { sequelize, tableName: 'basket' }
+);

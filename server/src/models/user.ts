@@ -1,14 +1,21 @@
 import {
     InferAttributes,
-    CreationOptional,
     InferCreationAttributes,
     Model,
-    WhereOptions
+    FindOptions,
+    WhereOptions,
+    DataTypes
 } from 'sequelize';
 import { User, Role } from 'yo-shop-model';
 
-/** Фильтр для получения пользователей. */
-export type FilterUser = WhereOptions<User>;
+// local
+import { sequelize } from '../db/sequelize';
+
+/** Параметры поиска пользователей. */
+export type FindUser = FindOptions<InferAttributes<ModelUser>>;
+
+/** Параметры поиска пользователей. */
+export type WhereUser = WhereOptions<InferAttributes<ModelUser>>;
 
 /** Модель пользователя. */
 export class ModelUser
@@ -18,9 +25,9 @@ export class ModelUser
     >
     implements User
 {
-    declare id?: CreationOptional<number>;
+    declare id?: number;
 
-    /** Электронаня почта. */
+    /** Электронная почта. */
     declare email: string;
 
     /** Тип. */
@@ -29,3 +36,16 @@ export class ModelUser
     /** Хэш пароля. */
     declare password: string;
 }
+
+ModelUser.init(
+    {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        role: { type: DataTypes.STRING, defaultValue: 'user' },
+        email: { type: DataTypes.STRING, allowNull: false },
+        password: { type: DataTypes.STRING, allowNull: false }
+    },
+    {
+        sequelize, // Ссылка на БД для инициализации
+        tableName: 'users' // Имя таблицы
+    }
+);

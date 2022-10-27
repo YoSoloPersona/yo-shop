@@ -1,11 +1,12 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import debug from 'debug';
+import { Role } from 'yo-shop-model';
+import { Op } from 'sequelize';
 
 // locals
-import { ModelUser, Role } from 'yo-shop-model';
+import { ModelUser, WhereUser } from '../models';
 import ErrorApi from '../errors/errorApi';
-import { InferAttributes, Op, WhereOptions } from 'sequelize';
 
 const log = debug('controllers:user');
 
@@ -42,11 +43,13 @@ class ControllerUser {
         const hashPassword = await bcrypt.hash(password, 5);
 
         // Регистрируем пользователя
-        const user = (await ModelUser.create({
-            email,
-            role,
-            password: hashPassword
-        })).toJSON();
+        const user = (
+            await ModelUser.create({
+                email,
+                role,
+                password: hashPassword
+            })
+        ).toJSON();
 
         // Возвращаем jwt токен
         return jwt.sign(
@@ -100,13 +103,14 @@ class ControllerUser {
 
     /**
      * Удаляет пользователей с указанными параметрами.
-     * @param filter параметры поиска удаляемых пользователей.
+     * @param option параметры поиска удаляемых пользователей.
      * @returns количество удалённых пользователей.
      */
-    delete(filter?: WhereOptions<InferAttributes<ModelUser>>) {
+    delete(option?: WhereUser) {
         return ModelUser.destroy({
             where: {
                 [Op.and]: [
+                    { ...option },
                     {
                         role: {
                             [Op.ne]: 'root'

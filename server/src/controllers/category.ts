@@ -1,10 +1,13 @@
+import { Category } from 'yo-shop-model';
+
 // local
 import Controller from './controller';
-import { ModelCategory, Category, FindCategory } from 'yo-shop-model';
-import { DestroyOptions } from 'sequelize/types';
+import { ModelCategory, FindCategory, WhereCategory } from '../models';
 
-/** Класс контроллер для получения типов товаров. */
-class ControllerCategory implements Controller<Category> {
+/**
+ * Класс контроллер для получения типов товаров.
+ */
+class ControllerCategory implements Controller<ModelCategory> {
     /**
      * Получение всех типов товаров.
      * @returns промис массива найденных типов товаров.
@@ -17,11 +20,11 @@ class ControllerCategory implements Controller<Category> {
 
     /**
      * Получение конктретного типа товаров.
-     * @param option параметры поиска.
+     * @param options параметры поиска.
      * @returns промис найденного типа товаров либо null в противном случае.
      */
-    findOne(option?: FindCategory): Promise<Category | null> {
-        return ModelCategory.findOne(option).then(category =>
+    findOne(options?: FindCategory): Promise<Category | null> {
+        return ModelCategory.findOne(options).then(category =>
             category ? category?.toJSON() : null
         );
     }
@@ -32,8 +35,8 @@ class ControllerCategory implements Controller<Category> {
      * @returns промис добавленного типа товаров с дополнительной информацией о добавлении.
      */
     add(categoty: Category): Promise<Category> {
-        return ModelCategory.create({ ...categoty }).then(category =>
-            category.toJSON()
+        return ModelCategory.create(categoty).then(modelCategory =>
+            modelCategory.toJSON()
         );
     }
 
@@ -42,8 +45,8 @@ class ControllerCategory implements Controller<Category> {
      * @param option параметры для поиска удаляемых типов товаров.
      * @returns количество удалённых типов товаров.
      */
-    async remove(option?: DestroyOptions<ModelCategory>): Promise<number> {
-        return ModelCategory.destroy(option);
+    async remove(option?: WhereCategory): Promise<number> {
+        return ModelCategory.destroy({ where: option });
     }
 }
 
