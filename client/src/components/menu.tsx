@@ -39,7 +39,7 @@ const Menu = (props: Props) => {
                 {props.user.email ? (
                     // Если пользователь авторизован
                     <Nav className="ml-auto">
-                        {/* Админимстрирование */}
+                        {/* Администрирование */}
                         <Nav.Link href={domain.user.admin.url}>
                             {t('menu.admin')}
                         </Nav.Link>
