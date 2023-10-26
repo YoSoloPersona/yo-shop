@@ -1,6 +1,20 @@
-export const config = {
-    /** Хост на котором расположен сайт. */
-    host: 'localhost',
+const config = {
+    mode:
+        process.env.NODE_ENV || ('development' as 'development' | 'production'),
+    /**
+     * Хост на котором расположен сайт.
+     */
+    server: {
+        /**
+         * Server address.
+         */
+        host: process.env.SERVER_HOST || 'localhost',
+
+        /**
+         * Server port.
+         */
+        port: Number(process.env.SERVER_PORT) || 3000
+    },
 
     /** Конфигурация базы данных. */
     db: {
@@ -14,3 +28,5 @@ export const config = {
         name: process.env.DB_NAME || 'shop_db'
     }
 };
+
+export default config;

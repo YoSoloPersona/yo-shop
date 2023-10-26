@@ -1,43 +1,19 @@
-import express from 'express';
+
 import debug from 'debug';
-import cors from 'cors';
 
-// local
-import { router as routerApi } from './routers/routerApi';
-import { domain } from './helpers/domain';
-import { sequelize } from './db/sequelize';
-import {error} from './middleware/error';
+// locals
+import { db } from './db/db';
+import { start } from './app';
 
-// Протоколы
+// protocols
 const log = debug('app:log');
-const logError = debug('app:error');
-
-// Сервер 
-const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(domain.api.url, routerApi);
-
-// обработчик ошибок
-app.use(error);
+const error = debug('app:error');0
  
-sequelize
-    // авторизируемся в бд
-    .authenticate()
-    // синхронизируемся с бд
-    .then(() => sequelize.sync())
-    // запускаем сервер
-    .then(() => {
-        const PORT = process.env.PORT || 3000;
-
-        // Запускаем сервер
-        app.listen(PORT, () => {
-            log(`Сервер запущен на порту: ${PORT}`);
-        });
-    })
-    // обработка ошибок
-    .catch((err) => {
-        logError(err);
-    });
+// init db
+db()
+// start server
+.then(() => start())
+// catch errors
+.catch((err) => {
+    error(err);
+});

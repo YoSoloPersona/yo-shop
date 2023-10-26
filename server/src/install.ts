@@ -1,5 +1,5 @@
-import ControllerUser from './controllers/user';
-import { sequelize } from './db/sequelize';
+import ControllerUser from './components/user/user.controller';
+import { sequelize } from './db/db';
 
 sequelize
     // Соединяемся с БД
