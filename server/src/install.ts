@@ -1,12 +1,13 @@
-import ControllerUser from './components/user/user.controller';
-import { sequelize } from './db/db';
+import { ControllerUser } from './components/user/';
+import { db } from './db';
 
-sequelize
-    // Соединяемся с БД
-    .authenticate()
-    // Синхронизируемся
-    .then(() => sequelize.sync())
-     // Добавляем главного админнистратора
-    .then(() => ControllerUser.registration('yo.solo.persona@gmail.com', '1234', 'root'))
-
-    .catch(console.error);
+db()    
+// Добавляем главного админнистратора
+.then(() =>
+    new ControllerUser().registration({
+        email: 'yo.solo.persona@gmail.com',
+        password: '1234',
+        role: 'root'
+    })
+)
+.catch(console.error);
