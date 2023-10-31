@@ -1,20 +1,12 @@
-import {
-    InferAttributes,
-    InferCreationAttributes,
-    Model,
-    DataTypes
-} from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import { BasketProducts } from 'yo-shop-model';
 
 // local
-import { sequelize } from '../db/sequelize';
+import { sequelize } from '../db';
 
 /** Модель карзины продуктов. */
 export class ModelBasketProducts
-    extends Model<
-        InferAttributes<ModelBasketProducts>,
-        InferCreationAttributes<ModelBasketProducts>
-    >
+    extends Model<BasketProducts, BasketProducts>
     implements BasketProducts
 {
     /** Идентификатор в БД. */
@@ -24,7 +16,11 @@ export class ModelBasketProducts
 /** Инициализация в БД. */
 ModelBasketProducts.init(
     {
-        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        }
     },
     { sequelize, tableName: 'basketProducts' }
 );

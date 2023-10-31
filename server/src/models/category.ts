@@ -1,28 +1,12 @@
-import {
-    InferAttributes,
-    InferCreationAttributes,
-    Model,
-    FindOptions,
-    WhereOptions,
-    DataTypes
-} from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import { Category } from 'yo-shop-model';
 
 // local
-import { sequelize } from '../db/sequelize';
-
-/** Параметры поиска категории товаров. */
-export type FindCategory = FindOptions<ModelCategory>;
-
-/** Параметры удаления категории товаров. */
-export type WhereCategory = WhereOptions<ModelCategory>;
+import { sequelize } from '../db';
 
 /** Модель категории продуктов. */
 export class ModelCategory
-    extends Model<
-        InferAttributes<ModelCategory>,
-        InferCreationAttributes<ModelCategory>
-    >
+    extends Model<Category, Category>
     implements Category
 {
     /** Идентификатор в БД. */
@@ -35,8 +19,16 @@ export class ModelCategory
 /** Инициализация в БД. */
 ModelCategory.init(
     {
-        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        name: { type: DataTypes.STRING, unique: true, allowNull: false }
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
+        }
     },
     {
         sequelize,

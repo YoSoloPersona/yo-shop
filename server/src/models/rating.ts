@@ -1,19 +1,17 @@
 import {
     DataTypes,
-    InferAttributes,
-    InferCreationAttributes,
     Model
 } from 'sequelize';
 import { Rating } from 'yo-shop-model';
 
 // local
-import { sequelize } from '../db/sequelize';
+import { sequelize } from '../db';
 
 /** Модель рейтинга. */
 export class ModelRating
     extends Model<
-        InferAttributes<ModelRating>,
-        InferCreationAttributes<ModelRating>
+        Rating,
+        Rating
     >
     implements Rating
 {
@@ -26,8 +24,15 @@ export class ModelRating
 
 ModelRating.init(
     {
-        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        rate: { type: DataTypes.INTEGER, allowNull: false }
+        id: { 
+            type: DataTypes.INTEGER, 
+            primaryKey: true, 
+            autoIncrement: true 
+        },
+        rate: { 
+            type: DataTypes.INTEGER, 
+            allowNull: false 
+        }
     },
     {
         sequelize,
