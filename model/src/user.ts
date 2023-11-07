@@ -1,17 +1,34 @@
-/** Типы пользователей. */
+/**
+ * Users type
+ */
 export type Role = 'root' | 'user' | 'admin';
 
-/** Пользователь. */
-export interface User {
-    /** Идентификатор в БД. */
-    id?:number;
+/**
+ * Authorization and registration response type
+ */
+export type AuthorizationResponse = {
+    token: string;
+};
 
-    /** Электронаня почта. */
+/** User interface */
+export interface User {
+    /**
+     * Id
+     */
+    id?: number;
+
+    /**
+     * Email
+     */
     email: string;
 
-    /** Тип. */
+    /**
+     * Role
+     */
     role: Role;
 
-    /** Хэш пароля. */
+    /**
+     * Password hash
+     */
     password: string;
 }

@@ -33,7 +33,7 @@ class UrlNode {
             }
         }
 
-        return Object.assign(parent, { ...children });
+        return Object.assign(parent, { ...(children ?? {}) });
     }
 
     /**
@@ -48,7 +48,7 @@ class UrlNode {
      * Возвращает полный путь до узла.
      * @returns string.
      */
-    get path(): string {
+    get fullUrl(): string {
         return this._parent ? this._parent.toString() + this._url : this._url;
     }
 
@@ -56,7 +56,7 @@ class UrlNode {
      * Возвращает текущий путь.
      * @returns string.
      */
-    get url() {
+    get currentUrl() {
         return this._url;
     }
 
@@ -68,47 +68,27 @@ class UrlNode {
 
 const init = UrlNode.init;
 
-// параметры
-const protocol = 'http';
-const host = 'localhost';
-const port = 3000;
+export const api = init(`/api/v${version}`, {
+    /** Пользователи. */
+    user: init(`/user`, {
+        /** Регистрация. */
+        registration: init('/registration', {}),
 
-/**
- * Объект с информацией о сайте.
- */
+        /** Авторизация. */
+        authorization: init('/authorization', {})
+    }),
+    /** Бренды. */
+    brand: init('/brand', {}),
 
-export const domain = init(`${protocol}://${host}:${port}`, {
-    /** Протокол. */
-    protocol,
+    /** Типы товаров. */
+    type: init('/type', {}),
 
-    /** Хост. */
-    host,
+    /** Корзина. */
+    basket: init('/basket', {}),
 
-    /** Порт. */
-    port,
+    /** Магазин. */
+    shop: init('/shop', {}),
 
-    api: init(`/api/v${version}`, {
-        /** Пользователи. */
-        user: init(`/user`, {
-            /** Регистрация. */
-            registration: init('/registration', {}),
-
-            /** Авторизация. */
-            login: init('/login', {})
-        }),
-        /** Бренды. */
-        brand: init('/brand', {}),
-
-        /** Типы товаров. */
-        type: init('/type', {}),
-
-        /** Корзина. */
-        basket: init('/basket', {}),
-
-        /** Магазин. */
-        shop: init('/shop', {}),
-
-        /** Описание товара. */
-        device: init('/device', {})
-    })
-});
+    /** Описание товара. */
+    device: init('/device', {})
+})

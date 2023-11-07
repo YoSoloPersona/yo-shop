@@ -1,6 +1,6 @@
-export { domain } from './domain';
+export { api } from './domain';
 
-export { User, Role } from './user';
+export { User, Role, AuthorizationResponse } from './user';
 export { Basket } from './basket';
 export { Product } from './product';
 export { Category } from './category';
