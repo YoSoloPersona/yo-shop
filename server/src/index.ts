@@ -8,7 +8,7 @@ import { ControllerUser } from './components/user';
 
 // protocols
 const log = debug('app:log');
-const error = debug('app:error');0
+const error = debug('app:error');
  
 // init db
 db()
