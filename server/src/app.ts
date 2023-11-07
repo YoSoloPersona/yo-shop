@@ -72,7 +72,7 @@ export function addController(
             getMeta(method, symbols.Method)
         ])
         .forEach(([classMethod, { httpMethod, path: pathMethod, params }]) => {
-            // регистрируем обработчик
+            // register the handler
             switch (httpMethod) {
                 case 'get':
                     router[httpMethod](
@@ -119,10 +119,32 @@ export function addController(
                         }
                     );
                     break;
-            }
+            
+                case 'delete':
+                    router[httpMethod](
+                        `${pathController}${pathMethod ?? ''}${params}`,
+                        (req, res, next) => {
+                            const result = classMethod.call(
+                                controller,
+                                params ? req.params : undefined
+                            );
+
+                            if (result instanceof Promise) {
+                                result
+                                    .then(promiseResult => {
+                                        res.send(promiseResult.toString());
+                                    })
+                                    .catch(err => next(err));
+                            } else {
+                                res.send(result.toString());
+                            }
+                        }
+                    );
+                    break;
+                }
 
             log(
-                `Добавлен обработчик ${classConstructor.name}.${classMethod.name}(${httpMethod})`
+                `Add handler ${classConstructor.name}.${classMethod.name}(${httpMethod})`
             );
         });
 
