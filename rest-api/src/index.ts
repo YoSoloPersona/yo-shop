@@ -1,2 +1,2 @@
-export { repositoryUser } from './repositoryUser';
-export { repositoryCategory } from './repositoryCategory';
+export { RepositoryUser } from './user/repository.user';
+export { RepositoryCategory } from './category/repository.category';

@@ -1,56 +1,84 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import debug from 'debug';
 
-const log = debug('axios');
+const logRequest = debug('axios:request');
+const errorRequest = debug('axios:request:error');
+const logResponse = debug('axios:response');
+const errorResponse = debug('axios:response:error');
 
-// Создаём объекты для запросов с базовыми настройками, для того чтобы не конфигурировать каждый раз заного.
-
-// Базовая конфигурация
-const baseConfig: AxiosRequestConfig = {
-    timeout: 4000
+export type Params = {
+    protocol?: 'http' | 'https';
+    host?: string;
+    port?: number;
 };
 
-/**
- * Добавляем протоколирование.
- * @param despatch 
- * @returns 
- */
 function addLog(despatch: AxiosInstance): AxiosInstance {
-    despatch.interceptors.response.use(res => {
-        // log(`ответ ${res.status};${res.data.toString()}`);
+    despatch.interceptors.request.use(
+        (config) => {
+            logRequest(`(${config.method}) ${config.url}`);
 
-        return res;
-    });
+            return config;
+        },
+        (error) => {
+            // log the error
+            errorRequest(error);
+
+            return Promise.reject(error);
+        }
+    );
+
+    despatch.interceptors.response.use(
+        // 2xx
+        (res) => {
+            logResponse(`status: ${res.status}, data: ${res.data}`);
+
+            return res;
+        },
+        // NOT 2xx
+        (error) => {
+            // log the error
+            errorResponse(error);
+
+            return Promise.reject(error);
+        }
+    );
 
     return despatch;
 }
 
-/** Объект для запросов данных с сервера не требующих авторизации. */
-const despatch = addLog(axios.create(baseConfig));
+export function factory({
+    protocol = 'http',
+    host = 'localhost',
+    port = 3000
+}: Params) {
+    // base config
+    const baseConfig: AxiosRequestConfig = {
+        timeout: 4000,
+        baseURL: `${protocol}://${host}${port > 0 ? ':' + port : ''}`
+    };
 
-/**  */
-const listAxios = new Map<string, AxiosInstance>([['', despatch]]);
+    // for data requests from the server that do not require authorization
+    const baseDespatch = addLog(axios.create(baseConfig));
 
-/**
- *
- * @param token
- */
-export function getDespatch(token = '') {
-    let despatch= listAxios.get(token);
+    /**  */
+    const listAxios = new Map<string, AxiosInstance>([['', baseDespatch]]);
 
-    if (!despatch)  {
-        /** Объект для запросов данных с сервера требующих авторизации. */
-        despatch = axios.create(baseConfig);
+    return function getDespatch(token = '') {
+        let despatch = listAxios.get(token);
 
-        // Перед каждой отправкой добавляем токен
-        despatch.interceptors.request.use(config => {
-            if (config.headers) {
-                config.headers.authorization = `Bearer ${token}`;
-            }
+        if (!despatch) {
+            despatch = axios.create(baseConfig);
 
-            return config;
-        });
-    }
+            // Before each send we add a token
+            despatch.interceptors.request.use((config) => {
+                if (config.headers) {
+                    config.headers.authorization = `Bearer ${token}`;
+                }
 
-    return addLog(despatch);
+                return config;
+            });
+        }
+
+        return addLog(despatch);
+    };
 }

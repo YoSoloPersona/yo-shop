@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "concurrently \"env-cmd -f ./env/test/server-test.env jasmine --config=./helpers/jasmine.json\""
+    "test": "concurrently \"env-cmd -f ./env/test/server.env jasmine --config=./helpers/jasmine.json\""
   },
   "keywords": [
     "rest",
