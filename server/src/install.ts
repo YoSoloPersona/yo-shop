@@ -1,13 +1,27 @@
+import debug from 'debug';
+
+// locals
 import { ControllerUser } from './components/user/';
 import { db } from './db';
 
-db()    
-// Добавляем главного админнистратора
-.then(() =>
-    new ControllerUser().registration({
-        email: 'yo.solo.persona@gmail.com',
-        password: '1234',
-        role: 'root'
+const log = debug('install');
+const error = debug('install');
+
+log('install');
+
+log('connect to database');
+// connect to db
+db()
+    .then(() => log('successfully'))
+    // add root
+    .then(() => {
+        log('add root');
+
+        return new ControllerUser().registration({
+            email: 'yo.solo.persona@gmail.com',
+            password: '1234',
+            role: 'root'
+        });
     })
-)
-.catch(console.error);
+    .then(() => log('successfully'))
+    .catch(error);
