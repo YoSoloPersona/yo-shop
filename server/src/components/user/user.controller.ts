@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import debug from 'debug';
-import { User } from 'yo-shop-model';
+import { AuthorizationResponse, User, api } from 'yo-shop-model';
 
 // locals
 import ErrorApi from '../../errors/errorApi';
@@ -15,7 +15,7 @@ const error = debug('app:controllers:user');
 /**
  * Class user controller
  */
-@controller({ path: '/user' })
+@controller({ path: api.user.fullUrl })
 export class ControllerUser {
     /**
      * User repository
@@ -28,7 +28,11 @@ export class ControllerUser {
      * @returns jsonwebtoken
      */
     @post()
-    async registration({ email, password, role }: User): Promise<string> {
+    async registration({
+        email,
+        password,
+        role
+    }: User): Promise<AuthorizationResponse> {
         log(`registration email: ${email}, role: ${role}`);
 
         if (!email || !password) {
@@ -58,14 +62,13 @@ export class ControllerUser {
         });
 
         // return jsonwebtoken
-        return jwt.sign(
-            // data
-            { id: user.id, email, role },
-            // key
+        const token = jwt.sign(
+            { id: user.id, email, role: user.role },
             process.env.SECRET_KEY as string,
-            // expiration date
             { expiresIn: '24h' }
         );
+
+        return { token };
     }
 
     /**
@@ -74,8 +77,11 @@ export class ControllerUser {
      * @param password password
      * @returns jsonwebtoken.
      */
-    @post({ path: '/authorization' })
-    async authorization({ email, password }: User): Promise<string> {
+    @post({ path: api.user.authorization.currentUrl })
+    async authorization({
+        email,
+        password
+    }: User): Promise<AuthorizationResponse> {
         log(`authorization email: ${email}`);
 
         if (!email || !password) {
@@ -95,11 +101,13 @@ export class ControllerUser {
             throw ErrorApi.badRequest(message);
         }
 
-        return jwt.sign(
+        const token = jwt.sign(
             { id: user.id, email, role: user.role },
             process.env.SECRET_KEY as string,
             { expiresIn: '24h' }
         );
+
+        return { token };
     }
 
     /**
