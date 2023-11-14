@@ -1,12 +1,9 @@
-import express, { Router } from 'express';
+import express, { RequestHandler, ErrorRequestHandler, Router } from 'express';
 import { Server } from 'node:http';
 import debug from 'debug';
-import cors from 'cors';
 
 // locals
 import config from './config';
-import { domain } from './helpers/domain';
-import { errorHandler } from './middleware/errorHandler';
 import { MetaController, MetaGet, symbols } from './helpers/decorators';
 import { getMeta } from './helpers/decorators/meta';
 
@@ -16,11 +13,6 @@ const error = debug('app:error');
 
 // server
 const app = express();
-
-// middleware
-app.use(cors());
-app.use(express.json());
-app.use(errorHandler);
 
 /**
  * Start server.
@@ -76,7 +68,9 @@ export function addController(
             switch (httpMethod) {
                 case 'get':
                     router[httpMethod](
+                        // path
                         `${pathController}${pathMethod ?? ''}${params}`,
+                        // handler
                         (req, res, next) => {
                             const result = classMethod.call(
                                 controller,
@@ -98,7 +92,7 @@ export function addController(
 
                 case 'post':
                     router[httpMethod](
-                        // address
+                        // path
                         `${pathController}${pathMethod ?? ''}${params ?? ''}`,
                         // handler
                         (req, res, next) => {
@@ -119,10 +113,12 @@ export function addController(
                         }
                     );
                     break;
-            
+
                 case 'delete':
                     router[httpMethod](
+                        // path
                         `${pathController}${pathMethod ?? ''}${params}`,
+                        // handler
                         (req, res, next) => {
                             const result = classMethod.call(
                                 controller,
@@ -141,14 +137,22 @@ export function addController(
                         }
                     );
                     break;
-                }
+            }
 
             log(
                 `Add handler ${classConstructor.name}.${classMethod.name}(${httpMethod})`
             );
         });
 
+    // add router
     app.use(router);
 
     return Promise.resolve();
+}
+
+export function addMiddleware(
+    middleWare: RequestHandler | ErrorRequestHandler
+) {
+    app.use(middleWare);
+    log(`Add middleware ${middleWare.name}`);
 }

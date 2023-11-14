@@ -1,9 +1,14 @@
 import { Response, NextFunction } from 'express';
 import { Role } from 'yo-shop-model';
+import debug from 'debug';
 
 // locals
 import ErrorApi from '../errors/errorApi';
 import { RequestAuthentication } from './authentication';
+
+// protocols
+const log = debug('middleware:authorization');
+const error = debug('middleware:authorization:error');
 
 /**
  * Creates a function to check if you have permissions to perform an operation
@@ -24,6 +29,7 @@ export function role(...role: Role[]) {
         next: NextFunction
     ) {
         if (!req.user) {
+            
             return next(ErrorApi.unauthorized('User is not authenticated'));
         }
 
@@ -33,6 +39,7 @@ export function role(...role: Role[]) {
             );
         }
 
+        log(`user successfully authorized`);
         // next handler
         next();
     };

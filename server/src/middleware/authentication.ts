@@ -1,8 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
+import debug from 'debug';
 
 // locals
 import { User } from 'yo-shop-model';
+
+// protocols
+const log = debug('middleware:authentification');
+const error = debug('middleware:authentification:error');
 
 /**
  * Type of request with authenticated user data
@@ -33,6 +38,7 @@ export default function authentication(
 
         // there is no token in the request
         if (token) {
+            log(`token request received ${token}`);
             // verify the token sent
             const user = jwt.verify(token, process.env.SECRET_KEY as string);
             // retrieve and save user data
@@ -41,9 +47,12 @@ export default function authentication(
                 writable: false,
                 configurable: false
             });
+
+            log(`the user is successfully authenticated ${user}`);
         }
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        error(err);
+        next(err);
     }
 
     // next handler
