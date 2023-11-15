@@ -1,5 +1,6 @@
 import debug from 'debug';
 
+// protocols
 const log = debug('decorators:inject');
 const error = debug('decorators:inject:error');
 

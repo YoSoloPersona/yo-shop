@@ -1,5 +1,6 @@
 import debug from 'debug';
 
+// protocols
 const log = debug('decorators:meta');
 
 export const { setMeta, getMeta } = (function () {
@@ -16,7 +17,6 @@ export const { setMeta, getMeta } = (function () {
         kvp[key] = meta;
 
         store.set(source, kvp);
-
         log('set metadata', source, kvp);
     }
 

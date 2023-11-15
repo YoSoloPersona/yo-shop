@@ -1,11 +1,14 @@
+export { getMeta, setMeta } from './meta';
 export { injectable, inject } from './inject';
 export {
+    symbolsController,
+    HTTPMethod,
+    MetaController,
+    MetaMethod,
     controller,
     get,
     post,
     put,
-    del,
-    MetaController,
-    MetaMethod as MetaGet,
-    symbols
+    del
 } from './controller';
+export { roles, symbolsRoles } from './roles';
