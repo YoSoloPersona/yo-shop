@@ -5,7 +5,7 @@ import { AuthorizationResponse, User, api } from 'yo-shop-model';
 
 // locals
 import ErrorApi from '../../errors/errorApi';
-import { controller, inject, post, del } from '../../helpers/decorators';
+import { controller, inject, post, del, roles } from '../../helpers/decorators';
 import { UserRepository } from './user.repository';
 
 // protocols
@@ -115,6 +115,7 @@ export class ControllerUser {
      * @returns Promise<number> number of deleted users
      */
     @del()
+    @roles('root', 'admin')
     deleteAll(): Promise<number> {
         return this._userRepository.deleteAll();
     }
@@ -125,6 +126,7 @@ export class ControllerUser {
      * @returns  Promise<number> number of deleted users
      */
     @del({ params: '/:id' })
+    @roles('root', 'admin')
     deletebyId(id: number): Promise<number> {
         return this._userRepository.deleteById(id);
     }

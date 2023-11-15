@@ -1,11 +1,24 @@
-import express, { RequestHandler, ErrorRequestHandler, Router } from 'express';
+import express, {
+    Request,
+    RequestHandler,
+    ErrorRequestHandler,
+    Router
+} from 'express';
 import { Server } from 'node:http';
 import debug from 'debug';
+import { Role } from 'yo-shop-model';
 
 // locals
 import config from './config';
-import { MetaController, MetaGet, symbols } from './helpers/decorators';
-import { getMeta } from './helpers/decorators/meta';
+import {
+    HTTPMethod,
+    MetaController,
+    MetaMethod,
+    symbolsController,
+    symbolsRoles
+} from './helpers/decorators';
+import { getMeta } from './helpers/decorators';
+import { authorization } from './middleware/authorization';
 
 // protocols
 const log = debug('app:log');
@@ -41,7 +54,7 @@ export function addController(
 
     const { path: pathController } = getMeta<MetaController>(
         classConstructor,
-        symbols.Controller
+        symbolsController.Controller
     );
 
     // if there is no metadata
@@ -55,90 +68,53 @@ export function addController(
     log(`added controller ${classConstructor.name}`);
 
     Reflect.ownKeys(classConstructor.prototype)
+        // get all props
         .map(prop => classConstructor.prototype[prop])
+        // filter only methods for which metadata with methods is defined
         .filter(
-            prop => prop instanceof Function && getMeta(prop, symbols.Method)
+            prop =>
+                prop instanceof Function &&
+                getMeta(prop, symbolsController.Method)
         )
-        .map<[Function, MetaGet]>(method => [
-            method,
-            getMeta(method, symbols.Method)
+        .map<[Function, MetaMethod]>(classMethod => [
+            classMethod,
+            getMeta(classMethod, symbolsController.Method)
         ])
         .forEach(([classMethod, { httpMethod, path: pathMethod, params }]) => {
-            // register the handler
-            switch (httpMethod) {
-                case 'get':
-                    router[httpMethod](
-                        // path
-                        `${pathController}${pathMethod ?? ''}${params}`,
-                        // handler
-                        (req, res, next) => {
-                            const result = classMethod.call(
-                                controller,
-                                params ? req.params : undefined
-                            );
+            const handlers: RequestHandler[] = [];
 
-                            if (result instanceof Promise) {
-                                result
-                                    .then(promiseResult => {
-                                        res.send(promiseResult);
-                                    })
-                                    .catch(err => next(err));
-                            } else {
-                                res.send(result.toString());
-                            }
-                        }
-                    );
-                    break;
+            // get roles
+            const roles: Role[] | undefined = getMeta(
+                classMethod,
+                symbolsRoles.Roles
+            );
 
-                case 'post':
-                    router[httpMethod](
-                        // path
-                        `${pathController}${pathMethod ?? ''}${params ?? ''}`,
-                        // handler
-                        (req, res, next) => {
-                            const result = classMethod.call(
-                                controller,
-                                req.body
-                            );
-
-                            if (result instanceof Promise) {
-                                result
-                                    .then(promiseResult => {
-                                        res.send(promiseResult);
-                                    })
-                                    .catch(err => next(err));
-                            } else {
-                                res.send(result.toString());
-                            }
-                        }
-                    );
-                    break;
-
-                case 'delete':
-                    router[httpMethod](
-                        // path
-                        `${pathController}${pathMethod ?? ''}${params}`,
-                        // handler
-                        (req, res, next) => {
-                            const result = classMethod.call(
-                                controller,
-                                params ? req.params : undefined
-                            );
-
-                            if (result instanceof Promise) {
-                                result
-                                    .then(promiseResult => {
-                                        res.send(promiseResult.toString());
-                                    })
-                                    .catch(err => next(err));
-                            } else {
-                                res.send(result.toString());
-                            }
-                        }
-                    );
-                    break;
+            if (Array.isArray(roles)) {
+                handlers.push(authorization(...roles));
             }
 
+            const getArgs = GetArgs(httpMethod);
+
+            // register the handler
+            router[httpMethod](
+                // path
+                `${pathController}${pathMethod ?? ''}${params ?? ''}`,
+                // handlers
+                ...handlers,
+                (req, res, next) => {
+                    const result = classMethod.call(controller, getArgs(req, params));
+
+                    if (result instanceof Promise) {
+                        result
+                            .then(promiseResult => {
+                                res.json(promiseResult);
+                            })
+                            .catch(err => next(err));
+                    } else {
+                        res.send(result.toString());
+                    }
+                }
+            );
             log(
                 `Add handler ${classConstructor.name}.${classMethod.name}(${httpMethod})`
             );
@@ -155,4 +131,39 @@ export function addMiddleware(
 ) {
     app.use(middleWare);
     log(`Add middleware ${middleWare.name}`);
+}
+
+function GetArgs(httpMethod: HTTPMethod): (req: Request, params?: string) => any {
+    switch (httpMethod) {
+        case 'get':
+            return getArgsGet;
+
+        case 'post':
+            return getArgsPost;
+
+        case 'put':
+            return getArgsPut;
+
+        case 'delete':
+            return getArgsDelete;
+
+        default:
+            throw Error('');
+    }
+}
+
+function getArgsGet(req: Request, params?: string): any {
+    return params ? req.params : undefined;
+}
+
+function getArgsPost(req: Request, params?: string): any {
+    return req.body;
+}
+
+function getArgsPut(req: Request, params?: string): any {
+    return req.body;
+}
+
+function getArgsDelete(req: Request, params?: string): any {
+    return params ? req.params : undefined;
 }
