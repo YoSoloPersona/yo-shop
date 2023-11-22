@@ -1,12 +1,21 @@
 {
   "name": "yo-shop-model",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Description of the yo-shop model.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/YoSoloPersona/yo-shop"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "main": "./dist/index.js",
   "types": "./dist/types",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch"
+    "build-docs": "typedoc --tsconfig ./tsconfig.json",
+    "watch": "tsc --watch",
+    "publish": "publish"
   },
   "keywords": [
     "typescript",
@@ -17,6 +26,7 @@
   "author": "yolik",
   "license": "ISC",
   "devDependencies": {
+    "typedoc": "^0.25.3",
     "typescript": "^4.8.4"
   }
 }
