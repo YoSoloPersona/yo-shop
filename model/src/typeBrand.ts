@@ -1,5 +1,5 @@
-/** Тип бренда. */
+/** Brand type interface */
 export interface TypeBrand {
-    /** Идентификатор в БД. */
+    /** Unique identifier */
     id?: number;
 }

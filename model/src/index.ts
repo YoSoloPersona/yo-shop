@@ -1,7 +1,7 @@
-export { api } from './domain';
+export { api } from './api';
 
 export { User, Role, AuthorizationResponse } from './user';
-export { Basket } from './basket';
+export { Cart } from './cart';
 export { Product } from './product';
 export { Category } from './category';
 export { Brand } from './brand';

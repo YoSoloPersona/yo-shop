@@ -1,8 +1,8 @@
-/** Модель рейтинга. */
+/** Raiting interface */
 export interface Rating {
-    /** Идентификатор в БД. */
+    /** Unique Identifier */
     id?: number;
 
-    /** Рейтинг. */
+    /** Rate */
     rate: number;
 }

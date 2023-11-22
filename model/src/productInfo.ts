@@ -1,11 +1,11 @@
-/** Описание продукта. */
+/** Product description interface */
 export interface ProductInfo {
-    /** Идентификатор в БД. */
+    /** Unique Identifier */
     id: number;
 
-    /** Заголовок. */
+    /** Title */
     title: string;
 
-    /** Описание. */
+    /** Description */
     description: string;
 }

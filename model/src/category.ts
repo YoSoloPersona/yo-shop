@@ -1,8 +1,8 @@
-/** Категория продуктов. */
+/** Product category interface */
 export interface Category {
-    /** Идентификатор в БД. */
+    /** Unique Identifier */
     id?: number;
 
-    /** Наименование. */
+    /** Name */
     name: string;
 }

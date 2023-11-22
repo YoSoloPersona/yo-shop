@@ -1,5 +1,5 @@
-/** Корзина продуктов. */
+/** Grocery cart interface */
 export interface BasketProducts {
-    /** Идентификатор в БД. */
+    /** Unique Identifier */
     id?: number;
 }

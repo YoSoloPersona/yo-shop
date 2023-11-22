@@ -1,17 +1,17 @@
-/** Продукт. */
+/** Product interface */
 export interface Product {
-    /** Идентификатор в БД. */
+    /** Unique Identifier */
     id?: number;
 
-    /** Наименование. */
+    /** Name */
     name: string;
 
-    /** Цена. */
+    /** Price */
     price: string;
 
-    /** Рейтинг. */
+    /** Rating */
     rating: number;
 
-    /** Картинка. */
+    /** Image */
     img: string;
 }

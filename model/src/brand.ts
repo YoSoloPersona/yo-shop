@@ -1,8 +1,8 @@
-/** Модель бренда. */
+/** Brand interface */
 export interface Brand  {
-    /** Идентификатор в БД. */
+    /** Unique Identifier */
     id?: number;
 
-    /** Наименование. */
+    /** Name */
     name: string;
 }
