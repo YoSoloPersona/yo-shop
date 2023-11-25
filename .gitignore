@@ -9,3 +9,6 @@ pgadmin/
 
 #docs
 docs/
+
+#
+.npmrc

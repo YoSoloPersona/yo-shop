@@ -1,13 +1,13 @@
 {
-  "name": "yo-shop-model",
+  "name": "@YoSoloPersona/yo-shop-model",
   "version": "0.1.0",
   "description": "Description of the yo-shop model.",
   "repository": {
-    "type": "github",
+    "type": "git",
     "url": "https://github.com/YoSoloPersona/yo-shop"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/YoSoloPersona"
   },
   "main": "./dist/index.js",
   "types": "./dist/types",
@@ -15,7 +15,7 @@
     "build": "tsc",
     "build-docs": "typedoc --tsconfig ./tsconfig.json",
     "watch": "tsc --watch",
-    "publish": "publish"
+    "publish": "npm publish"
   },
   "keywords": [
     "typescript",
