@@ -1,11 +1,59 @@
+# syntax=docker/dockerfile:1
+
+ARG NODE_VERSION=21
+
 # Образ клиента для тестирования сервера
-FROM node:12-alpine
-# Создаём директорию для сервера
-WORKDIR /server
-# Необходимые пакеты
-COPY package.json .
-COPY ./dist ./dist/
-# Устанавливаем пакеты
-RUN npm i
+FROM node:${NODE_VERSION}-alpine as base
+
+# Create a directory
+WORKDIR  /usr/src/app
+
+# Create a stage for installing production dependecies.
+FROM base as deps
+
+RUN --mount=type=bind,source=server/package.json,target=server/package.json \
+    --mount=type=bind,source=server/package-lock.json,target=server/package-lock.json \
+# Local package with model
+    --mount=type=bind,source=model/package.json,target=model/package.json \
+    --mount=type=bind,source=model/package-lock.json,target=model/package-lock.json \
+    --mount=type=bind,source=model/dist,target=model/dist \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --omit=dev
+
+FROM deps as build
+
+RUN --mount=type=bind,source=server/package.json,target=server/package.json \
+    --mount=type=bind,source=server/package-lock.json,target=server/package-lock.json \
+# Local package with model
+    --mount=type=bind,source=model/package.json,target=model/package.json \
+    --mount=type=bind,source=model/package-lock.json,target=model/package-lock.json \
+    --mount=type=bind,source=model/dist,target=model/dist \
+    --mount=type=cache,target=/root/.npm \
+    npm ci
+
+COPY . .
+
+# Run the build script.
+RUN npm run build
+
+################################################################################
+# Create a new stage to run the application with minimal runtime dependencies
+# where the necessary files are copied from the build stage.
+FROM base as final
+
+# Use production node environment by default.
+ENV NODE_ENV production
+
+# Run the application as a non-root user.
+USER node
+
+# Copy package.json so that package manager commands can be used
+COPY server/package.json server/.
+
+COPY --from=deps /usr/src/app/server/node_modules ./server/node_modules
+COPY --from=build /usr/src/app/server/dist ./server/dist
+
+EXPOSE 3000
+
 # Запускаем сервер
 CMD ["node", "./dist/index.js"]

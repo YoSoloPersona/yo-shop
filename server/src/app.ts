@@ -6,7 +6,7 @@ import express, {
 } from 'express';
 import { Server } from 'node:http';
 import debug from 'debug';
-import { Role } from 'yo-shop-model';
+import { Role } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import config from './config';

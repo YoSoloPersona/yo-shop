@@ -1,6 +1,6 @@
 // local
 import { ModelUser } from '../components/user/user.model';
-import { ModelBasket } from './basket';
+import { ModelCart } from './basket';
 import { ModelCategory } from './category';
 import { ModelProduct } from './product';
 import { ModelBasketProducts } from './basketProduct';
@@ -11,7 +11,7 @@ import { ModelTypeBrand } from './typeBrand';
 
 // local
 export { ModelUser } from '../components/user/user.model';
-export { ModelBasket } from './basket';
+export { ModelCart as ModelBasket } from './basket';
 export { ModelCategory } from './category';
 export { ModelProduct } from './product';
 export { ModelBasketProducts } from './basketProduct';
@@ -21,14 +21,14 @@ export { ModelProductInfo } from './productInfo';
 export { ModelTypeBrand } from './typeBrand';
 
 // Связи
-ModelUser.hasOne(ModelBasket);
-ModelBasket.belongsTo(ModelUser);
+ModelUser.hasOne(ModelCart);
+ModelCart.belongsTo(ModelUser);
 
 ModelUser.hasMany(ModelRating);
 ModelRating.belongsTo(ModelUser);
 
-ModelBasket.hasMany(ModelBasketProducts);
-ModelBasketProducts.belongsTo(ModelBasket);
+ModelCart.hasMany(ModelBasketProducts);
+ModelBasketProducts.belongsTo(ModelCart);
 
 ModelCategory.hasMany(ModelProduct);
 ModelProduct.belongsTo(ModelCategory);

@@ -1,5 +1,5 @@
 import { Response, NextFunction, RequestHandler } from 'express';
-import { Role } from 'yo-shop-model';
+import { Role } from '@YoSoloPersona/yo-shop-model';
 import debug from 'debug';
 
 // locals

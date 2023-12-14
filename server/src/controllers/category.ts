@@ -1,4 +1,4 @@
-import { Category } from 'yo-shop-model';
+import { Category } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import { ModelCategory } from '../models';

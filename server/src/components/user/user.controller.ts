@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import debug from 'debug';
-import { AuthorizationResponse, User, api } from 'yo-shop-model';
+import { AuthorizationResponse, User, api } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import ErrorApi from '../../errors/errorApi';
@@ -20,7 +20,7 @@ export class ControllerUser {
     /**
      * User repository
      */
-    @inject(UserRepository) private _userRepository: UserRepository;
+    @inject(UserRepository) private _userRepository!: UserRepository;
 
     /**
      *

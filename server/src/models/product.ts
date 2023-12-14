@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import { Product } from 'yo-shop-model';
+import { Product } from '@YoSoloPersona/yo-shop-model';
 
 // local
 import { sequelize } from '../db';

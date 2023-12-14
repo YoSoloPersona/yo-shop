@@ -1,5 +1,5 @@
 import jasmine from 'jasmine';
-import { User } from 'yo-shop-model';
+import { User } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import { UserRepository } from './user.repository';
@@ -57,7 +57,11 @@ describe('#userRepository', () => {
     });
 
     it('create empty user', async () => {
-        await expectAsync(userRepository.create({})).toBeRejected();
+        await expectAsync(userRepository.create({
+            email: '',
+            role: 'root',
+            password: ''
+        })).toBeRejected();
     });
 
     it('read non-existent user', async () => {

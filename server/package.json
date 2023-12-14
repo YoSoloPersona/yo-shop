@@ -1,19 +1,27 @@
 {
-    "name": "yo-shop-server",
-    "version": "0.0.1",
-    "description": "Server of my shop",
+    "name": "@YoSoloPersona/yo-shop-server",
+    "version": "0.1.0",
+    "description": "Server of my yo-shop",
     "main": "./dist/index.js",
     "types": "./dist/types",
     "scripts": {
         "build": "tsc",
         "watch": "tsc --watch",
+        "development": "concurrently \"npm:watch\" \"npm:start-development\"",
+
         "lint": "eslint --fix",
-        "install-development": "env-cmd -f ./env/development/server.env nodemon ./dist/install.js",
-        "start-development-server": "env-cmd -f ./env/development/server.env nodemon ./dist/index.js",
-        "start-development-postgres-pgadmin": "docker-compose -f ./docker/development/docker-compose.yml up -d",
-        "start-development": "concurrently \"npm:watch\" \"npm:start-development-*\"",
-        "test:docker": "docker-compose -f ./docker/test/docker-compose.yml up --abort-on-container-exit --force-recreate",
-        "test:local": "concurrently \"env-cmd -f ./env/development/server.env jasmine --config=./helpers/jasmine.json\""
+        "install-development": "env-cmd -f ./env/development/app.env nodemon ./dist/install.js",
+
+        "start": "node ./dist/index.js",
+        "start-development": "nodemon ./dist/index.js",
+        "start-development-env": "env-cmd -f ./env/development/app.local.env nodemon ./dist/index.js",
+
+        "docker-compose-local": "docker compose -f ./docker/development/compose.postgres.pgadmin.yaml up -d",
+        "docker-compose-development": "docker compose -f ./docker/development/compose.yaml up -d",
+        "docker-compose-production": "docker compose -f ./docker/production/compose.yaml up -d",
+
+        "test-docker": "docker-compose -f ./docker/test/docker-compose.yml up --abort-on-container-exit --force-recreate",
+        "test-local": "concurrently \"env-cmd -f ./env/development/server.env jasmine --config=./helpers/jasmine.json\""
     },
     "repository": {
         "type": "git",
@@ -34,7 +42,6 @@
     },
     "homepage": "https://github.com/YoSoloPersona/yo-shop#readme",
     "devDependencies": {
-        "@types/axios": "^0.14.0",
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.12",
         "@types/express": "^4.17.13",
@@ -43,7 +50,6 @@
         "@types/node": "^18.0.3",
         "@typescript-eslint/eslint-plugin": "^5.30.7",
         "@typescript-eslint/parser": "^5.30.7",
-        "axios": "^0.27.2",
         "concurrently": "^7.4.0",
         "cross-env": "^7.0.3",
         "debug": "^4.3.4",
@@ -51,23 +57,22 @@
         "eslint": "^8.20.0",
         "jasmine": "^4.2.1",
         "jasmine-reporters": "^2.5.0",
-        "nodemon": "^2.0.19",
+        "nodemon": "^3.0.1",
         "prettier": "^2.7.1",
-        "typedoc": "^0.23.7",
+        "typedoc": "^0.25.3",
         "typescript": "^5.2.2",
-        "xunit-viewer": "^7.2.0",
-        "yo-shop-model": "file:../model"
+        "xunit-viewer": "^10.5.1"
     },
     "dependencies": {
+        "@YoSoloPersona/yo-shop-model": "0.1.0",
         "bcrypt": "^5.0.1",
         "cors": "^2.8.5",
         "dotenv": "^16.0.1",
         "express": "^4.18.1",
         "i18next-browser-languagedetector": "^6.1.4",
         "i18next-http-backend": "^1.4.1",
-        "jsonwebtoken": "^8.5.1",
-        "pg": "^8.7.3",
-        "pg-hstore": "^2.3.4",
-        "sequelize": "6.25.0"
+        "jsonwebtoken": "^9.0.2",
+        "pg": "^8.11.3",
+        "sequelize": "6.35.0"
     }
 }

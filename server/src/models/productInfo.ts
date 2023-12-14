@@ -2,7 +2,7 @@ import {
     DataTypes,
     Model
 } from 'sequelize';
-import { ProductInfo } from 'yo-shop-model';
+import { ProductInfo } from '@YoSoloPersona/yo-shop-model';
 
 // local
 import { sequelize } from '../db';

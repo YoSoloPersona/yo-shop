@@ -2,19 +2,19 @@ import {
     DataTypes,
     Model
 } from 'sequelize';
-import { Basket } from 'yo-shop-model';
+import { Cart } from '@YoSoloPersona/yo-shop-model';
 
 // local
 import { sequelize } from '../db';
 
 /** Модель корзины. */
-export class ModelBasket extends Model<Basket, Basket> implements Basket {
+export class ModelCart extends Model<Cart, Cart> implements Cart {
     /** Идентификатор в БД. */
     declare id: number;
 }
 
 /** Инициализация в БД. */
-ModelBasket.init(
+ModelCart.init(
     {
         id: {
             type: DataTypes.INTEGER,

@@ -1,5 +1,5 @@
 import { Model, DataTypes, CreationOptional } from 'sequelize';
-import { User, Role } from 'yo-shop-model';
+import { User, Role } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import { sequelize } from '../../db';

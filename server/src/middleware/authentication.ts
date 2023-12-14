@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import debug from 'debug';
 
 // locals
-import { User } from 'yo-shop-model';
+import { User } from '@YoSoloPersona/yo-shop-model';
 
 // protocols
 const log = debug('middleware:authentification');

@@ -1,5 +1,5 @@
 import { Op, WhereOptions } from 'sequelize';
-import { User, Role } from 'yo-shop-model';
+import { User, Role } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import { injectable } from '../../helpers/decorators';

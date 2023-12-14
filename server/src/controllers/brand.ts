@@ -1,4 +1,4 @@
-import { Brand } from 'yo-shop-model';
+import { Brand } from '@YoSoloPersona/yo-shop-model';
 
 // local
 import { ModelBrand } from '../models';

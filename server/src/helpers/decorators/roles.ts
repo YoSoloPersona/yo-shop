@@ -2,7 +2,7 @@ import debug from 'debug';
 
 // locals
 import { setMeta } from './meta';
-import { Role } from 'yo-shop-model';
+import { Role } from '@YoSoloPersona/yo-shop-model';
 
 // protocols
 const log = debug('decorators:role');
