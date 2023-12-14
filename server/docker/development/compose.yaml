@@ -1,0 +1,47 @@
+# schema version
+version: "3.9"
+
+# list of services
+services:
+  app:
+      build:
+        context: ../../
+        dockerfile: ./docker/dockerfile
+        target: development
+
+      env_file: ../../env/development/app.compose.env
+      # command: npm run development
+      ports:
+        - 3000:3000 # server
+        - 9229:9229 # node debugging
+      depends_on:
+        db:
+          condition: service_healthy
+      volumes:
+        - ../../:/usr/src/app
+        - /usr/src/app/node_modules
+        
+  # database server
+  db:
+    image: postgres:14.4
+    restart: always
+    env_file: ../../env/development/postgres.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d yo-shop -U admin" ] # variables from the .env file cannot be referenced with $ =(
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # pgadmin
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file: ../../env/development/pgadmin.env
+    volumes:
+      - ../../pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+volumes:
+  db-data:

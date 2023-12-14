@@ -1,14 +1,14 @@
-# версия схемы
+# schema version
 version: "3.9"
 
-# Тестирование сервера
-# список служб
+# a network for running tests
+# list of services
 services:
-  # сервер базы данных
+  # database server
   yo-shop-postgres:
     container_name: test_postgres_container
     image: postgres:14.4
-    env_file: ../../env/postgres.env
+    env_file: ../../env/development/postgres.env
     restart: 'no'
 
 
