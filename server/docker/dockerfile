@@ -36,7 +36,21 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 COPY . .
 
 # compile, i.e. form the folder ./dist
-CMD npm run development
+CMD npm run start-development
+
+FROM base as test
+
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=bind,source=.npmrc,target=.npmrc \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --include=dev
+
+COPY . .
+
+RUN npm run build
+
+CMD npm run test
 
 # BUILD
 FROM dependencies as build

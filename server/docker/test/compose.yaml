@@ -1,0 +1,40 @@
+# schema version
+version: "3.9"
+
+# list of services
+services:
+  yo-shop:
+      build:
+        context: ../../
+        dockerfile: ./docker/dockerfile
+        target: test
+
+      env_file: ../../env/development/app.env
+
+      depends_on:
+        db:
+          condition: service_healthy
+        
+  # database server
+  db:
+    image: postgres:14.4
+
+    restart: always
+
+    env_file: ../../env/development/postgres.env
+    
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d yo-shop -U admin" ] # variables from the .env file cannot be referenced with $ =(
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # pgadmin
+#   pgadmin:
+#     image: dpage/pgadmin4
+#     env_file: ../../env/development/pgadmin.env
+#     restart: unless-stopped
+# volumes:
+#   app:
+#     name: "my-app-data"
+#   db-data:
