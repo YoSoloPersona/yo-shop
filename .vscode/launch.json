@@ -5,16 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Server debug",
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}\\server\\src\\install.ts",
+            "cwd": "${workspaceFolder}/server",
+            "program": "src/index.ts",
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}/dist/**/*.js"
             ]
+        },
+        {
+            "name": "Server debug docker",
+            "type": "node",
+            "cwd": "${workspaceFolder}/server",
+            "localRoot": "${workspaceFolder}/server",
+            "request": "attach",
+            "preLaunchTask": "server-docker-compose-up-development",
+            "remoteRoot": "/usr/src/app",
+            "port": 9229,
+            "restart": true,
+            "sourceMaps": true,
         }
     ]
 }

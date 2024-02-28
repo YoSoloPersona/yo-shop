@@ -19,12 +19,54 @@
             "problemMatcher": []
         },
         {
+            "label": "server-watch",
             "type": "typescript",
             "tsconfig": "server/tsconfig.json",
             "option": "watch",
             "problemMatcher": ["$tsc-watch"],
-            "group": "build",
-            "label": "tsc: отслеживание — server/tsconfig.json"
+            "group": "build" 
+        },
+        {
+            "label": "server-build",
+            "type": "typescript",
+            "tsconfig": "server/tsconfig",
+            "problemMatcher": [ "$tsc"]
+        },
+        {
+            "label": "server-docker-build-production",
+            "type": "docker-build",
+            "platform": "node",
+            "dockerBuild": {
+                "dockerfile": "${workspaceFolder}/server/docker/dockerfile",
+                "context": "${workspaceFolder}/server",
+                "target": "production"
+            }
+        },
+        {
+            "label": "server-docker-build-development",
+            "type": "docker-build",
+            "platform": "node",
+            "dockerBuild": {
+                "dockerfile": "${workspaceFolder}/server/docker/dockerfile",
+                "context": "${workspaceFolder}/server",
+                "target": "development",
+                "tag": "yo-shop:latest"
+            }
+        },
+        {
+            "label": "server-docker-compose-up-development",
+            "type": "docker-compose",
+            "dockerCompose": {
+                "up": {
+                    "detached": true,
+                    "services": [ "db", "pgadmin", "app" ],
+                    "build": true
+                },
+                "files": [
+                    "${workspaceFolder}/server/docker/development/compose.yaml"
+                ],
+                "envFiles": [ "${workspaceFolder}/server/env/development/postgres.env", "${workspaceFolder}/server/env/development/pgadmin.env", "${workspaceFolder}/server/env/development/app.env" ]
+            }
         }
     ]
 }
