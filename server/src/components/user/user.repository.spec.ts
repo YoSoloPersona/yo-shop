@@ -5,7 +5,7 @@ import { User } from '@YoSoloPersona/yo-shop-model';
 import { UserRepository } from './user.repository';
 import { db } from '../../db';
 
-describe('#userRepository', () => {
+describe('#components user.repository', () => {
     // root
     const root: User = {
         email: 'yo.solo.persona@gmail.com',

@@ -5,6 +5,8 @@ dist/
 test-results/
 pack/
 
+db-data
+
 # pgamin
 pgadmin/
 

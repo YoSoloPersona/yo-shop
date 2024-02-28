@@ -4,7 +4,7 @@ import debug from 'debug';
 
 // locals
 import { db } from './db';
-import { errorHandler } from './middleware/errorHandler';
+import { errorHandler } from './middleware/error.handler';
 import { addController, addMiddleware, start } from './app';
 import { ControllerUser } from './components/user';
 import authentication from './middleware/authentication';

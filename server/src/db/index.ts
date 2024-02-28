@@ -28,6 +28,8 @@ export const sequelize = new Sequelize(
  * @returns Promise<Sequelize>
  */
 export function db(): Promise<Sequelize> {
+    log(`connect to ${config.db.host}:${config.db.port}`);
+    
     return (
         sequelize
             // authenticate
