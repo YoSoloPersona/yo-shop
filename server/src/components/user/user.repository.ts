@@ -10,6 +10,18 @@ export class UserRepository {
     //#region Create
 
     async create(user: User): Promise<User> {
+        if (!user) {
+            throw Error('Error when creating a user, null or undenfined is passed as user!');
+        }
+
+        if (!user.email) {
+            throw Error('Error during user creation, null, undenfined or empty string is passed as users e-mail!');
+        }
+
+        if (!user.password) {
+            throw Error('Error during user creation, null, undenfined or empty string is passed as users password!');
+        }
+
         return (await ModelUser.create(user)).get();
     }
 
