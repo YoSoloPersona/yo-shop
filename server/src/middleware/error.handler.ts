@@ -6,7 +6,8 @@ import config from '../config';
 import ErrorApi from '../errors/errorApi';
 
 // protocols
-const error = debug('app:error');
+const log = debug('middleware:error.handler');
+const error = debug('middleware:error.handler:error');
 
 /**
  * API Error Handling
@@ -23,7 +24,7 @@ export function errorHandler(
     next: NextFunction
 ): void {
     // log errors
-    error(err);
+    log(err);
 
     if (err instanceof ErrorApi) {
         res.status(err.status).json({ message: err.message });
