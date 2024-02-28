@@ -7,21 +7,23 @@
     "scripts": {
         "build": "tsc",
         "watch": "tsc --watch",
-        "development": "concurrently \"npm:watch\" \"npm:start-development\"",
 
         "lint": "eslint --fix",
-        "install-development": "env-cmd -f ./env/development/app.env nodemon ./dist/install.js",
+        "install-development": "env-cmd -f ./env/development/app.local.env nodemon ./dist/install.js",
 
         "start": "node ./dist/index.js",
-        "start-development": "nodemon ./dist/index.js",
-        "start-development-env": "env-cmd -f ./env/development/app.local.env nodemon ./dist/index.js",
+        "start-development": "nodemon --legacy-watch --inspect=0.0.0.0:9229 ./dist/index.js",
 
-        "docker-compose-local": "docker compose -f ./docker/development/compose.postgres.pgadmin.yaml up -d",
+        "docker-build-production": "docker build --tag development-yo-shop:latest -f ./docker/dockerfile --target production .",
+        "docker-build-development": "docker build --tag development-yo-shop:latest -f ./docker/dockerfile --target development .",
+        "docker-build-test": "docker build --tag test-yo-shop:latest -f ./docker/dockerfile --target test .",
+
+        "docker-compose-local": "docker compose -f ./docker/development/compose.yaml up -d db pgadmin",
         "docker-compose-development": "docker compose -f ./docker/development/compose.yaml up -d",
+        "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up",
         "docker-compose-production": "docker compose -f ./docker/production/compose.yaml up -d",
 
-        "test-docker": "docker-compose -f ./docker/test/docker-compose.yml up --abort-on-container-exit --force-recreate",
-        "test-local": "concurrently \"env-cmd -f ./env/development/server.env jasmine --config=./helpers/jasmine.json\""
+        "test": "jasmine --config=./helpers/jasmine.json"
     },
     "repository": {
         "type": "git",

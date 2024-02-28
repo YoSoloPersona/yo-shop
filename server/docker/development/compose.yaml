@@ -3,23 +3,25 @@ version: "3.9"
 
 # list of services
 services:
-  app:
+  yo-shop:
       build:
         context: ../../
         dockerfile: ./docker/dockerfile
         target: development
 
-      env_file: ../../env/development/app.compose.env
-      # command: npm run development
+      env_file: ../../env/development/app.env
+
       ports:
-        - 3000:3000 # server
+        - ${APP_PORT:-3000}:${APP_PORT:-3000} # server
         - 9229:9229 # node debugging
+
       depends_on:
         db:
           condition: service_healthy
+
       volumes:
-        - ../../:/usr/src/app
-        - /usr/src/app/node_modules
+        - ../../src:/usr/src/app/src
+        - ../../dist:/usr/src/app/dist
         
   # database server
   db:
@@ -28,6 +30,8 @@ services:
     env_file: ../../env/development/postgres.env
     volumes:
       - db-data:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT:-5432}:${DB_PORT:-5432}
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d yo-shop -U admin" ] # variables from the .env file cannot be referenced with $ =(
       interval: 10s
@@ -44,4 +48,6 @@ services:
       - "5050:80"
     restart: unless-stopped
 volumes:
+  app:
+    name: "my-app-data"
   db-data:
