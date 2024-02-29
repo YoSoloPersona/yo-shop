@@ -1,5 +1,5 @@
 import debug from 'debug';
-import { api, Category } from 'yo-shop-model';
+import { api, Category } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import { Params } from '../despatch';

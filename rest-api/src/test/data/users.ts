@@ -1,4 +1,4 @@
-import { User } from 'yo-shop-model';
+import { User } from '@YoSoloPersona/yo-shop-model';
 
 // Заранее опрделённые для тестирования пользователи
 

@@ -1,5 +1,5 @@
 import debug from 'debug';
-import { api, User, AuthorizationResponse } from 'yo-shop-model';
+import { api, User, AuthorizationResponse } from '@YoSoloPersona/yo-shop-model';
 import { URLSearchParams } from 'url';
 
 // locals
@@ -80,7 +80,7 @@ export class RepositoryUser extends Repository {
      * @param filter filter
      * @returns number of deleted users
      */
-    delete(filter?: Omit<User, 'password' | 'role'>): Promise<number> {
+    delete(filter?: Omit<User, 'password' | 'role'> & {[key: string]: any}): Promise<number> {
         const params = new URLSearchParams();
 
         for (const key in filter) {

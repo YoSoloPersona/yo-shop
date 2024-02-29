@@ -1,4 +1,4 @@
-import { User, api, AuthorizationResponse } from 'yo-shop-model';
+import { User, api, AuthorizationResponse } from '@YoSoloPersona/yo-shop-model';
 
 // locals
 import { AxiosInstance } from 'axios';
