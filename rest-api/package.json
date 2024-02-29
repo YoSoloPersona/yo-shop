@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "concurrently \"env-cmd -f ./env/test/server.env jasmine --config=./helpers/jasmine.json\""
+    "test": "jasmine --config=./helpers/jasmine.json",
+    "docker-build-test": "docker build --tag=test-rest-api --target=test -f ./docker/dockerfile .",
+    "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up"
   },
   "keywords": [
     "rest",
@@ -28,6 +30,6 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "axios": "^1.1.3",
-    "yo-shop-model": "file:../model"
+    "@YoSoloPersona/yo-shop-model": "0.1.0"
   }
 }

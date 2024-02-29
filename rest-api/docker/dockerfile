@@ -1,0 +1,30 @@
+# syntax=docker/dockerfile:experimental
+
+ARG NODE_VERSION=21
+
+# BASE
+FROM node:${NODE_VERSION}-alpine as base
+
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=bind,source=.npmrc,target=.npmrc \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --omit=dev
+
+# DEVELOPMENT
+FROM base as development
+
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=bind,source=.npmrc,target=.npmrc \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --include=dev
+
+#TEST
+FROM development as test
+
+COPY . .
+
+RUN npm run build
+
+CMD npm run test

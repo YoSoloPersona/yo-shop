@@ -1,0 +1,21 @@
+# schema: "3.9"
+
+name: rest-api-test
+
+include:
+  - path:
+    - ../../../server/docker/production/compose.yaml
+
+services:
+  rest-api:
+    build:
+      context: ../../
+      dockerfile: ./docker/dockerfile
+      target: test
+
+    env_file: ../../env/test/server.env
+
+    depends_on:
+      yo-shop:
+       condition: service_started
+  
