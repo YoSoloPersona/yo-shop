@@ -9,7 +9,6 @@
         "watch": "tsc --watch",
 
         "lint": "eslint --fix",
-        "install-development": "env-cmd -f ./env/development/app.local.env nodemon ./dist/install.js",
 
         "start": "node ./dist/index.js",
         "start-development": "nodemon --legacy-watch --inspect=0.0.0.0:9229 ./dist/index.js",
@@ -21,7 +20,7 @@
         "docker-compose-local": "docker compose -f ./docker/development/compose.yaml up -d db pgadmin",
         "docker-compose-development": "docker compose -f ./docker/development/compose.yaml up -d",
         "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up",
-        "docker-compose-production": "docker compose -f ./docker/production/compose.yaml up -d",
+        "docker-compose-production": "docker compose -f ./docker/production/compose.yaml up -d --build",
 
         "test": "jasmine --config=./helpers/jasmine.json"
     },

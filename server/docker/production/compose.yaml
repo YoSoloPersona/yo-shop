@@ -1,11 +1,13 @@
 # schema version
 version: "3.9"
 
+name: production-yo-shop
+
 # list of services
 services:
   # yo-shop server
-  yo-shop:
-    container_name: production-yo-shop
+  server:
+    container_name: production-server
 
     build:
       context: ../../
