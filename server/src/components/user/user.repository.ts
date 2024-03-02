@@ -33,12 +33,16 @@ export class UserRepository {
         return (await ModelUser.findAll()).map(model => model.get());
     }
 
-    async readById(id: number): Promise<User | undefined> {
-        return (await ModelUser.findOne({ where: { id } }))?.get();
+    async readById(id: number): Promise<User | null> {
+        return (await ModelUser.findOne({ where: { id } }));
     }
 
-    async readByEmail(email: string): Promise<User | undefined> {
-        return (await ModelUser.findOne({ where: { email } }))?.get();
+    async readByEmail(email: string): Promise<User | null> {
+        return (await ModelUser.findOne({ where: { email } }));
+    }
+
+    async readByRole(role: Role): Promise<User[] | undefined> {
+        return (await ModelUser.findAll({ where: { role } }));
     }
 
     //#endregion

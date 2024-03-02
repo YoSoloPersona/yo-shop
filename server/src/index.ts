@@ -8,6 +8,7 @@ import { errorHandler } from './middleware/error.handler';
 import { addController, addMiddleware, start } from './app';
 import { ControllerUser } from './components/user';
 import authentication from './middleware/authentication';
+import { init } from './app/init';
 
 // protocols
 const log = debug('app:log');
@@ -15,6 +16,7 @@ const error = debug('app:error');
 
 // init db
 db()
+    .then(() => init())
     // add middleware
     .then(() => {
         addMiddleware(cors());
