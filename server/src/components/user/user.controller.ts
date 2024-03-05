@@ -51,14 +51,11 @@ export class ControllerUser {
             throw ErrorApi.accountAlreadyExists(message);
         }
 
-        // get the hash of the password
-        const hashPassword = await bcrypt.hash(password, 5);
-
         // registering a user
         const user = await this._userRepository.create({
             email,
             role,
-            password: hashPassword
+            password
         });
 
         // return jsonwebtoken
