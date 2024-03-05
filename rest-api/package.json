@@ -8,7 +8,7 @@
     "watch": "tsc --watch",
     "test": "jasmine --config=./helpers/jasmine.json",
     "docker-build-test": "docker build --tag=test-rest-api --target=test -f ./docker/dockerfile .",
-    "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up"
+    "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up --build"
   },
   "keywords": [
     "rest",
