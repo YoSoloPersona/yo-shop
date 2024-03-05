@@ -3,7 +3,7 @@ import 'jasmine';
 // locals
 import { user1, root } from '../test/data/users';
 import { RepositoryUser } from '..';
-import { env } from 'process';
+import { User } from '@YoSoloPersona/yo-shop-model';
 
 // timeout
 const timeoutIt = 5000;
@@ -11,6 +11,7 @@ const timeoutIt = 5000;
 describe('#RepositoryUser', () => {
     let repositoryUser: RepositoryUser;
 
+    // prepare repository
     beforeAll(() => {
         repositoryUser = new RepositoryUser({
             host: process.env.SHOP_HOST || 'localhost',

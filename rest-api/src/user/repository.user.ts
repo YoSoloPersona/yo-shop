@@ -33,7 +33,7 @@ export class RepositoryUser extends Repository {
      * @param user user
      * @returns jsonwebtoken
      */
-    registration(user: User): Promise<AuthorizationResponse> {
+    registration(user: Omit<User, 'role'>): Promise<AuthorizationResponse> {
         return (
             this.axios
                 .post<AuthorizationResponse>(
