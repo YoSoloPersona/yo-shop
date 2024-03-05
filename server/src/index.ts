@@ -9,6 +9,7 @@ import { addController, addMiddleware, start } from './app';
 import { ControllerUser } from './components/user';
 import authentication from './middleware/authentication';
 import { init } from './app/init';
+import { ControllerHealt } from './components/health';
 
 // protocols
 const log = debug('app:log');
@@ -28,6 +29,7 @@ db()
     })
     // add controllers
     .then(() => addController(ControllerUser))
+    .then(() => addController(ControllerHealt))
     // start server
     .then(() => start())
     // catch errors
