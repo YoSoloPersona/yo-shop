@@ -3,6 +3,7 @@ import 'jasmine';
 // locals
 import { user1, root } from '../test/data/users';
 import { RepositoryUser } from '..';
+import { env } from 'process';
 
 // timeout
 const timeoutIt = 5000;
@@ -11,7 +12,10 @@ describe('#RepositoryUser', () => {
     let repositoryUser: RepositoryUser;
 
     beforeAll(() => {
-        repositoryUser = new RepositoryUser({});
+        repositoryUser = new RepositoryUser({
+            host: process.env.SHOP_HOST || 'localhost',
+            port: Number(process.env.SHOP_PORT) || 3000
+        });
     });
 
     it(
@@ -19,8 +23,8 @@ describe('#RepositoryUser', () => {
         async () => {
             // arrange
             await repositoryUser.authorization({
-                email: root.email,
-                password: root.password
+                email: process.env.SHOP_USER || '',
+                password: process.env.SHOP_PASSWORD || ''
             }); // login as root
             await repositoryUser.deleteAll();
 
