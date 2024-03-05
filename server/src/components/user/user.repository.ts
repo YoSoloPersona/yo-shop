@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { Op, WhereOptions } from 'sequelize';
 import { User, Role } from '@YoSoloPersona/yo-shop-model';
 
@@ -21,6 +22,9 @@ export class UserRepository {
         if (!user.password) {
             throw Error('Error during user creation, null, undenfined or empty string is passed as users password!');
         }
+
+        // get the hash of the password
+        user.password = await bcrypt.hash(user.password, 5);
 
         return (await ModelUser.create(user)).get();
     }
