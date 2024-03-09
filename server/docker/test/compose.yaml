@@ -8,6 +8,8 @@ services:
         context: ../../
         dockerfile: ./docker/dockerfile
         target: test
+        args:
+          progress: plain
 
       env_file: ../../env/development/app.env
 
