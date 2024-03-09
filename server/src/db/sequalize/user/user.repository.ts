@@ -3,11 +3,10 @@ import { Op, WhereOptions } from 'sequelize';
 import { User, Role } from '@YoSoloPersona/yo-shop-model';
 
 // locals
-import { injectable } from '../../helpers/decorators';
-import { ModelUser } from '../../models';
+import { RepositoryUser } from '../../interfaces';
+import { ModelUser } from './user.model';
 
-@injectable
-export class UserRepository {
+export class UserRepository implements RepositoryUser {
     //#region Create
 
     async create(user: User): Promise<User> {
@@ -45,7 +44,7 @@ export class UserRepository {
         return (await ModelUser.findOne({ where: { email } }));
     }
 
-    async readByRole(role: Role): Promise<User[] | undefined> {
+    async readByRole(role: Role): Promise<User[] | null> {
         return (await ModelUser.findAll({ where: { role } }));
     }
 

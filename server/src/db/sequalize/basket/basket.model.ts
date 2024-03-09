@@ -1,11 +1,8 @@
-import {
-    DataTypes,
-    Model
-} from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { Cart } from '@YoSoloPersona/yo-shop-model';
 
 // local
-import { sequelize } from '../db';
+import { sequelize } from '../';
 
 /** Модель корзины. */
 export class ModelCart extends Model<Cart, Cart> implements Cart {

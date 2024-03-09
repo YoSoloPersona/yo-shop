@@ -6,7 +6,8 @@ import { AuthorizationResponse, User, api } from '@YoSoloPersona/yo-shop-model';
 // locals
 import ErrorApi from '../../errors/errorApi';
 import { controller, inject, post, del, roles } from '../../helpers/decorators';
-import { UserRepository } from './user.repository';
+import { RepositoryUser } from '../../db/interfaces';
+import { UserRepository } from '../../db/sequalize/user/user.repository';
 
 // protocols
 const log = debug('app:controllers:user');
@@ -20,7 +21,7 @@ export class ControllerUser {
     /**
      * User repository
      */
-    @inject(UserRepository) private _userRepository!: UserRepository;
+    @inject(UserRepository) private _userRepository!: RepositoryUser;
 
     /**
      *

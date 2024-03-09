@@ -1,7 +1,7 @@
 import debug from 'debug';
 
 // locals
-import { UserRepository } from '../components/user/user.repository';
+import { orm } from '../db';
 
 // protocols
 const log = debug('app:log');
@@ -11,7 +11,8 @@ const error = debug('app:error');
  * Initzializes the application
  */
 export async function init(): Promise<void> {
-    const reposotiry = new UserRepository();
+    const reposotiry = orm.createRepositoryUser();
+
     const email = process.env.APP_USER || '';
     const password = process.env.APP_PASSWORD || '';
 

@@ -1,18 +1,12 @@
-import {
-    DataTypes,
-    Model
-} from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { ProductInfo } from '@YoSoloPersona/yo-shop-model';
 
 // local
-import { sequelize } from '../db';
+import { sequelize } from '../';
 
 /** Модель описания продукта. */
 export class ModelProductInfo
-    extends Model<
-        ProductInfo,
-        ProductInfo
-    >
+    extends Model<ProductInfo, ProductInfo>
     implements ProductInfo
 {
     /** Идентификатор в БД. */
@@ -28,18 +22,18 @@ export class ModelProductInfo
 /** Инициализация в БД. */
 ModelProductInfo.init(
     {
-        id: { 
-            type: DataTypes.INTEGER, 
-            primaryKey: true, 
-            autoIncrement: true 
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
-        title: { 
-            type: DataTypes.STRING, 
-            allowNull: false 
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
         },
-        description: { 
-            type: DataTypes.STRING, 
-            allowNull: false 
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     },
     {

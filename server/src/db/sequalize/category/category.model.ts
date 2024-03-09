@@ -1,22 +1,22 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { Category } from '@YoSoloPersona/yo-shop-model';
 
-// local
-import { sequelize } from '../db';
+// locals
+import { sequelize } from '../';
 
-/** Модель категории продуктов. */
+/** Category model */
 export class ModelCategory
     extends Model<Category, Category>
     implements Category
 {
-    /** Идентификатор в БД. */
-    declare id?: number;
+    declare id: CreationOptional<number>;
 
-    /** Наименование. */
+    /**
+     * Name
+     */
     declare name: string;
 }
 
-/** Инициализация в БД. */
 ModelCategory.init(
     {
         id: {
@@ -24,14 +24,14 @@ ModelCategory.init(
             primaryKey: true,
             autoIncrement: true
         },
+
         name: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false
         }
     },
     {
         sequelize,
-        tableName: 'category'
+        tableName: 'categories'
     }
 );

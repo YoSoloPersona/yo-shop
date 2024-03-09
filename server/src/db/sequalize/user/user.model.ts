@@ -2,7 +2,7 @@ import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { User, Role } from '@YoSoloPersona/yo-shop-model';
 
 // locals
-import { sequelize } from '../../db';
+import { sequelize } from '../';
 
 /** User model */
 export class ModelUser extends Model<User, User> implements User {

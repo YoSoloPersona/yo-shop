@@ -2,8 +2,8 @@ import jasmine from 'jasmine';
 import { User } from '@YoSoloPersona/yo-shop-model';
 
 // locals
-import { UserRepository } from './user.repository';
-import { db } from '../../db';
+import { orm } from '../../db';
+import { UserRepository } from '../../db/sequalize/user/user.repository';
 
 describe('#components user.repository', () => {
     // root
@@ -30,8 +30,8 @@ describe('#components user.repository', () => {
     let userRepository: UserRepository;
 
     beforeAll(async () => {
-        await db();
-        userRepository = new UserRepository();
+        await orm.init();
+        userRepository = orm.createRepositoryUser();
     });
 
     it('create read update delete', async () => {
@@ -67,6 +67,6 @@ describe('#components user.repository', () => {
     it('read non-existent user', async () => {
         const findedUser = await userRepository.readByEmail('non.existent.email@mail.ru');
 
-        expect(findedUser).toBeUndefined();
+        expect(findedUser).toBeNull();
     })
 });
