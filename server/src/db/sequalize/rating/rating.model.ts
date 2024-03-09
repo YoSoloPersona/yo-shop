@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import { Rating } from '@YoSoloPersona/yo-shop-model';
 
 // local
-import { sequelize } from '../';
+import { sequelize } from '../sequelize';
 
 /** Модель рейтинга. */
 export class ModelRating extends Model<Rating, Rating> implements Rating {

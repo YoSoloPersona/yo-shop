@@ -2,7 +2,7 @@ import { Model, DataTypes, CreationOptional } from 'sequelize';
 import { Category } from '@YoSoloPersona/yo-shop-model';
 
 // locals
-import { sequelize } from '../';
+import { sequelize } from '../sequelize';
 
 /** Category model */
 export class ModelCategory

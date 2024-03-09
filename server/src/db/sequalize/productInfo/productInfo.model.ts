@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import { ProductInfo } from '@YoSoloPersona/yo-shop-model';
 
 // local
-import { sequelize } from '../';
+import { sequelize } from '../sequelize';
 
 /** Модель описания продукта. */
 export class ModelProductInfo

@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import { TypeBrand } from '@YoSoloPersona/yo-shop-model';
 
 // local
-import { sequelize } from '../';
+import { sequelize } from '../sequelize';
 
 /** Модель типа бренда. */
 export class ModelTypeBrand
