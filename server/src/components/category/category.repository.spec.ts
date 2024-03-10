@@ -14,19 +14,22 @@ describe('#CategoryRepository', () => {
         categoryRepository = orm.createRepositoryCategory();
     });
 
-    it('create', async () => {
+    it('crud', async () => {
         // Arrange
         const categoryComputers: Category = {
             name: 'Computers'
         };
 
         // Act
-        const categoryFromAnswer = await categoryRepository.create(
+        // create
+        const categoryComputersCreated = await categoryRepository.create(
             categoryComputers
         );
 
+
         // Assert
-        console.log(categoryFromAnswer);
-        expect(categoryFromAnswer).toContain(categoryComputers);
+        expect(categoryComputersCreated).toEqual(
+            jasmine.objectContaining(categoryComputers)
+        );
     });
 });

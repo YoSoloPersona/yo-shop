@@ -12,14 +12,16 @@ export class CategoryRepository implements Repository<Category> {
      * @param category category
      * @returns Promise<Category>.
      */
-    create(category: Category): Promise<Category> {
+    async create(category: Category): Promise<Category> {
         if (!category) {
             throw Error(
                 'Error when adding a category, the category is passed as category null or undenfined!'
             );
         }
 
-        return ModelCategory.create(category);
+        const model = await ModelCategory.create(category);
+
+        return model.get({ plain: true });
     }
 
     //#endregion

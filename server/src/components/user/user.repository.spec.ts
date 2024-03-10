@@ -1,4 +1,3 @@
-import jasmine from 'jasmine';
 import { User } from '@YoSoloPersona/yo-shop-model';
 
 // locals
@@ -51,7 +50,7 @@ describe('#components user.repository', () => {
         // Assert
         expect(createdUser).toBeDefined();
         expect(createdUser.id).toBeGreaterThan(0);
-        expect(findedUser).toEqual(createdUser);
+        expect(findedUser).toEqual(jasmine.objectContaining(createdUser));
         expect(affectedCount).toEqual(1);
         expect(deletedCount).toEqual(1);
     });
