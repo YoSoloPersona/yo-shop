@@ -20,7 +20,7 @@
 
         "docker-compose-local":         "docker compose -f ./docker/development/compose.yaml up -d                 db pgadmin",
         "docker-compose-development":   "docker compose -f ./docker/development/compose.yaml up -d --build backend db pgadmin",
-        "docker-compose-test-units":    "docker compose -f ./docker/test/compose.yaml up        -d --build backend db pgadmin",
+        "docker-compose-test-units":    "docker compose -f ./docker/test-units/compose.yaml up  -d --build backend db pgadmin",
         "docker-compose-production":    "docker compose -f ./docker/production/compose.yaml up  -d --build backend db",
 
         "test": "jasmine --config=./helpers/jasmine.json"
