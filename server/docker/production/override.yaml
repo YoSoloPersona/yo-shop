@@ -1,0 +1,11 @@
+# list of services
+services:
+  # yo-shop server
+  yo-shop:
+    build:
+      target: production
+    env_file: ../../env/production/app.env
+
+  # database server
+  db:
+    env_file: ../../env/production/postgres.env

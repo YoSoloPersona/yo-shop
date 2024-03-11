@@ -1,0 +1,7 @@
+# list of services
+services:
+  backend:
+      build:
+        target: test-units
+
+      env_file: ../../env/development/app.env

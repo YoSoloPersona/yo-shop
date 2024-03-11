@@ -1,48 +1,9 @@
 # schema version
 version: "3.9"
 
-name: production-yo-shop
+name: yo-shop-production
 
-# list of services
-services:
-  # yo-shop server
-  server:
-    container_name: production-server
-
-    build:
-      context: ../../
-      dockerfile: ./docker/dockerfile
-      target: production
-
-    env_file: ../../env/production/app.env
-
-    ports:
-       - ${APP_PORT:-3000}:${APP_PORT:-3000}
-
-    healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-
-    depends_on:
-        db:
-          condition: service_healthy
-
-    # restart: unless-stopped
-
-  # database server
-  db:
-    container_name: production-db
-    image: postgres:14.4
-    restart: always
-    env_file: ../../env/production/postgres.env
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d yo-shop -U admin" ] # variables from the .env file cannot be referenced with $ =(
-      interval: 10s
-      timeout: 5s
-      retries: 5
-volumes:
-  db-data:
+include:
+  - path:
+    - ../base/compose.yaml
+    - override.yaml

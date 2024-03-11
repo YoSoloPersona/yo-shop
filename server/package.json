@@ -11,16 +11,17 @@
         "lint": "eslint --fix",
 
         "start": "node ./dist/index.js",
+        "start-pm2": "pm2 ./dist/index.js",
         "start-development": "nodemon --legacy-watch --inspect=0.0.0.0:9229 ./dist/index.js",
 
         "docker-build-production": "docker build --tag development-yo-shop:latest -f ./docker/dockerfile --progress=plain --target production .",
         "docker-build-development": "docker build --tag development-yo-shop:latest -f ./docker/dockerfile --target development .",
         "docker-build-test": "docker build --tag test-yo-shop:latest -f ./docker/dockerfile --target test .",
 
-        "docker-compose-local": "docker compose -f ./docker/development/compose.yaml up -d db pgadmin",
-        "docker-compose-development": "docker compose -f ./docker/development/compose.yaml up -d",
-        "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up --build",
-        "docker-compose-production": "docker compose -f ./docker/production/compose.yaml up -d --build",
+        "docker-compose-local":         "docker compose -f ./docker/development/compose.yaml up -d                 db pgadmin",
+        "docker-compose-development":   "docker compose -f ./docker/development/compose.yaml up -d --build backend db pgadmin",
+        "docker-compose-test-units":    "docker compose -f ./docker/test/compose.yaml up        -d --build backend db pgadmin",
+        "docker-compose-production":    "docker compose -f ./docker/production/compose.yaml up  -d --build backend db",
 
         "test": "jasmine --config=./helpers/jasmine.json"
     },
