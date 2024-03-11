@@ -24,6 +24,12 @@ import { authorization } from './middleware/authorization';
 const log = debug('app:log');
 const error = debug('app:error');
 
+const logController = debug('app:controller:log');
+const errorController = debug('app:controller:error');
+
+const logMiddleware = debug('app:middleware:log');
+const errorMiddleware = debug('app:middleware:error');
+
 // server
 const app = express();
 
@@ -65,7 +71,7 @@ export function addController(
     const router = Router();
     const controller = new classConstructor();
 
-    log(`added controller ${classConstructor.name}`);
+    logController(`added controller ${classConstructor.name}`);
 
     Reflect.ownKeys(classConstructor.prototype)
         // get all props
@@ -102,7 +108,10 @@ export function addController(
                 // handlers
                 ...handlers,
                 (req, res, next) => {
-                    const result = classMethod.call(controller, getArgs(req, params));
+                    const result = classMethod.call(
+                        controller,
+                        getArgs(req, params)
+                    );
 
                     if (result instanceof Promise) {
                         result
@@ -115,7 +124,7 @@ export function addController(
                     }
                 }
             );
-            log(
+            logController(
                 `Add handler ${classConstructor.name}.${classMethod.name}(${httpMethod})`
             );
         });
@@ -130,10 +139,12 @@ export function addMiddleware(
     middleWare: RequestHandler | ErrorRequestHandler
 ) {
     app.use(middleWare);
-    log(`Add middleware ${middleWare.name}`);
+    logMiddleware(`Add middleware ${middleWare.name}`);
 }
 
-function GetArgs(httpMethod: HTTPMethod): (req: Request, params?: string) => any {
+function GetArgs(
+    httpMethod: HTTPMethod
+): (req: Request, params?: string) => any {
     switch (httpMethod) {
         case 'get':
             return getArgsGet;
