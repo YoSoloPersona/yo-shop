@@ -1,0 +1,8 @@
+#schema
+version: "3.9"
+
+include:
+  - path:
+    - ../base/compose.yaml
+    - override.yaml
+
