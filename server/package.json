@@ -15,10 +15,10 @@
         "docker-build-development": "docker build --tag development-yo-shop:latest -f ./docker/dockerfile --target development .",
         "docker-build-test": "docker build --tag test-yo-shop:latest -f ./docker/dockerfile --target test .",
         "docker-compose-local": "docker compose -f ./docker/development/compose.yaml up -d                 db pgadmin",
-        "docker-compose-development":   "docker compose -f ./docker/development/compose.yaml    up  -d --build backend db pgadmin",
-        "docker-compose-test-units":    "docker compose -f ./docker/test-units/compose.yaml     up  -d --build backend db pgadmin",
-        "docker-compose-test-stress":   "docker compose -f ./docker/test-stress/compose.yaml    up --build backend db k6",
-        "docker-compose-production":    "docker compose -f ./docker/production/compose.yaml     up  -d --build backend db",
+        "docker-compose-development":   "docker compose -f ./docker/development/compose.yaml    up  --build backend db pgadmin",
+        "docker-compose-test-units":    "docker compose -f ./docker/test-units/compose.yaml     up  --build backend db pgadmin",
+        "docker-compose-test-stress":   "docker compose -f ./docker/test-stress/compose.yaml    up  --build backend db k6",
+        "docker-compose-production":    "docker compose -f ./docker/production/compose.yaml     up  --build backend db",
         "test": "jasmine --config=./helpers/jasmine.json"
     },
     "repository": {
