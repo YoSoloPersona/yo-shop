@@ -5,3 +5,14 @@ services:
         target: test-units
 
       env_file: ../../env/development/app.env
+
+  db:
+    volumes:
+      - postgres-data-test-units:/var/lib/postgresql/data
+
+  pgadmin:
+    volumes:
+      - pgadmin-data-test-units:/var/lib/pgadmin
+volumes:
+  postgres-data-test-units:
+  pgadmin-data-test-units:
