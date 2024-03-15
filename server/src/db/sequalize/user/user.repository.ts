@@ -36,16 +36,16 @@ export class UserRepository implements RepositoryUser {
         return (await ModelUser.findAll()).map(model => model.get());
     }
 
-    async readById(id: number): Promise<User | null> {
-        return (await ModelUser.findOne({ where: { id } }));
+    async readById(id: number): Promise<User | undefined> {
+        return (await ModelUser.findOne({ where: { id } }))?.get();
     }
 
-    async readByEmail(email: string): Promise<User | null> {
-        return (await ModelUser.findOne({ where: { email } }));
+    async readByEmail(email: string): Promise<User | undefined> {
+        return (await ModelUser.findOne({ where: { email } }))?.get();
     }
 
-    async readByRole(role: Role): Promise<User[] | null> {
-        return (await ModelUser.findAll({ where: { role } }));
+    async readByRole(role: Role): Promise<User[]> {
+        return (await ModelUser.findAll({ where: { role } })).map(model => model.get());
     }
 
     //#endregion

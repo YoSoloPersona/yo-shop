@@ -40,7 +40,7 @@ export interface Repository<T> {
      * Reads the element with the specified id
      * @param id id of the searched element
      */
-    readById(id: number): Promise<T | null>;
+    readById(id: number): Promise<T | undefined>;
 
     //#endregion
 
@@ -91,7 +91,7 @@ export interface FactoryORM extends FactoryRepositories {
  * User repository interface
  */
 export interface RepositoryUser extends Repository<User> {
-    readByEmail(email: string): Promise<User | null>;
+    readByEmail(email: string): Promise<User | undefined>;
 
-    readByRole(role: Role): Promise<User[] | null>;
+    readByRole(role: Role): Promise<User[]>;
 }
