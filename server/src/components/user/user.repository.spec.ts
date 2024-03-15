@@ -66,6 +66,6 @@ describe('#components user.repository', () => {
     it('read non-existent user', async () => {
         const findedUser = await userRepository.readByEmail('non.existent.email@mail.ru');
 
-        expect(findedUser).toBeNull();
+        expect(findedUser).toBeUndefined();
     })
 });
