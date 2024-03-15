@@ -1,5 +1,5 @@
 {
-  "name": "yo-shop-rest-api",
+  "name": "@YoSoloPersona/yo-shop-api",
   "version": "0.0.1",
   "description": "REST API for yo-shop",
   "main": "index.js",
