@@ -13,9 +13,9 @@ export class CategoryRepository implements Repository<Category> {
      * @returns Promise<Category>.
      */
     async create(category: Category): Promise<Category> {
-        if (!category) {
+        if (!category || category.name === "" || category.name.trim() === "") {
             throw Error(
-                'Error when adding a category, the category is passed as category null or undenfined!'
+                'Error when adding a category, the category is passed as category null, undenfined or empty name!'
             );
         }
 
