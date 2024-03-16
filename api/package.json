@@ -2,13 +2,21 @@
   "name": "@YoSoloPersona/yo-shop-api",
   "version": "0.0.1",
   "description": "REST API for yo-shop",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YoSoloPersona/yo-shop"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/YoSoloPersona"
+  },
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
     "test": "jasmine --config=./helpers/jasmine.json",
     "docker-build-test": "docker build --tag=test-rest-api --target=test -f ./docker/dockerfile .",
-    "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up --build"
+    "docker-compose-test": "docker compose -f ./docker/test/compose.yaml up --build",
+    "publish": "npm publish"
   },
   "keywords": [
     "rest",
