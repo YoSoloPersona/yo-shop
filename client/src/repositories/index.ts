@@ -1,1 +1,0 @@
-export { repositoryCategory } from './repositoryCategory'
