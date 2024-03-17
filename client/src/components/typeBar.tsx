@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 // local
 import { RootState, initCategories } from '../reducer';
-import { repositoryCategory } from '@YoSoloPersona/yo-shop-api';
+import { RepositoryCategory } from '@YoSoloPersona/yo-shop-api';
 
 const mapState = (state: RootState) => state.category;
 
@@ -16,8 +16,12 @@ type Props = {} & ConnectedProps<typeof connector>;
 
 const TypeBar = (props: Props) => {
     useEffect(() => {
+        const repositoryCategory = new RepositoryCategory({
+
+        });
+
         repositoryCategory
-            .all()
+            .read()
             .then((newTypesDevice) => {
               props.initCategories(newTypesDevice)
             });

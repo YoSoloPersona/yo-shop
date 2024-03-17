@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { User } from '@YoSoloPersona/yo-shop-model';
 import { RootState, setUserAction } from '../reducer';
 import { domain } from '../domain';
-import { repositoryUser } from '@YoSoloPersona/yo-shop-api';
+import { RepositoryUser } from '@YoSoloPersona/yo-shop-api';
 
 // Вытаскивае необходимые данные из хранилища (авторизация)
 const mapState = (state: RootState) => state.auth;
@@ -46,6 +46,10 @@ function Auth(props: Props) {
     const isLogin = location.pathname !== domain.user.registration.url; // Определяем где мы находимся, на регистрации или авторизации
     const action = isLogin ? 'authorization' : 'registration';
 
+    const repositoryUser = new RepositoryUser({
+
+    });
+
     // Ввод адреса почты
     const emailChanged: React.ChangeEventHandler<HTMLInputElement> = (e) =>
         setData({ ...data, email: e.target.value });
@@ -58,7 +62,7 @@ function Auth(props: Props) {
     const registrate: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         repositoryUser
             // Отправляем данные на сервер
-            .registrate(data)
+            .registration(data)
             // Обрабатываем полученный ответ
             .then((answer) => {
                 data.password = '';
@@ -74,7 +78,7 @@ function Auth(props: Props) {
     // Авторизирует пользователя
     const login: React.MouseEventHandler<HTMLButtonElement> = (e) => {
         repositoryUser
-            .login(data)
+            .authorization(data)
             .then((answer) => {
                 data.password = '';
                 props.setUser({ email: data.email, token: answer.token }); // Сохраням данные

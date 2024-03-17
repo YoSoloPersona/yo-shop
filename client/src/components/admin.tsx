@@ -4,11 +4,15 @@ import {  Tab, Row, Col, Nav } from 'react-bootstrap';
 import EditorCategory from './admin/editorCategory';
 import { Brand } from './admin/brand';
 import { Product } from './admin/product';
-import { repositoryCategory } from '@YoSoloPersona/yo-shop-api';
+import { RepositoryCategory } from '@YoSoloPersona/yo-shop-api';
 
 type Props = {};
 
 export default function Admin(props: Props) {
+    const repositoryCategory = new RepositoryCategory({
+
+    });
+
     return (
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <Row>
@@ -28,7 +32,7 @@ export default function Admin(props: Props) {
                 <Col sm={9}>
                     <Tab.Content>
                         <Tab.Pane eventKey="first">
-                            <EditorCategory task={repositoryCategory.all} />
+                            <EditorCategory task={repositoryCategory.read} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
                             <Brand />

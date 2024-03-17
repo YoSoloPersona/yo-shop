@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 
 // local
-import { repositoryCategory } from '@YoSoloPersona/yo-shop-api';
+import { RepositoryCategory } from '@YoSoloPersona/yo-shop-api';
 import { List } from './list';
 import { Add } from './add';
 import { Category } from '@YoSoloPersona/yo-shop-model';
@@ -31,12 +31,16 @@ export const Main = ({ data }: Props) => {
     const [listCategories, setListCategories] =
         useState<EditableCategory[]>(data);
 
+        const repositoryCategory = new RepositoryCategory({
+
+        });
+
     // Добавляет новую категорию товаров
     const addCategory = (newCategory: Category) => {
         return (
             repositoryCategory
                 // Отправляем категорию на сервер
-                .push(newCategory)
+                .create(newCategory)
                 // Если категория была успешно добавлена на сервере,
                 // обновляем и в списке
                 .then((addedCategory) => {
@@ -55,7 +59,7 @@ export const Main = ({ data }: Props) => {
         return (
             repositoryCategory
                 // Удаляем категорию товаров на сервере
-                .remove(removedCategory)
+                .delete(removedCategory)
                 // После удаления на сервере обновляем список
                 .then((count) => {
                     setListCategories(
