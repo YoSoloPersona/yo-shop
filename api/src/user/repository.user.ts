@@ -1,6 +1,5 @@
 import debug from 'debug';
 import { api, User, AuthorizationResponse } from '@YoSoloPersona/yo-shop-model';
-import { URLSearchParams } from 'url';
 
 // locals
 import { Params } from '../despatch';
