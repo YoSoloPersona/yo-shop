@@ -7,10 +7,10 @@ import { Container, Form, Card, Button, Row, Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 // local
-import { User } from 'yo-shop-model';
+import { User } from '@YoSoloPersona/yo-shop-model';
 import { RootState, setUserAction } from '../reducer';
 import { domain } from '../domain';
-import { repositoryUser } from '../repositories/repositoryUser';
+import { repositoryUser } from '@YoSoloPersona/yo-shop-api';
 
 // Вытаскивае необходимые данные из хранилища (авторизация)
 const mapState = (state: RootState) => state.auth;

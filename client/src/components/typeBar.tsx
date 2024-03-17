@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 // local
 import { RootState, initCategories } from '../reducer';
-import { repositoryCategory } from '../repositories/repositoryCategory';
+import { repositoryCategory } from '@YoSoloPersona/yo-shop-api';
 
 const mapState = (state: RootState) => state.category;
 

@@ -4,7 +4,7 @@ import {  Tab, Row, Col, Nav } from 'react-bootstrap';
 import EditorCategory from './admin/editorCategory';
 import { Brand } from './admin/brand';
 import { Product } from './admin/product';
-import { repositoryCategory } from '../repositories/repositoryCategory';
+import { repositoryCategory } from '@YoSoloPersona/yo-shop-api';
 
 type Props = {};
 

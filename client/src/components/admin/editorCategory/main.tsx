@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 
 // local
-import { repositoryCategory } from '../../../repositories';
+import { repositoryCategory } from '@YoSoloPersona/yo-shop-api';
 import { List } from './list';
 import { Add } from './add';
-import { Category } from 'yo-shop-model';
+import { Category } from '@YoSoloPersona/yo-shop-model';
 
 /** Свойства. */
 type Props = {
