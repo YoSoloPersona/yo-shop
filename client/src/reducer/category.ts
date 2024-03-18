@@ -1,7 +1,7 @@
 import { Action, Reducer } from 'redux';
 
 // local
-import { Category as Model } from 'yo-shop-model';
+import { Category as Model } from '@YoSoloPersona/yo-shop-model';
 
 // Убираем id из типа, он нам не нужен
 type Category = Omit<Model, 'id'>;
