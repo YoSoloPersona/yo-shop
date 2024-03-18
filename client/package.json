@@ -12,7 +12,7 @@
         "@types/node": "^16.18.89",
         "@types/react": "^18.2.66",
         "@types/react-dom": "^18.2.22",
-        "@YoSoloPersona/yo-shop-api": "0.0.1",
+        "@YoSoloPersona/yo-shop-api": "0.0.2",
         "@YoSoloPersona/yo-shop-model": "0.1.0",
         "axios": "^1.6.8",
         "bootstrap": "^5.2.0",
