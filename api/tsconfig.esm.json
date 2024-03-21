@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "target": "ES2022",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+      "moduleResolution": "Node",
+      /* Modules */
+      "module": "ESNext",                                /* Specify what module code is generated. */
+  
+      /* Emit */
+      "outDir": "./dist/esm",                                   /* Specify an output folder for all emitted files. */
+    },
+    "include": [
+      "src"
+    ]
+  }
+  
