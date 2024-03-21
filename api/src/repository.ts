@@ -1,8 +1,8 @@
+import { AxiosInstance } from 'axios';
 import { User, api, AuthorizationResponse } from '@YoSoloPersona/yo-shop-model';
 
 // locals
-import { AxiosInstance } from 'axios';
-import { Params, factory } from './despatch';
+import { Params, factory } from './despatch.js';
 
 /**
  * Abstract repository class, implements authorization on the server

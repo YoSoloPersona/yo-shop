@@ -1,8 +1,8 @@
 import 'jasmine';
 
 // locals
-import { user1, root } from '../test/data/users';
-import { RepositoryUser } from '..';
+import { user1, root } from '../test/data/users.js';
+import { RepositoryUser } from '../index.js';
 import { User } from '@YoSoloPersona/yo-shop-model';
 
 // timeout

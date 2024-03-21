@@ -2,8 +2,8 @@ import debug from 'debug';
 import { api, User, AuthorizationResponse } from '@YoSoloPersona/yo-shop-model';
 
 // locals
-import { Params } from '../despatch';
-import { Repository } from '../repository';
+import { Params } from '../despatch.js';
+import { Repository } from '../repository.js';
 
 // protocols
 const log = debug('repository:user');
